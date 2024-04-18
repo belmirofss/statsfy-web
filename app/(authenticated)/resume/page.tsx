@@ -1,7 +1,7 @@
-import { getAuthSession } from "@/app/shared/utils/auth";
 import { redirect } from "next/navigation";
+import { getAuthSession } from "@/app/shared/actions/auth";
 
-export default async function Home() {
+export default async function Resume() {
   const session = await getAuthSession();
 
   if (!session) {
