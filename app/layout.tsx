@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+import { NextAuthProvider } from "./shared/providers/NextAuthProvider";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Statsfy",
-  description: "Spotify account stats",
+  description: "Connect with your Spotify account and see your stats",
 };
 
 export default function RootLayout({
@@ -16,7 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${openSans.className}`}>{children}</body>
+      <body className={`${openSans.className}`}>
+        <NextAuthProvider>
+          <main className="p-6 h-full">{children}</main>
+        </NextAuthProvider>
+      </body>
     </html>
   );
 }

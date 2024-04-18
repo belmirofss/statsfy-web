@@ -1,12 +1,13 @@
-import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Statsfy",
-  description: "",
-};
+import { getAuthSession } from "./shared/utils/auth";
 
-export default function Main() {
-  return (
-    <main className="flex flex-col p-6 justify-center items-center h-full gap-6"></main>
-  );
+export default async function Main() {
+  const session = await getAuthSession();
+
+  if (session) {
+    redirect("/home");
+  } else {
+    redirect("/login");
+  }
 }

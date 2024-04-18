@@ -15,7 +15,7 @@ export const Button = ({ children, onClick, type, className }: Props) => {
 
   return (
     <button
-      className={`w-full text-xl font-bold p-3 rounded-full ${customClasses[type]} ${className}`}
+      className={`w-full text-xl font-bold p-3 rounded-full hover:brightness-90 ${customClasses[type]} ${className}`}
       onClick={onClick}
     >
       {children}
