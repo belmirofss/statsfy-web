@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import { NextAuthProvider } from "./shared/providers/NextAuthProvider";
 import "./globals.css";
+import { Theme } from "@radix-ui/themes";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -18,9 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${openSans.className}`}>
-        <NextAuthProvider>
-          <main className="p-6 h-full">{children}</main>
-        </NextAuthProvider>
+        <Theme className="h-full">
+          <NextAuthProvider>{children}</NextAuthProvider>
+        </Theme>
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+import { Button as RadixButton } from "@radix-ui/themes";
 import { ReactNode } from "react";
 
 type Props = {
@@ -14,11 +15,13 @@ export const Button = ({ children, onClick, type, className }: Props) => {
   };
 
   return (
-    <button
-      className={`w-full text-xl font-bold p-3 rounded-full hover:brightness-90 ${customClasses[type]} ${className}`}
+    <RadixButton
+      className={`w-full text-xl font-bold hover:brightness-90 ${customClasses[type]} ${className}`}
       onClick={onClick}
+      radius="full"
+      size="4"
     >
       {children}
-    </button>
+    </RadixButton>
   );
 };

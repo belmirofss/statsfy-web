@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Statsfy | Home",
+  title: "Statsfy | Resume",
   description: "Resume from your Spotify account",
 };
 
