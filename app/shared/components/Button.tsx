@@ -16,7 +16,7 @@ export const Button = ({ children, onClick, type, className }: Props) => {
 
   return (
     <RadixButton
-      className={`w-full text-xl font-bold hover:brightness-90 ${customClasses[type]} ${className}`}
+      className={`w-full text-xl font-bold cursor-pointer hover:brightness-90 ${customClasses[type]} ${className}`}
       onClick={onClick}
       radius="full"
       size="4"

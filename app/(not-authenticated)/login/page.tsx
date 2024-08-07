@@ -4,6 +4,7 @@ import Image from "next/image";
 import { signIn } from "next-auth/react";
 import logo from "../../../public/logo_statsfy.png";
 import { Button } from "../../shared/components/Button";
+import { Heading } from "@radix-ui/themes";
 
 export default function Login() {
   const handleLogin = () => {
@@ -15,12 +16,13 @@ export default function Login() {
       <Image src={logo} alt="Statsfy image" className="h-16 w-auto" />
 
       <div>
-        <h1 className="text-2xl font-bold">
+        <Heading as="h1" weight="bold" size="6" align="center">
           Hello! Are you looking for your stats?
-        </h1>
-        <h2 className="text-xl">
+        </Heading>
+
+        <Heading as="h2" weight="regular" size="4" align="center">
           Log in with your Spotify account to see your stats
-        </h2>
+        </Heading>
       </div>
 
       <div className="flex flex-col items-center w-full gap-2">

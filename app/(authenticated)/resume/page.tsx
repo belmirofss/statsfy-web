@@ -1,12 +1,5 @@
-import { redirect } from "next/navigation";
-import { getAuthSession } from "@/app/shared/actions/auth";
+"use client";
 
-export default async function Resume() {
-  const session = await getAuthSession();
-
-  if (!session) {
-    redirect("/login");
-  }
-
+export default function Resume() {
   return <h1>it works</h1>;
 }

@@ -1,14 +1,28 @@
 import { Metadata } from "next";
+import { Header } from "../shared/components/Header";
+import { getAuthSession } from "../shared/actions/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Statsfy | Login",
   description: "Connect with your Spotify account",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main className="p-6 h-full">{children}</main>;
+  const session = await getAuthSession();
+
+  if (!session) {
+    redirect("/login");
+  }
+
+  return (
+    <div>
+      <Header />
+      <main className="p-6 h-full">{children}</main>
+    </div>
+  );
 }
