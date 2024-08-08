@@ -1,25 +1,25 @@
 "use client";
 
+import { FaPerson } from "react-icons/fa6";
 import { Text } from "@radix-ui/themes";
-import { usePathname } from "next/navigation";
-
-const getTitle = (pathname: string) => {
-  if (pathname === "/resume") {
-    return "Resume";
-  }
-
-  return "";
-};
+import { Button } from "./Button";
+import { useHumanizedPathname } from "../hooks/useHumanizedPathname";
 
 export const Header = () => {
-  const pathname = usePathname();
-  const title = getTitle(pathname);
+  const title = useHumanizedPathname();
 
   return (
-    <header className="p-6">
-      <Text as="span" weight="bold" size="4">
+    <header className="px-6 py-4 flex flex-row justify-between items-center drop-shadow-lg bg-white">
+      <Text as="span" weight="bold" size="6">
         {title}
       </Text>
+
+      <div>
+        <Button type="transparent" size="small" onClick={() => {}}>
+          <FaPerson size="20" />
+          <span className="hidden md:block">My account</span>
+        </Button>
+      </div>
     </header>
   );
 };

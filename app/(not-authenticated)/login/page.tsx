@@ -29,6 +29,9 @@ export default function Login() {
         <Button type="primary" onClick={handleLogin} className="md:max-w-sm">
           Log in with Spotify
         </Button>
+        <Button type="secondary" onClick={() => {}} className="md:max-w-sm">
+          About the website
+        </Button>
       </div>
     </div>
   );
