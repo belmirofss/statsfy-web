@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 type Props = {
   children: ReactNode;
   onClick: () => void;
-  type: "primary" | "secondary" | "transparent";
+  type: "primary" | "secondary" | "menu";
   size?: "regular" | "small";
   className?: string;
 };
@@ -18,9 +18,9 @@ export const Button = ({
   size = "regular",
 }: Props) => {
   const customClasses = {
-    primary: "bg-main text-white",
-    secondary: "bg-gray-300 text-black",
-    transparent: "bg-transparent text-black",
+    primary: "bg-main text-white hover:brightness-90",
+    secondary: "bg-gray-300 text-black hover:brightness-90",
+    menu: "bg-transparent text-black hover:text-main",
   };
 
   const customSizeClasses = {
@@ -35,7 +35,7 @@ export const Button = ({
 
   return (
     <RadixButton
-      className={`w-full font-bold cursor-pointer hover:brightness-90 ${customClasses[type]} ${customSizeClasses[size]} ${className}`}
+      className={`w-full font-bold cursor-pointer ${customClasses[type]} ${customSizeClasses[size]} ${className}`}
       onClick={onClick}
       radius="full"
       size={sizes[size] as Responsive<"4" | "2" | "1" | "3">}
