@@ -3,9 +3,12 @@ import { usePathname } from "next/navigation";
 export const useHumanizedPathname = () => {
   const pathname = usePathname();
 
-  if (pathname === "/resume") {
-    return "Resume";
+  const titles: Record<string, string> = {
+    "/resume": "Resume",
+    "/top-tracks": "Top tracks",
+    "/top-artists": "Top artists",
+    "/my-account": "My account",
   }
 
-  return "";
+  return titles[pathname] || ""
 };

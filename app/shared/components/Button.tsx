@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   type: "primary" | "secondary" | "menu";
   size?: "regular" | "small";
   className?: string;
