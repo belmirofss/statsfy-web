@@ -3,6 +3,7 @@ import { Open_Sans } from "next/font/google";
 import { NextAuthProvider } from "./shared/providers/NextAuthProvider";
 import "./globals.css";
 import { Theme } from "@radix-ui/themes";
+import ReactQueryProvider from "./shared/providers/QueryClientProvider";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${openSans.className}`}>
         <Theme className="h-full">
-          <NextAuthProvider>{children}</NextAuthProvider>
+          <ReactQueryProvider>
+            <NextAuthProvider>{children}</NextAuthProvider>
+          </ReactQueryProvider>
         </Theme>
       </body>
     </html>
