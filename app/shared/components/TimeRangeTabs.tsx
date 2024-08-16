@@ -1,4 +1,4 @@
-import { Box, Tabs } from "@radix-ui/themes";
+import { Box, Tabs, Text } from "@radix-ui/themes";
 import { ReactNode } from "react";
 
 type Props = {
@@ -20,15 +20,17 @@ export const TimeRangeTabs = ({ children }: Props) => {
         highContrast
         className="justify-between md:justify-start"
       >
-        <Tabs.Trigger value={TimeRangeTabsValues.ALL_TIME}>
-          All time
-        </Tabs.Trigger>
-        <Tabs.Trigger value={TimeRangeTabsValues.LAST_6_MONTHS}>
-          Last 6 months
-        </Tabs.Trigger>
-        <Tabs.Trigger value={TimeRangeTabsValues.LAST_4_WEEKS}>
-          Last 4 weeks
-        </Tabs.Trigger>
+        {[
+          [TimeRangeTabsValues.ALL_TIME, "All time"],
+          [TimeRangeTabsValues.LAST_6_MONTHS, "Last 6 months"],
+          [TimeRangeTabsValues.LAST_4_WEEKS, "Last 4 weeks"],
+        ].map(([value, label]) => (
+          <Tabs.Trigger key={value} value={value}>
+            <Text size="3" className="font-bold">
+              {label}
+            </Text>
+          </Tabs.Trigger>
+        ))}
       </Tabs.List>
 
       <Box pt="3">{children}</Box>

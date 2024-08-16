@@ -22,7 +22,7 @@ export default async function RootLayout({
   return (
     <div>
       <Header />
-      <main className="px-6 pb-6 pt-20 h-full">{children}</main>
+      <main className="px-6 md:px-12 pb-6 pt-20 h-full">{children}</main>
     </div>
   );
 }
