@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Header } from "../shared/components/Header";
 import { getAuthSession } from "../shared/actions/auth";
 import { redirect } from "next/navigation";
+import { Footer } from "../shared/components/Footer";
 
 export const metadata: Metadata = {
   title: "Statsfy | Login",
@@ -23,6 +24,7 @@ export default async function RootLayout({
     <div>
       <Header />
       <main className="px-6 md:px-12 pb-6 pt-20 h-full">{children}</main>
+      <Footer />
     </div>
   );
 }

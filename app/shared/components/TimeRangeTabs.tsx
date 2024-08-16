@@ -18,7 +18,7 @@ export const TimeRangeTabs = ({ children }: Props) => {
         size="2"
         color="gray"
         highContrast
-        className="justify-between md:justify-start"
+        className="justify-center md:justify-start"
       >
         {[
           [TimeRangeTabsValues.ALL_TIME, "All time"],
