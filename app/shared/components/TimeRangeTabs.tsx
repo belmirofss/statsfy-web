@@ -14,12 +14,7 @@ enum TimeRangeTabsValues {
 export const TimeRangeTabs = ({ children }: Props) => {
   return (
     <Tabs.Root defaultValue={TimeRangeTabsValues.ALL_TIME}>
-      <Tabs.List
-        size="2"
-        color="gray"
-        highContrast
-        className="justify-center md:justify-start"
-      >
+      <Tabs.List size="2" color="gray" highContrast className="justify-center">
         {[
           [TimeRangeTabsValues.ALL_TIME, "All time"],
           [TimeRangeTabsValues.LAST_6_MONTHS, "Last 6 months"],

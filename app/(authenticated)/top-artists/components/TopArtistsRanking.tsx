@@ -17,8 +17,12 @@ export const TopArtistsRanking = ({ timeRange }: Props) => {
     return <Loading />;
   }
 
-  if (isError || !data) {
+  if (isError) {
     return <Error />;
+  }
+
+  if (!data) {
+    return null;
   }
 
   const [first, second, third, ...rest] = data;

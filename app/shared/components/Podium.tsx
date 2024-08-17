@@ -1,4 +1,7 @@
 import { Text } from "@radix-ui/themes";
+import { FaCrown } from "react-icons/fa6";
+import { NOT_FOUND_IMG } from "../constants";
+import { CSSProperties } from "react";
 
 type PodiumPositionProps = {
   position: "first" | "second" | "third";
@@ -13,12 +16,30 @@ type Props = {
   third: Omit<PodiumPositionProps, "position">;
 };
 
-const ONE_THIRD_SCREEN_WIDTH = window.innerWidth / 3;
+const ONE_THIRD_SCREEN_WIDTH = window.innerWidth / 3 - 16;
+
+const COLORS = {
+  first: "#FFBF00",
+  second: "#B5B7BB",
+  third: "#804A00",
+};
+
+const ICON_SIZES = {
+  first: 36,
+  second: 32,
+  third: 32,
+};
 
 const SIZE_MULTIPLIER = {
   first: 1.25,
   second: 0.875,
   third: 0.875,
+};
+
+const MARGIN_TOP_POSITIONS = {
+  first: 0,
+  second: 0.7,
+  third: 0.7,
 };
 
 const POSITION_NUMBERS = {
@@ -27,27 +48,83 @@ const POSITION_NUMBERS = {
   third: 3,
 };
 
+const generateTruncateWhenStyles = (
+  numberOfLines: number
+): {
+  display: CSSProperties["display"];
+  WebkitLineClamp: CSSProperties["WebkitLineClamp"];
+  WebkitBoxOrient: CSSProperties["WebkitBoxOrient"];
+  overflow: CSSProperties["overflow"];
+} => {
+  return {
+    display: "-webkit-box",
+    WebkitLineClamp: numberOfLines,
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+  };
+};
+
 const PodiumItem = ({
   position,
   title,
   description,
   imageUrl,
 }: PodiumPositionProps) => {
-  const size = ONE_THIRD_SCREEN_WIDTH * SIZE_MULTIPLIER[position];
+  const size =
+    Math.min(ONE_THIRD_SCREEN_WIDTH, 164) * SIZE_MULTIPLIER[position];
+
+  const textWidthSize = size - 2;
 
   return (
-    <div className="flex flex-col">
-      <Text>
-        {POSITION_NUMBERS[position]}. {title}
-      </Text>
-      {description && <Text>{description}</Text>}
+    <div
+      className="flex flex-col items-center gap-1"
+      style={{
+        marginTop: size * MARGIN_TOP_POSITIONS[position],
+      }}
+    >
+      <FaCrown color={COLORS[position]} size={ICON_SIZES[position]} />
+      <img
+        src={imageUrl || NOT_FOUND_IMG}
+        className="rounded-full border border-black"
+        style={{
+          height: size,
+          width: size,
+        }}
+      />
+      <div className="flex flex-col">
+        <Text
+          size="3"
+          weight="bold"
+          align="center"
+          className="px-2"
+          style={{
+            width: textWidthSize,
+            ...generateTruncateWhenStyles(3),
+          }}
+        >
+          {POSITION_NUMBERS[position]}. {title}
+        </Text>
+        {description && (
+          <Text
+            size="2"
+            align="center"
+            className="px-2"
+            style={{
+              width: textWidthSize,
+              ...generateTruncateWhenStyles(3),
+            }}
+          >
+            {description}
+          </Text>
+        )}
+      </div>
     </div>
   );
 };
 
 export const Podium = ({ first, second, third }: Props) => {
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row justify-center gap-2">
       <PodiumItem
         position="second"
         title={second.title}

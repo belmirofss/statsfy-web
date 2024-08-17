@@ -21,7 +21,7 @@ export default function TopArtists() {
       </TimeRangeLast6MonthsTab>
 
       <TimeRangeLast4WeeksTab>
-        <TopArtistsRanking timeRange={SpotifyTimeRanges.MEDIUM} />
+        <TopArtistsRanking timeRange={SpotifyTimeRanges.SHORT} />
       </TimeRangeLast4WeeksTab>
     </TimeRangeTabs>
   );

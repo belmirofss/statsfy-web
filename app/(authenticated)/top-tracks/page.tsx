@@ -6,21 +6,22 @@ import {
   TimeRangeLast6MonthsTab,
   TimeRangeTabs,
 } from "@/app/shared/components/TimeRangeTabs";
-import { Text } from "@radix-ui/themes";
+import { TopTracksRanking } from "./components/TopTracksRanking";
+import { SpotifyTimeRanges } from "@/app/shared/types";
 
 export default function TopTracks() {
   return (
     <TimeRangeTabs>
       <TimeRangeAllTimeTab>
-        <Text size="2">all-time</Text>
+        <TopTracksRanking timeRange={SpotifyTimeRanges.LONG} />
       </TimeRangeAllTimeTab>
 
       <TimeRangeLast6MonthsTab>
-        <Text size="2">last-6-months</Text>
+        <TopTracksRanking timeRange={SpotifyTimeRanges.MEDIUM} />
       </TimeRangeLast6MonthsTab>
 
       <TimeRangeLast4WeeksTab>
-        <Text size="2">last-4-weeks</Text>
+        <TopTracksRanking timeRange={SpotifyTimeRanges.SHORT} />
       </TimeRangeLast4WeeksTab>
     </TimeRangeTabs>
   );
