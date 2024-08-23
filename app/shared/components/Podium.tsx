@@ -1,7 +1,7 @@
 import { Text } from "@radix-ui/themes";
 import { FaCrown } from "react-icons/fa6";
 import { NOT_FOUND_IMG } from "../constants";
-import { CSSProperties } from "react";
+import { generateTruncateWhenStyles } from "../helpers/generateTruncateWhenStyles";
 
 type PodiumPositionProps = {
   position: "first" | "second" | "third";
@@ -46,22 +46,6 @@ const POSITION_NUMBERS = {
   first: 1,
   second: 2,
   third: 3,
-};
-
-const generateTruncateWhenStyles = (
-  numberOfLines: number
-): {
-  display: CSSProperties["display"];
-  WebkitLineClamp: CSSProperties["WebkitLineClamp"];
-  WebkitBoxOrient: CSSProperties["WebkitBoxOrient"];
-  overflow: CSSProperties["overflow"];
-} => {
-  return {
-    display: "-webkit-box",
-    WebkitLineClamp: numberOfLines,
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-  };
 };
 
 const PodiumItem = ({
