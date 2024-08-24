@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import logo from "../../../public/logo_statsfy.png";
 import { Button } from "../../shared/components/Button";
 import { Heading } from "@radix-ui/themes";
 import Link from "next/link";
+import { Logo } from "@/app/shared/components/Logo";
 
 export default function Login() {
   const handleLogin = () => {
@@ -14,7 +14,7 @@ export default function Login() {
 
   return (
     <div className="flex flex-col justify-center items-center gap-6 h-full">
-      <Image src={logo} alt="Statsfy image" className="h-16 w-auto" />
+      <Logo />
 
       <div>
         <Heading as="h1" weight="bold" size="6" align="center">
