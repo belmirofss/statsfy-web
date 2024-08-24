@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Page } from "../shared/components/Page";
 
 export const metadata: Metadata = {
   title: "Statsfy | About",
@@ -10,5 +11,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return <Page>{children}</Page>;
 }
