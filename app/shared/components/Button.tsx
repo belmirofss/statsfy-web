@@ -25,21 +25,15 @@ export const Button = ({
   };
 
   const customSizeClasses = {
-    regular: "text-xl",
+    regular: "text-lg",
     small: "text-m",
-  };
-
-  const sizes = {
-    regular: "4",
-    small: "2",
   };
 
   return (
     <RadixButton
-      className={`w-full font-bold cursor-pointer ${customClasses[type]} ${customSizeClasses[size]} ${className}`}
+      className={`w-full font-bold cursor-pointer py-5 ${customClasses[type]} ${customSizeClasses[size]} ${className}`}
       onClick={onClick}
       radius="full"
-      size={sizes[size] as Responsive<"4" | "2" | "1" | "3">}
     >
       {children}
     </RadixButton>
