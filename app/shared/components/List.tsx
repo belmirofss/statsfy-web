@@ -1,5 +1,4 @@
 import { Text } from "@radix-ui/themes";
-import { MAX_SCREEN_WIDTH } from "../constants";
 import { generateTruncateWhenStyles } from "../helpers/generateTruncateWhenStyles";
 import { Image } from "./Image";
 
@@ -19,33 +18,23 @@ export const List = ({
   getImage,
 }: Props) => {
   return (
-    <div className="flex flex-row justify-center mt-8">
-      <div
-        className="flex flex-col gap-8"
-        style={{
-          width: MAX_SCREEN_WIDTH,
-        }}
-      >
-        {data.map((item, index) => (
-          <div
-            key={getTitle(item)}
-            className="flex flex-row items-center gap-4"
-          >
-            <Text weight="bold">{index + startAt}.</Text>
-            <Image url={getImage(item)} size={72} />
-            <div className="flex flex-col">
-              <Text weight="bold" style={{ ...generateTruncateWhenStyles(2) }}>
-                {getTitle(item)}
+    <div className="flex flex-col gap-8 mt-8">
+      {data.map((item, index) => (
+        <div key={getTitle(item)} className="flex flex-row items-center gap-4">
+          <Text weight="bold">{index + startAt}.</Text>
+          <Image url={getImage(item)} size={72} />
+          <div className="flex flex-col">
+            <Text weight="bold" style={{ ...generateTruncateWhenStyles(2) }}>
+              {getTitle(item)}
+            </Text>
+            {getDescription && (
+              <Text style={{ ...generateTruncateWhenStyles(3) }}>
+                {getDescription(item)}
               </Text>
-              {getDescription && (
-                <Text style={{ ...generateTruncateWhenStyles(3) }}>
-                  {getDescription(item)}
-                </Text>
-              )}
-            </div>
+            )}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };

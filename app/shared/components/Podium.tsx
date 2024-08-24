@@ -1,8 +1,9 @@
 import { Text } from "@radix-ui/themes";
 import { FaCrown } from "react-icons/fa6";
-import { ONE_THIRD_SCREEN_WIDTH } from "../constants";
 import { generateTruncateWhenStyles } from "../helpers/generateTruncateWhenStyles";
 import { Image } from "./Image";
+
+export const ONE_THIRD_SCREEN_WIDTH = window.innerWidth / 3 - 16;
 
 type PodiumPositionProps = {
   position: "first" | "second" | "third";
