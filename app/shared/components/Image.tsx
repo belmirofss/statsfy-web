@@ -1,4 +1,4 @@
-import { NOT_FOUND_IMG } from "../constants";
+import notFoundImg from "../../../public/not_found.png";
 
 type Props = {
   size: number;
@@ -8,7 +8,7 @@ type Props = {
 export const Image = ({ url, size }: Props) => {
   return (
     <img
-      src={url || NOT_FOUND_IMG}
+      src={url || notFoundImg.src}
       className="rounded-full border border-black"
       style={{
         height: size,

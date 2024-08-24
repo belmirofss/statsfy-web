@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 type Props = {
   children: ReactNode;
   onClick?: () => void;
-  type: "primary" | "secondary" | "menu";
+  type: "primary" | "secondary" | "danger" | "menu";
   size?: "regular" | "small";
   className?: string;
 };
@@ -20,6 +20,7 @@ export const Button = ({
   const customClasses = {
     primary: "bg-main text-white hover:brightness-90",
     secondary: "bg-gray-300 text-black hover:brightness-90",
+    danger: "bg-red-700 text-white hover:brightness-90",
     menu: "bg-transparent text-black hover:text-main",
   };
 
