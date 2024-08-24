@@ -101,6 +101,10 @@ export default function Resume() {
           }}
         />
       )}
+
+      <Text size="5" weight="bold">
+        Recently played
+      </Text>
     </div>
   );
 }
