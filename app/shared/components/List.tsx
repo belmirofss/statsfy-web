@@ -1,6 +1,7 @@
 import { Text } from "@radix-ui/themes";
-import { MAX_SCREEN_WIDTH, NOT_FOUND_IMG } from "../constants";
+import { MAX_SCREEN_WIDTH } from "../constants";
 import { generateTruncateWhenStyles } from "../helpers/generateTruncateWhenStyles";
+import { Image } from "./Image";
 
 type Props = {
   startAt: number;
@@ -31,14 +32,7 @@ export const List = ({
             className="flex flex-row items-center gap-4"
           >
             <Text weight="bold">{index + startAt}.</Text>
-            <img
-              src={getImage(item) || NOT_FOUND_IMG}
-              className="rounded-full border border-black"
-              style={{
-                height: 72,
-                width: 72,
-              }}
-            />
+            <Image url={getImage(item)} size={72} />
             <div className="flex flex-col">
               <Text weight="bold" style={{ ...generateTruncateWhenStyles(2) }}>
                 {getTitle(item)}

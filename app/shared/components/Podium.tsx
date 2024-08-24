@@ -1,11 +1,8 @@
 import { Text } from "@radix-ui/themes";
 import { FaCrown } from "react-icons/fa6";
-import {
-  MAX_SCREEN_WIDTH,
-  NOT_FOUND_IMG,
-  ONE_THIRD_SCREEN_WIDTH,
-} from "../constants";
+import { ONE_THIRD_SCREEN_WIDTH } from "../constants";
 import { generateTruncateWhenStyles } from "../helpers/generateTruncateWhenStyles";
+import { Image } from "./Image";
 
 type PodiumPositionProps = {
   position: "first" | "second" | "third";
@@ -69,14 +66,9 @@ const PodiumItem = ({
       }}
     >
       <FaCrown color={COLORS[position]} size={ICON_SIZES[position]} />
-      <img
-        src={imageUrl || NOT_FOUND_IMG}
-        className="rounded-full border border-black"
-        style={{
-          height: size,
-          width: size,
-        }}
-      />
+
+      <Image url={imageUrl} size={size} />
+
       <div className="flex flex-col">
         <Text
           size="3"
