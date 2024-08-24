@@ -1,6 +1,10 @@
 import { Text } from "@radix-ui/themes";
 import { FaCrown } from "react-icons/fa6";
-import { NOT_FOUND_IMG } from "../constants";
+import {
+  MAX_SCREEN_WIDTH,
+  NOT_FOUND_IMG,
+  ONE_THIRD_SCREEN_WIDTH,
+} from "../constants";
 import { generateTruncateWhenStyles } from "../helpers/generateTruncateWhenStyles";
 
 type PodiumPositionProps = {
@@ -15,8 +19,6 @@ type Props = {
   second: Omit<PodiumPositionProps, "position">;
   third: Omit<PodiumPositionProps, "position">;
 };
-
-const ONE_THIRD_SCREEN_WIDTH = window.innerWidth / 3 - 16;
 
 const COLORS = {
   first: "#FFBF00",

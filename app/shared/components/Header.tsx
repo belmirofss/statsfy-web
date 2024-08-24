@@ -43,7 +43,7 @@ export const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full px-6 md:px-12 py-4 flex flex-row justify-between items-center drop-shadow-lg bg-white">
+    <header className="fixed top-0 left-0 w-full px-6 md:px-12 py-4 flex flex-row justify-between items-center drop-shadow-lg bg-white z-50">
       <Text as="span" weight="bold" size="6">
         {title}
       </Text>
