@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 import logo from "../../../public/logo_statsfy.png";
 import { Button } from "../../shared/components/Button";
 import { Heading } from "@radix-ui/themes";
+import Link from "next/link";
 
 export default function Login() {
   const handleLogin = () => {
@@ -29,9 +30,9 @@ export default function Login() {
         <Button type="primary" onClick={handleLogin} className="md:max-w-sm">
           Log in with Spotify
         </Button>
-        <Button type="secondary" onClick={() => {}} className="md:max-w-sm">
-          About the website
-        </Button>
+        <Link href="/about" className="w-full md:max-w-sm">
+          <Button type="secondary">About the website</Button>
+        </Link>
       </div>
     </div>
   );

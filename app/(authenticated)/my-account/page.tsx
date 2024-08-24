@@ -7,6 +7,7 @@ import { Loading } from "@/app/shared/components/Loading";
 import { signOut } from "next-auth/react";
 import { useSpotifyAccount } from "@/app/shared/hooks/useSpotifyAccount";
 import { Text } from "@radix-ui/themes";
+import Link from "next/link";
 
 export default function MyAccount() {
   const { data, isLoading, isError } = useSpotifyAccount();
@@ -34,7 +35,10 @@ export default function MyAccount() {
       </Text>
 
       <div className="mt-8 flex flex-col gap-2 w-full">
-        <Button type="secondary">About the website</Button>
+        <Link href="/about" className="w-full">
+          <Button type="secondary">About the website</Button>
+        </Link>
+
         <Button type="danger" onClick={signOut}>
           Log out
         </Button>
