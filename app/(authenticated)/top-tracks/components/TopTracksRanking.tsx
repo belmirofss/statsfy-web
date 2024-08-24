@@ -2,6 +2,7 @@ import { Error } from "@/app/shared/components/Error";
 import { List } from "@/app/shared/components/List";
 import { Loading } from "@/app/shared/components/Loading";
 import { Podium } from "@/app/shared/components/Podium";
+import { formatArtistsToArtistNames } from "@/app/shared/helpers/formatArtistsToArtistNames";
 import { useSpotifyTopTracks } from "@/app/shared/hooks/useSpotifyTopTracks";
 import {
   SpotifyArtist,
@@ -29,9 +30,6 @@ export const TopTracksRanking = ({ timeRange }: Props) => {
   if (!data) {
     return null;
   }
-
-  const formatArtistsToArtistNames = (artists: SpotifyArtist[]): string =>
-    artists.map((item) => item.name).join(", ");
 
   const [first, second, third, ...rest] = data;
 
