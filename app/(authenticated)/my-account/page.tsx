@@ -26,7 +26,7 @@ export default function MyAccount() {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <Image size={98} url={data.images?.[0]?.url} />
+      <Image size={98} type="rounded" url={data.images?.[0]?.url} />
       <Text weight="bold">
         [{data.country}] {data.display_name}
       </Text>

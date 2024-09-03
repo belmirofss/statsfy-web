@@ -1,9 +1,9 @@
+"use client";
+
 import { Text } from "@radix-ui/themes";
 import { FaCrown } from "react-icons/fa6";
 import { generateTruncateWhenStyles } from "../helpers/generateTruncateWhenStyles";
 import { Image } from "./Image";
-
-export const ONE_THIRD_SCREEN_WIDTH = window.innerWidth / 3 - 16;
 
 type PodiumPositionProps = {
   position: "first" | "second" | "third";
@@ -55,7 +55,7 @@ const PodiumItem = ({
   imageUrl,
 }: PodiumPositionProps) => {
   const size =
-    Math.min(ONE_THIRD_SCREEN_WIDTH, 164) * SIZE_MULTIPLIER[position];
+    Math.min(window.innerWidth / 3 - 16, 164) * SIZE_MULTIPLIER[position];
 
   const textWidthSize = size - 2;
 
@@ -68,7 +68,7 @@ const PodiumItem = ({
     >
       <FaCrown color={COLORS[position]} size={ICON_SIZES[position]} />
 
-      <Image url={imageUrl} size={size} />
+      <Image url={imageUrl} size={size} type="rounded" />
 
       <div className="flex flex-col">
         <Text

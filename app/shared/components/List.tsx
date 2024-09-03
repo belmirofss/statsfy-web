@@ -22,7 +22,7 @@ export const List = ({
       {data.map((item, index) => (
         <div key={getTitle(item)} className="flex flex-row items-center gap-4">
           <Text weight="bold">{index + startAt}.</Text>
-          <Image url={getImage(item)} size={72} />
+          <Image url={getImage(item)} size={72} type="rounded" />
           <div className="flex flex-col">
             <Text weight="bold" style={{ ...generateTruncateWhenStyles(2) }}>
               {getTitle(item)}
