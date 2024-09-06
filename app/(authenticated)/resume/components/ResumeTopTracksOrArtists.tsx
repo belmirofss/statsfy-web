@@ -1,5 +1,5 @@
 import { Podium } from "@/app/shared/components/Podium";
-import { TracksOrArtistsSelect } from "@/app/shared/components/TracksOrArtistsSelect";
+import { Select } from "@/app/shared/components/Select";
 import { formatArtistsToArtistNames } from "@/app/shared/helpers/formatArtistsToArtistNames";
 import { SpotifyArtist, SpotifyModes, SpotifyTrack } from "@/app/shared/types";
 import { Text } from "@radix-ui/themes";
@@ -25,9 +25,19 @@ export const ResumeTopTracksOrArtists = ({ topTracks, topArtists }: Props) => {
           <Text size="5" weight="bold">
             Top
           </Text>
-          <TracksOrArtistsSelect
+          <Select
             value={selectedMode}
-            onChange={setSelectedMode}
+            onChange={(value) => setSelectedMode(value as SpotifyModes)}
+            options={[
+              {
+                label: "Tracks",
+                value: SpotifyModes.TRACKS,
+              },
+              {
+                label: "Artists",
+                value: SpotifyModes.ARTISTS,
+              },
+            ]}
           />
         </div>
         <Text size="4">Last 4 weeks</Text>

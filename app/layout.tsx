@@ -20,11 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${openSans.className}`}>
-        <Theme className="h-full">
-          <ReactQueryProvider>
-            <NextAuthProvider>{children}</NextAuthProvider>
-          </ReactQueryProvider>
-        </Theme>
+        <div id="app" className="h-full">
+          <Theme className="h-full">
+            <ReactQueryProvider>
+              <NextAuthProvider>{children}</NextAuthProvider>
+            </ReactQueryProvider>
+          </Theme>
+        </div>
       </body>
     </html>
   );

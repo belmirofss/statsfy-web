@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  FaHouse,
-  FaMusic,
-  FaPerson,
-  FaStar,
-  FaAlignJustify,
-} from "react-icons/fa6";
+import { FaHouse, FaMusic, FaPerson, FaStar, FaBars } from "react-icons/fa6";
 import { Button as RadixButton } from "@radix-ui/themes";
 import { DropdownMenu, Text } from "@radix-ui/themes";
 import Link from "next/link";
@@ -66,7 +60,7 @@ export const Header = () => {
         <DropdownMenu.Root>
           <DropdownMenu.Trigger>
             <RadixButton className="cursor-pointer bg-transparent text-black hover:text-main">
-              <FaAlignJustify size={ICON_SIZE} />
+              <FaBars size={ICON_SIZE} />
             </RadixButton>
           </DropdownMenu.Trigger>
 
