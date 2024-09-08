@@ -8,6 +8,7 @@ export const useHumanizedPathname = () => {
     "/top-tracks": "Top tracks",
     "/top-artists": "Top artists",
     "/my-account": "My account",
+    "/share": "Share and download",
   }
 
   return titles[pathname] || ""

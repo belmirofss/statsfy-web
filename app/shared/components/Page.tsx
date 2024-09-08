@@ -14,7 +14,7 @@ export const Page = async ({ children }: Props) => {
     <div>
       {session && <Header />}
       <main className="p-6 pt-20 h-full flex flex-row justify-center w-full">
-        <div className="w-full md:max-w-lg">{children}</div>
+        <div className="w-full">{children}</div>
       </main>
       <Footer />
     </div>

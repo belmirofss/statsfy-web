@@ -9,12 +9,9 @@ import { SpotifyTimeRanges } from "@/app/shared/types";
 import { ResumeTopTracksOrArtists } from "./components/ResumeTopTracksOrArtists";
 import { ResumeRecentlyPlayed } from "./components/ResumeRecentlyPlayed";
 import { useSpotifyRecentlyPlayed } from "@/app/shared/hooks/useSpotifyRecentlyPlayed";
-import { useState } from "react";
-import { ShareModal } from "./components/ShareModal";
+import Link from "next/link";
 
 export default function Resume() {
-  const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
-
   const {
     data: topArtistsData,
     isLoading: topArtistsIsLoading,
@@ -59,13 +56,9 @@ export default function Resume() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Button type="primary" onClick={() => setShareModalIsOpen(true)}>
-        Share
-      </Button>
-      <ShareModal
-        isOpen={shareModalIsOpen}
-        onClose={() => setShareModalIsOpen(false)}
-      />
+      <Link href="/share" className="w-full">
+        <Button type="primary">Share</Button>
+      </Link>
 
       <ResumeTopTracksOrArtists
         topTracks={topTracksData}

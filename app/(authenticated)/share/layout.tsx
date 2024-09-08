@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Statsfy | Share",
-  description: "Download and Share your Spotify stats",
+  title: "Statsfy | Top artists",
+  description: "Artists that you most listened on Spotify",
 };
 
 export default function RootLayout({

@@ -1,7 +1,9 @@
+"use client";
+
 import { Button } from "@/app/shared/components/Button";
 import { Error } from "@/app/shared/components/Error";
 import { Loading } from "@/app/shared/components/Loading";
-import { Modal } from "@/app/shared/components/Modal";
+import { Logo } from "@/app/shared/components/Logo";
 import { Podium } from "@/app/shared/components/Podium";
 import { Select } from "@/app/shared/components/Select";
 import { formatArtistsToArtistNames } from "@/app/shared/helpers/formatArtistsToArtistNames";
@@ -10,17 +12,19 @@ import { useSpotifyTopArtists } from "@/app/shared/hooks/useSpotifyTopArtists";
 import { useSpotifyTopTracks } from "@/app/shared/hooks/useSpotifyTopTracks";
 import { SpotifyTimeRanges } from "@/app/shared/types";
 import { Text } from "@radix-ui/themes";
-import { ComponentProps, useState } from "react";
+import { toJpeg } from "html-to-image";
+import Link from "next/link";
+import { useRef, useState } from "react";
 
-export const SPOTIFY_TIME_RANGE_TO_TEXT: Record<SpotifyTimeRanges, string> = {
+const SPOTIFY_TIME_RANGE_TO_TEXT: Record<SpotifyTimeRanges, string> = {
   [SpotifyTimeRanges.SHORT]: "last 4 weeks",
   [SpotifyTimeRanges.MEDIUM]: "last 6 months",
   [SpotifyTimeRanges.LONG]: "all time",
 };
 
-type Props = Pick<ComponentProps<typeof Modal>, "isOpen" | "onClose">;
+export default function Share() {
+  const downloadRef = useRef<HTMLDivElement>(null);
 
-export const ShareModal = ({ isOpen, onClose }: Props) => {
   const [selectedTimeRange, setSelectedTimeRange] = useState<SpotifyTimeRanges>(
     SpotifyTimeRanges.SHORT
   );
@@ -53,41 +57,54 @@ export const ShareModal = ({ isOpen, onClose }: Props) => {
     accountIsLoading || topArtistsIsLoading || topTracksIsLoading;
   const isError = accountIsError || topArtistsIsError || topTracksIsError;
 
+  const handleDownloadImage = async () => {
+    if (!downloadRef.current) {
+      return;
+    }
+
+    toJpeg(downloadRef.current, {
+      cacheBust: false,
+      backgroundColor: "white",
+      quality: 1,
+    }).then((dataUrl) => {
+      const link = document.createElement("a");
+      link.download = "my-spotify-stats.png";
+      link.href = dataUrl;
+      link.click();
+    });
+  };
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      contentLabel="Share your Spotify stats"
-      title={
-        <Select
-          value={selectedTimeRange}
-          onChange={(value) => setSelectedTimeRange(value as SpotifyTimeRanges)}
-          options={[
-            {
-              label: "Last 4 weeks",
-              value: SpotifyTimeRanges.SHORT,
-            },
-            {
-              label: "Last 6 months",
-              value: SpotifyTimeRanges.MEDIUM,
-            },
-            {
-              label: "All time",
-              value: SpotifyTimeRanges.LONG,
-            },
-          ]}
-        />
-      }
-    >
+    <div className="flex flex-col items-center">
       {!isLoading &&
       !isError &&
       topArtistsData &&
       topTracksData &&
       accountData ? (
-        <div>
-          <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
+          <Select
+            value={selectedTimeRange}
+            onChange={(value) =>
+              setSelectedTimeRange(value as SpotifyTimeRanges)
+            }
+            options={[
+              {
+                label: "Last 4 weeks",
+                value: SpotifyTimeRanges.SHORT,
+              },
+              {
+                label: "Last 6 months",
+                value: SpotifyTimeRanges.MEDIUM,
+              },
+              {
+                label: "All time",
+                value: SpotifyTimeRanges.LONG,
+              },
+            ]}
+          />
+          <div className="flex flex-col gap-4 bg-white p-4" ref={downloadRef}>
             <div className="flex flex-col">
-              <Text size="5" weight="bold" className="text-main">
+              <Text size="6" weight="bold" className="text-main">
                 {accountData.display_name}
               </Text>
               <Text size="5">
@@ -144,17 +161,24 @@ export const ShareModal = ({ isOpen, onClose }: Props) => {
                 }}
               />
             </div>
+            <div>
+              <Logo size="small" />
+            </div>
           </div>
 
-          <Button type="primary" className="mt-4">
+          <Button type="primary" className="mt-4" onClick={handleDownloadImage}>
             Download
           </Button>
+
+          <Link href="/resume" className="w-full">
+            <Button type="secondary">Back to resume</Button>
+          </Link>
         </div>
       ) : null}
 
       {isLoading && <Loading />}
 
       {isError && <Error />}
-    </Modal>
+    </div>
   );
-};
+}
