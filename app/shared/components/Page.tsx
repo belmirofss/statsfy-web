@@ -11,9 +11,9 @@ export const Page = async ({ children }: Props) => {
   const session = await getAuthSession();
 
   return (
-    <div>
+    <div className="h-full w-full flex flex-col">
       {session && <Header />}
-      <main className="p-6 pt-20 h-full flex flex-row justify-center w-full">
+      <main className="p-6 pt-20 h-full flex flex-row justify-center overscroll-y-auto">
         <div className="w-full md:max-w-lg">{children}</div>
       </main>
       <Footer />
