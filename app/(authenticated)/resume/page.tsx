@@ -10,6 +10,7 @@ import { ResumeTopTracksOrArtists } from "./components/ResumeTopTracksOrArtists"
 import { ResumeRecentlyPlayed } from "./components/ResumeRecentlyPlayed";
 import { useSpotifyRecentlyPlayed } from "@/app/shared/hooks/useSpotifyRecentlyPlayed";
 import Link from "next/link";
+import { BuyMeACoffee } from "@/app/shared/components/BuyMeACoffee";
 
 export default function Resume() {
   const {
@@ -64,6 +65,8 @@ export default function Resume() {
         topTracks={topTracksData}
         topArtists={topArtistsData}
       />
+
+      <BuyMeACoffee />
 
       <ResumeRecentlyPlayed recentlyPlayed={recentlyPlayedData} />
     </div>
