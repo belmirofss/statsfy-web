@@ -1,5 +1,6 @@
 import { DefaultSession } from "next-auth";
 
+
 interface AuthUser {
   name: string;
   email: string;
