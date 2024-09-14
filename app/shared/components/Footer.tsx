@@ -16,7 +16,7 @@ export const Footer = () => {
             </Button>
           </a>
 
-          <Link href="/about" target="_blank">
+          <Link href="/about">
             <Button className="font-medium cursor-pointer bg-transparent text-white hover:text-gray-200">
               About the website
             </Button>
