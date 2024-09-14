@@ -29,7 +29,7 @@ export const ResumeRecentlyPlayedItem = ({ historyTrack }: Props) => {
         {calculateTimestampDiffToNow(historyTrack.played_at)}
       </span>
 
-      <div className="rounded-md absolute bottom-0 left-0 p-2 pt-4 bg-gradient-to-t from-black">
+      <div className="rounded-md absolute bottom-0 left-0 p-2 pt-4 bg-gradient-to-t from-black w-full">
         <Text
           style={{ ...generateTruncateWhenStyles(2) }}
           weight="bold"

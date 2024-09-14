@@ -11,12 +11,12 @@ export const Page = async ({ children }: Props) => {
   const session = await getAuthSession();
 
   return (
-    <div className="h-full w-full flex flex-col">
+    <div className="h-full w-full">
       {session && <Header />}
-      <main className="p-6 pt-20 h-full flex flex-row justify-center overscroll-y-auto">
-        <div className="w-full md:max-w-lg">{children}</div>
-      </main>
-      <Footer />
+      <div className="pt-20 w-full h-full flex flex-col items-center overscroll-y-auto gap-4">
+        <main className="p-6 w-full md:max-w-lg flex-1">{children}</main>
+        <Footer />
+      </div>
     </div>
   );
 };

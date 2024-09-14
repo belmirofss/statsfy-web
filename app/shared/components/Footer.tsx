@@ -5,8 +5,8 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <div className="w-full bg-main flex flex-row justify-center p-8">
-      <div className="w-full md:max-w-lg flex flex-row justify-between items-center">
+    <footer className="w-full bg-main flex flex-row justify-center p-8 h-[176px]W">
+      <div className="w-full md:max-w-lg flex flex-col-reverse md:flex-row justify-center gap-4 md:gap-0 md:justify-between items-center">
         <Logo inverse />
 
         <div className="flex flex-col items-center gap-2">
@@ -29,6 +29,6 @@ export const Footer = () => {
           </a>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
