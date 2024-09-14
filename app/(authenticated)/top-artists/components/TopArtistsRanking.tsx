@@ -1,3 +1,4 @@
+import { AdFeed } from "@/app/shared/components/AdFeed";
 import { Error } from "@/app/shared/components/Error";
 import { List } from "@/app/shared/components/List";
 import { Loading } from "@/app/shared/components/Loading";
@@ -38,6 +39,7 @@ export const TopArtistsRanking = ({ timeRange }: Props) => {
         second={{ title: second.name, imageUrl: second.images[0].url }}
         third={{ title: third.name, imageUrl: third.images[0].url }}
       />
+      <AdFeed dataAdSlot="9329317498" />
       <List
         startAt={4}
         data={rest}

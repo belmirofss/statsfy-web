@@ -4,6 +4,7 @@ import { NextAuthProvider } from "./shared/providers/NextAuthProvider";
 import "./globals.css";
 import { Theme } from "@radix-ui/themes";
 import ReactQueryProvider from "./shared/providers/QueryClientProvider";
+import { AdSense } from "./shared/components/AdSense";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -19,6 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <AdSense />
+      </head>
       <body className={`${openSans.className} h-full`}>
         <Theme className="h-full">
           <ReactQueryProvider>

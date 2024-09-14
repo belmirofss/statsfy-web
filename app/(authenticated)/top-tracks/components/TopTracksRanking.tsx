@@ -1,3 +1,4 @@
+import { AdFeed } from "@/app/shared/components/AdFeed";
 import { Error } from "@/app/shared/components/Error";
 import { List } from "@/app/shared/components/List";
 import { Loading } from "@/app/shared/components/Loading";
@@ -52,6 +53,7 @@ export const TopTracksRanking = ({ timeRange }: Props) => {
           imageUrl: third.album.images[0].url,
         }}
       />
+      <AdFeed dataAdSlot="4538620272" />
       <List
         startAt={4}
         data={rest}
