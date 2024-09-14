@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { PUBLISHER_ID } from "../constants";
 
 type AdBannerTypes = {
   dataAdSlot: string;
@@ -22,7 +21,7 @@ export const AdFeed = ({ dataAdSlot }: AdBannerTypes) => {
     <ins
       className="adsbygoogle"
       style={{ display: "block" }}
-      data-ad-client={PUBLISHER_ID}
+      data-ad-client={process.env.PUBLISHER_ID}
       data-ad-slot={dataAdSlot}
       data-ad-format="auto"
       data-full-width-responsive={true.toString()}
