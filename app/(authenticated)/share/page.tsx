@@ -169,10 +169,6 @@ export default function Share() {
           <Button type="primary" className="mt-4" onClick={handleDownloadImage}>
             Download
           </Button>
-
-          <Link href="/resume" className="w-full">
-            <Button type="secondary">Back to resume</Button>
-          </Link>
         </div>
       ) : null}
 
