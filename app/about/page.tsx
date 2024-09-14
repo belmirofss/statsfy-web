@@ -1,6 +1,6 @@
 import { Text } from "@radix-ui/themes";
 import { Logo } from "../shared/components/Logo";
-import { BackButton } from "./components/BackButton";
+import { AboutButtons } from "./components/AboutButtons";
 
 export default function About() {
   return (
@@ -20,7 +20,7 @@ export default function About() {
         Statsfy is independent and hass no relationshiop with Spotify.
       </Text>
       <div className="mt-4">
-        <BackButton />
+        <AboutButtons />
       </div>
     </div>
   );
