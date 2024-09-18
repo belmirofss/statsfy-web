@@ -25,6 +25,6 @@ export const AdFeed = ({ dataAdSlot }: AdBannerTypes) => {
       data-ad-slot={dataAdSlot}
       data-ad-format="auto"
       data-full-width-responsive={true.toString()}
-    ></ins>
+    />
   );
 };

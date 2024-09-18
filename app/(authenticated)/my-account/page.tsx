@@ -34,11 +34,7 @@ export default function MyAccount() {
         {data.email} | {data.product}
       </Text>
 
-      <div className="mt-8 flex flex-col gap-2 w-full">
-        <Link href="/about" className="w-full">
-          <Button type="secondary">About the website</Button>
-        </Link>
-
+      <div className="mt-8 w-full">
         <Button type="danger" onClick={signOut}>
           Log out
         </Button>

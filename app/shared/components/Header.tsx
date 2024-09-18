@@ -1,6 +1,14 @@
 "use client";
 
-import { FaHouse, FaMusic, FaPerson, FaStar, FaBars } from "react-icons/fa6";
+import {
+  FaHouse,
+  FaMusic,
+  FaPerson,
+  FaStar,
+  FaBars,
+  FaCirclePlus,
+  FaCircleInfo,
+} from "react-icons/fa6";
 import { Button as RadixButton } from "@radix-ui/themes";
 import { DropdownMenu, Text } from "@radix-ui/themes";
 import Link from "next/link";
@@ -13,7 +21,7 @@ export const Header = () => {
   const title = useHumanizedPathname();
   const pathname = usePathname();
 
-  const buttons = [
+  const mainButtons = [
     {
       label: "Resume",
       Icon: () => <FaHouse size={ICON_SIZE} />,
@@ -29,10 +37,20 @@ export const Header = () => {
       Icon: () => <FaStar size={ICON_SIZE} />,
       url: "/top-artists",
     },
+  ];
+
+  const moreButtons = [
     {
       label: "My account",
       Icon: () => <FaPerson size={ICON_SIZE} />,
       url: "/my-account",
+      includeOnMore: true,
+    },
+    {
+      label: "About",
+      Icon: () => <FaCircleInfo size={ICON_SIZE} />,
+      url: "/about",
+      includeOnMore: true,
     },
   ];
 
@@ -43,7 +61,7 @@ export const Header = () => {
       </Text>
 
       <div className="hidden md:flex flew-row items-center gap-6">
-        {buttons.map(({ label, Icon, url }) => (
+        {mainButtons.map(({ label, Icon, url }) => (
           <Link
             key={url}
             href={url}
@@ -54,6 +72,31 @@ export const Header = () => {
             <Icon /> {label}
           </Link>
         ))}
+
+        <DropdownMenu.Root modal={false}>
+          <DropdownMenu.Trigger>
+            <RadixButton className="px-0 cursor-pointer bg-transparent text-black hover:text-main">
+              <FaCirclePlus size={ICON_SIZE} />{" "}
+              <span className="text-m font-bold">More</span>
+            </RadixButton>
+          </DropdownMenu.Trigger>
+
+          <DropdownMenu.Content>
+            {moreButtons.map(({ label, Icon, url }) => (
+              <DropdownMenu.Item key={url} asChild>
+                <Link
+                  key={url}
+                  href={url}
+                  className={`flex flew-row gap-2 justify-center items-center bg-transparent text-black hover:text-main text-m font-bold ${
+                    pathname === url ? "text-main" : ""
+                  }`}
+                >
+                  <Icon /> {label}
+                </Link>
+              </DropdownMenu.Item>
+            ))}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       </div>
 
       <div className="md:hidden">
@@ -65,7 +108,7 @@ export const Header = () => {
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content>
-            {buttons.map(({ label, Icon, url }) => (
+            {mainButtons.concat(moreButtons).map(({ label, Icon, url }) => (
               <DropdownMenu.Item key={url} asChild>
                 <Link
                   key={url}
