@@ -1,5 +1,8 @@
 "use client";
 
+import { useRef, useState } from "react";
+import { Text } from "@radix-ui/themes";
+import { toJpeg } from "html-to-image";
 import { Button } from "@/app/shared/components/Button";
 import { Error } from "@/app/shared/components/Error";
 import { Loading } from "@/app/shared/components/Loading";
@@ -11,10 +14,6 @@ import { useSpotifyAccount } from "@/app/shared/hooks/useSpotifyAccount";
 import { useSpotifyTopArtists } from "@/app/shared/hooks/useSpotifyTopArtists";
 import { useSpotifyTopTracks } from "@/app/shared/hooks/useSpotifyTopTracks";
 import { SpotifyTimeRanges } from "@/app/shared/types";
-import { Text } from "@radix-ui/themes";
-import { toJpeg } from "html-to-image";
-import Link from "next/link";
-import { useRef, useState } from "react";
 
 const SPOTIFY_TIME_RANGE_TO_TEXT: Record<SpotifyTimeRanges, string> = {
   [SpotifyTimeRanges.SHORT]: "last 4 weeks",

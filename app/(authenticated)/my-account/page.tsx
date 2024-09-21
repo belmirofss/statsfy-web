@@ -7,7 +7,6 @@ import { Loading } from "@/app/shared/components/Loading";
 import { signOut } from "next-auth/react";
 import { useSpotifyAccount } from "@/app/shared/hooks/useSpotifyAccount";
 import { Text } from "@radix-ui/themes";
-import Link from "next/link";
 
 export default function MyAccount() {
   const { data, isLoading, isError } = useSpotifyAccount();

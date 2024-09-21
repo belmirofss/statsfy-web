@@ -87,7 +87,7 @@ export const Header = () => {
                 <Link
                   key={url}
                   href={url}
-                  className={`flex flew-row gap-2 justify-center items-center bg-transparent text-black hover:text-main text-m font-bold ${
+                  className={`flex flew-row gap-2 justify-center items-center bg-transparent text-black hover:text-main hover:cursor-pointer text-m font-bold ${
                     pathname === url ? "text-main" : ""
                   }`}
                 >
