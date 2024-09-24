@@ -5,6 +5,7 @@ import { Button } from "../../shared/components/Button";
 import { Heading } from "@radix-ui/themes";
 import Link from "next/link";
 import { Logo } from "@/app/shared/components/Logo";
+import { AdFeed } from "@/app/shared/components/AdFeed";
 
 export default function Login() {
   const handleLogin = () => {
@@ -32,6 +33,10 @@ export default function Login() {
         <Link href="/about" className="w-full md:max-w-sm">
           <Button type="secondary">About the website</Button>
         </Link>
+      </div>
+
+      <div className="w-full">
+        <AdFeed dataAdSlot="6984604616" />
       </div>
     </div>
   );

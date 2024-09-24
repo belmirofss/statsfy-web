@@ -7,22 +7,15 @@ type AdBannerTypes = {
 };
 
 export const AdFeed = ({ dataAdSlot }: AdBannerTypes) => {
-  const [shouldHide, setShouldHide] = useState(false);
-
   useEffect(() => {
     try {
       ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push(
         {}
       );
     } catch (error: any) {
-      setShouldHide(true);
       console.log(error.message);
     }
   }, []);
-
-  if (shouldHide) {
-    return null;
-  }
 
   return (
     <ins
