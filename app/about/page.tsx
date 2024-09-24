@@ -13,12 +13,18 @@ export default function About() {
         All your data is saved exclusively on your device.
       </Text>
       <Text size="4">
+        By logging in with your Spotify account, you will beautifully discover
+        stats from your account. You can view your most listened tracks and
+        artists across time ranges and easily share them with your friends!
+      </Text>
+      <Text size="4">
         Statsfy will never save or collect any information about you or your
         account.
       </Text>
       <Text size="4">
-        Statsfy is independent and hass no relationshiop with Spotify.
+        Statsfy is independent and does not have relationshiop with Spotify.
       </Text>
+
       <div className="mt-4">
         <AboutButtons />
       </div>

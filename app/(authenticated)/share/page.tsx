@@ -82,26 +82,29 @@ export default function Share() {
       topTracksData &&
       accountData ? (
         <div className="flex flex-col gap-4">
-          <Select
-            value={selectedTimeRange}
-            onChange={(value) =>
-              setSelectedTimeRange(value as SpotifyTimeRanges)
-            }
-            options={[
-              {
-                label: "Last 4 weeks",
-                value: SpotifyTimeRanges.SHORT,
-              },
-              {
-                label: "Last 6 months",
-                value: SpotifyTimeRanges.MEDIUM,
-              },
-              {
-                label: "All time",
-                value: SpotifyTimeRanges.LONG,
-              },
-            ]}
-          />
+          <div className="px-4 w-full">
+            <Select
+              value={selectedTimeRange}
+              onChange={(value) =>
+                setSelectedTimeRange(value as SpotifyTimeRanges)
+              }
+              options={[
+                {
+                  label: "Last 4 weeks",
+                  value: SpotifyTimeRanges.SHORT,
+                },
+                {
+                  label: "Last 6 months",
+                  value: SpotifyTimeRanges.MEDIUM,
+                },
+                {
+                  label: "All time",
+                  value: SpotifyTimeRanges.LONG,
+                },
+              ]}
+            />
+          </div>
+
           <div className="flex flex-col gap-4 bg-white p-4" ref={downloadRef}>
             <div className="flex flex-col">
               <Text size="6" weight="bold" className="text-main">
@@ -166,12 +169,18 @@ export default function Share() {
             </div>
           </div>
 
-          <Button type="primary" className="mt-4" onClick={handleDownloadImage}>
-            Download
-          </Button>
+          <div className="px-4">
+            <Button
+              type="primary"
+              className="mt-4"
+              onClick={handleDownloadImage}
+            >
+              Download
+            </Button>
 
-          <div className="mt-4">
-            <AdFeed dataAdSlot="9428727139" />
+            <div className="mt-4">
+              <AdFeed dataAdSlot="9428727139" />
+            </div>
           </div>
         </div>
       ) : null}
