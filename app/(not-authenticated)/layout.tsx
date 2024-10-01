@@ -10,5 +10,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main className="p-6 h-full">{children}</main>;
+  return <main className="h-full">{children}</main>;
 }

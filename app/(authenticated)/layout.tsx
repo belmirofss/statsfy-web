@@ -16,7 +16,7 @@ export default async function RootLayout({
   const session = await getAuthSession();
 
   if (!session) {
-    redirect("/login");
+    redirect("/");
   }
 
   return <Page>{children}</Page>;
