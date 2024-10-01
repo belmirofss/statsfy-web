@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { Button } from "../../shared/components/Button";
+import { Button } from "../shared/components/Button";
 import { Heading } from "@radix-ui/themes";
 import Link from "next/link";
 import { Logo } from "@/app/shared/components/Logo";
@@ -9,7 +9,7 @@ import { AdFeed } from "@/app/shared/components/AdFeed";
 
 export default function Login() {
   const handleLogin = () => {
-    signIn("spotify", { callbackUrl: process.env.NEXT_PUBLIC_URL });
+    signIn("spotify", { callbackUrl: `${process.env.NEXT_PUBLIC_URL}/resume` });
   };
 
   return (
