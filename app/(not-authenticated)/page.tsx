@@ -1,16 +1,10 @@
-"use client";
-
-import { signIn } from "next-auth/react";
 import { Button } from "../shared/components/Button";
 import { Heading, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import { Logo } from "@/app/shared/components/Logo";
+import { SpotifyLoginButton } from "./components/SpotifyLoginButton";
 
 export default function Login() {
-  const handleLogin = () => {
-    signIn("spotify", { callbackUrl: `${process.env.NEXT_PUBLIC_URL}/resume` });
-  };
-
   return (
     <div className="h-full">
       <div className="p-6 flex flex-col justify-center items-center gap-6 h-full w-full">
@@ -27,16 +21,16 @@ export default function Login() {
         </div>
 
         <div className="flex flex-col items-center w-full gap-2">
-          <Button type="primary" onClick={handleLogin} className="md:max-w-sm">
-            Log in with Spotify
-          </Button>
+          <SpotifyLoginButton />
           <Link href="/about" className="w-full md:max-w-sm">
             <Button type="secondary">About the website</Button>
           </Link>
         </div>
       </div>
 
-      <div className="flex flex-col items-center w-full bg-main p-8">
+      <div className="p-6"></div>
+
+      <div className="flex flex-col items-center w-full bg-main p-6">
         <div className="flex flex-col  w-full md:max-w-lg gap-4">
           <div className="flex flex-col">
             <Text className="text-white" weight="bold" size="5">
