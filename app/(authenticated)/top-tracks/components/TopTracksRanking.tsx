@@ -1,15 +1,10 @@
-import { AdFeed } from "@/app/shared/components/AdFeed";
 import { Error } from "@/app/shared/components/Error";
 import { List } from "@/app/shared/components/List";
 import { Loading } from "@/app/shared/components/Loading";
 import { Podium } from "@/app/shared/components/Podium";
 import { formatArtistsToArtistNames } from "@/app/shared/helpers/formatArtistsToArtistNames";
 import { useSpotifyTopTracks } from "@/app/shared/hooks/useSpotifyTopTracks";
-import {
-  SpotifyArtist,
-  SpotifyTimeRanges,
-  SpotifyTrack,
-} from "@/app/shared/types";
+import { SpotifyTimeRanges, SpotifyTrack } from "@/app/shared/types";
 
 type Props = {
   timeRange: SpotifyTimeRanges;
@@ -53,7 +48,6 @@ export const TopTracksRanking = ({ timeRange }: Props) => {
           imageUrl: third.album.images[0].url,
         }}
       />
-      <AdFeed dataAdSlot="4538620272" />
       <List
         startAt={4}
         data={rest}

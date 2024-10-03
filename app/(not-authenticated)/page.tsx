@@ -5,7 +5,6 @@ import { Button } from "../shared/components/Button";
 import { Heading, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import { Logo } from "@/app/shared/components/Logo";
-import { AdFeed } from "@/app/shared/components/AdFeed";
 
 export default function Login() {
   const handleLogin = () => {
@@ -13,8 +12,8 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col h-full w-full gap-4">
-      <div className="p-6 flex flex-col justify-center items-center gap-6 h-full w-full my-24">
+    <div className="h-full">
+      <div className="p-6 flex flex-col justify-center items-center gap-6 h-full w-full">
         <Logo />
 
         <div>
@@ -60,15 +59,15 @@ export default function Login() {
             </Text>
           </div>
 
-          <div className="flex flex-col">
+          {/* <div className="flex flex-col">
             <Text className="text-white" weight="bold" size="5">
-              Create playlists - soon
+              Create playlists
             </Text>
             <Text className="text-white" size="4">
               Create an amazing playlist from your personal stats and listen to
               it in the Spotify app.
             </Text>
-          </div>
+          </div> */}
 
           <div className="flex flex-col">
             <Text className="text-white" weight="bold" size="5">
@@ -80,10 +79,6 @@ export default function Login() {
             </Text>
           </div>
         </div>
-      </div>
-
-      <div className="w-full">
-        <AdFeed dataAdSlot="6984604616" />
       </div>
     </div>
   );

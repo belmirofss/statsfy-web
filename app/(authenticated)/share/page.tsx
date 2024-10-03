@@ -14,7 +14,6 @@ import { useSpotifyAccount } from "@/app/shared/hooks/useSpotifyAccount";
 import { useSpotifyTopArtists } from "@/app/shared/hooks/useSpotifyTopArtists";
 import { useSpotifyTopTracks } from "@/app/shared/hooks/useSpotifyTopTracks";
 import { SpotifyTimeRanges } from "@/app/shared/types";
-import { AdFeed } from "@/app/shared/components/AdFeed";
 
 const SPOTIFY_TIME_RANGE_TO_TEXT: Record<SpotifyTimeRanges, string> = {
   [SpotifyTimeRanges.SHORT]: "last 4 weeks",
@@ -177,10 +176,6 @@ export default function Share() {
             >
               Download
             </Button>
-
-            <div className="mt-4">
-              <AdFeed dataAdSlot="9428727139" />
-            </div>
           </div>
         </div>
       ) : null}

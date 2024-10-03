@@ -11,7 +11,6 @@ import { ResumeRecentlyPlayed } from "./components/ResumeRecentlyPlayed";
 import { useSpotifyRecentlyPlayed } from "@/app/shared/hooks/useSpotifyRecentlyPlayed";
 import Link from "next/link";
 import { BuyMeACoffee } from "@/app/shared/components/BuyMeACoffee";
-import { AdFeed } from "@/app/shared/components/AdFeed";
 
 export default function Resume() {
   const {
@@ -66,8 +65,6 @@ export default function Resume() {
         topTracks={topTracksData}
         topArtists={topArtistsData}
       />
-
-      <AdFeed dataAdSlot="8366184640" />
 
       <ResumeRecentlyPlayed recentlyPlayed={recentlyPlayedData} />
 
