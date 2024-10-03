@@ -7,7 +7,7 @@ type Props = {
   data: unknown[];
   getTitle: (item: unknown) => string;
   getDescription?: (item: unknown) => string;
-  getImage: (item: unknown) => string;
+  getImage: (item: unknown) => string | undefined;
 };
 
 export const List = ({

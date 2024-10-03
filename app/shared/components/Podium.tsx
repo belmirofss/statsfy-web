@@ -1,5 +1,3 @@
-"use client";
-
 import { Text } from "@radix-ui/themes";
 import { FaCrown } from "react-icons/fa6";
 import { generateTruncateWhenStyles } from "../helpers/generateTruncateWhenStyles";

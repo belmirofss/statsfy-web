@@ -77,3 +77,18 @@ export type SpotifyHistoryTrack = {
   track: SpotifyTrack;
   played_at: string;
 };
+
+export type ChartMastersTrack = {
+  title: string;
+  artist: string;
+  imageUrl: string | undefined;
+  playcount: string;
+  dailyStreams: string;
+  year: string;
+}
+
+export type ChartMastersArtist = {
+  artist: string;
+  imageUrl: string | undefined;
+  leadSteams: string;
+}
