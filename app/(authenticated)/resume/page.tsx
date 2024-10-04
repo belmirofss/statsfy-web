@@ -67,7 +67,6 @@ export default function Resume() {
       />
 
       <ResumeRecentlyPlayed recentlyPlayed={recentlyPlayedData} />
-
       <BuyMeACoffee />
     </div>
   );

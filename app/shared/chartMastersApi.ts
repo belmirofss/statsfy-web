@@ -2,7 +2,13 @@ import puppeteer from 'puppeteer';
 import { CHART_MASTERS_ENDPOINT } from "./constants";
 import { ChartMastersArtist, ChartMastersTrack } from "./types";
 
-const getWdtNonce = async (url: string) => {
+const cache: Record<string, string> = {};
+
+const getWdtNonce = async (url: string, invalidate: boolean = false) => {
+  if (!invalidate && cache[url]) {
+    return cache[url];
+  }
+
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: 'networkidle2' });
@@ -14,10 +20,11 @@ const getWdtNonce = async (url: string) => {
     return null;
   });
   await browser.close();
+  cache[url] = inputValue || "";
   return inputValue;
 }
 
-export const getChartMastersMostStreamedTracks = async (limit: number = 50): Promise<ChartMastersTrack[]> => {
+export const getChartMastersMostStreamedTracks = async (limit: number = 50, invalidate: boolean = false): Promise<ChartMastersTrack[]> => {
   const wdtNonce = await getWdtNonce(`${CHART_MASTERS_ENDPOINT}/most-streamed-tracks-on-spotify`);
   const response = await fetch(`${CHART_MASTERS_ENDPOINT}/wp-admin/admin-ajax.php?action=get_wdtable&table_id=46`, {
     method: "POST",
@@ -30,38 +37,47 @@ export const getChartMastersMostStreamedTracks = async (limit: number = 50): Pro
         revalidate: 60 * 60 * 8 // 8 hours
     }
   });
-  const data = await response.json() as {
-    draw: number;
-    recordsTotal: string;
-    recordsFiltered: string;
-    data: string[][];
-  };
 
-  return data.data.map(
-    ([
-      _rank,
-      _g,
-      title,
-      artist,
-      imageUrl,
-      _song,
-      playcount,
-      dailyStreams,
-      year,
-      _genre,
-      _language,
-    ]) => ({
-      title,
-      artist,
-      imageUrl: imageUrl.match(/src=['"]([^'"]+)['"]/)?.[1],
-      playcount,
-      dailyStreams,
-      year,
-    })
-  );
+  try {
+    const data = await response.json() as {
+      draw: number;
+      recordsTotal: string;
+      recordsFiltered: string;
+      data: string[][];
+    };
+
+    return data.data.map(
+      ([
+        _rank,
+        _g,
+        title,
+        artist,
+        imageUrl,
+        _song,
+        playcount,
+        dailyStreams,
+        year,
+        _genre,
+        _language,
+      ]) => ({
+        title,
+        artist,
+        imageUrl: imageUrl.match(/src=['"]([^'"]+)['"]/)?.[1],
+        playcount,
+        dailyStreams,
+        year,
+      })
+    );
+  } catch (err) {
+    if (!invalidate) {
+      return await getChartMastersMostStreamedTracks(limit, true)
+    } else {
+      return Promise.reject(err)
+    }
+  }  
 };
 
-export const getChartMastersMostStreamedArtists = async (limit: number = 50): Promise<ChartMastersArtist[]> => {
+export const getChartMastersMostStreamedArtists = async (limit: number = 50, invalidate: boolean = false): Promise<ChartMastersArtist[]> => {
   const wdtNonce = await getWdtNonce(`${CHART_MASTERS_ENDPOINT}/most-streamed-artists-ever-on-spotify`);
   const response = await fetch(`${CHART_MASTERS_ENDPOINT}/wp-admin/admin-ajax.php?action=get_wdtable&table_id=1`, {
     method: "POST",
@@ -74,34 +90,45 @@ export const getChartMastersMostStreamedArtists = async (limit: number = 50): Pr
         revalidate: 60 * 60 * 8 // 8 hours
     }
   });
-  const data = await response.json() as {
-    draw: number;
-    recordsTotal: string;
-    recordsFiltered: string;
-    data: string[][];
-  };
 
-  return data.data.map(
-    ([
-      _rank,
-      _g,
-      imageUrl,
-      artist,
-      leadSteams,
-      _tracks,
-      _1b,
-      _100m,
-      _10m,
-      _1m,
-      _featStreams,
-      _gender,
-      _language,
-      _genre,
-      _country
-    ]) => ({
-      artist,
-      imageUrl: imageUrl.match(/src=['"]([^'"]+)['"]/)?.[1],
-      leadSteams,
-    })
-  );
+  try {
+    const data = await response.json() as {
+      draw: number;
+      recordsTotal: string;
+      recordsFiltered: string;
+      data: string[][];
+    };
+  
+    return data.data.map(
+      ([
+        _rank,
+        _g,
+        imageUrl,
+        artist,
+        _artist,
+        leadSteams,
+        _tracks,
+        _1b,
+        _100m,
+        _10m,
+        _1m,
+        _featStreams,
+        _gender,
+        _language,
+        _genre,
+        _country
+      ]) => ({
+        artist,
+        imageUrl: imageUrl.match(/src=['"]([^'"]+)['"]/)?.[1],
+        leadSteams,
+      })
+    );
+  } catch (err) {
+    if (!invalidate) {
+      return await getChartMastersMostStreamedArtists(limit, true)
+    } else {
+      return Promise.reject(err)
+    }
+  } 
+  
 };

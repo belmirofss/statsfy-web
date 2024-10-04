@@ -8,6 +8,7 @@ import {
   FaBars,
   FaCirclePlus,
   FaCircleInfo,
+  FaRankingStar,
 } from "react-icons/fa6";
 import { Button as RadixButton } from "@radix-ui/themes";
 import { DropdownMenu, Text } from "@radix-ui/themes";
@@ -41,16 +42,19 @@ export const Header = () => {
 
   const moreButtons = [
     {
+      label: "Spotify all time",
+      Icon: () => <FaRankingStar size={ICON_SIZE} />,
+      url: "/spotify-all-time",
+    },
+    {
       label: "My account",
       Icon: () => <FaPerson size={ICON_SIZE} />,
       url: "/my-account",
-      includeOnMore: true,
     },
     {
       label: "About",
       Icon: () => <FaCircleInfo size={ICON_SIZE} />,
       url: "/about",
-      includeOnMore: true,
     },
   ];
 

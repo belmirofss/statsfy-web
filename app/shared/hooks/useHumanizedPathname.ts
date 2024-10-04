@@ -10,6 +10,7 @@ export const useHumanizedPathname = () => {
     "/my-account": "My account",
     "/share": "Share and download",
     "/about": "About",
+    "/spotify-all-time": "Spotify all time",
   }
 
   return titles[pathname] || ""
