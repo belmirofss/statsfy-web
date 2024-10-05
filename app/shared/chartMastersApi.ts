@@ -5,27 +5,29 @@ import { CHART_MASTERS_ENDPOINT } from "./constants";
 import { ChartMastersArtist, ChartMastersTrack } from "./types";
 
 const cache: Record<string, string> = {};
+const chromiumPack =
+  "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar";
 
-const chromiumPack = "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar";
-
+let browser: any;
 
 const getWdtNonce = async (url: string, invalidate: boolean = false) => {
   if (!invalidate && cache[url]) {
     return cache[url];
   }
 
-  let browser: any;
-  if (process.env.NODE_ENV === "production") {
-    const executablePath = await chromium.executablePath(chromiumPack);
-    browser = await puppeteerCore.launch({
-      executablePath,
-      args: chromium.args,
-      headless: true,
-    });
-  } else {
-    browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
+  if (!browser) {
+    if (process.env.NODE_ENV === "production") {
+      const executablePath = await chromium.executablePath(chromiumPack);
+      browser = await puppeteerCore.launch({
+        executablePath,
+        args: chromium.args,
+        headless: true,
+      });
+    } else {
+      browser = await puppeteer.launch({
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      });
+    }
   }
 
   const page = await browser.newPage();
