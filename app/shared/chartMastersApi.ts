@@ -1,10 +1,12 @@
 import puppeteer from "puppeteer";
 import puppeteerCore from "puppeteer-core";
-import chromium from "@sparticuz/chromium";
+import chromium from "@sparticuz/chromium-min";
 import { CHART_MASTERS_ENDPOINT } from "./constants";
 import { ChartMastersArtist, ChartMastersTrack } from "./types";
 
 const cache: Record<string, string> = {};
+
+const chromiumPack = "https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar";
 
 
 const getWdtNonce = async (url: string, invalidate: boolean = false) => {
@@ -13,14 +15,12 @@ const getWdtNonce = async (url: string, invalidate: boolean = false) => {
   }
 
   let browser: any;
-  console.log('JAKLJDLKASJLKDJALKSDJ', process.env.NODE_ENV)
   if (process.env.NODE_ENV === "production") {
-    const executablePath = await chromium.executablePath();
+    const executablePath = await chromium.executablePath(chromiumPack);
     browser = await puppeteerCore.launch({
       executablePath,
       args: chromium.args,
-      headless: chromium.headless,
-      defaultViewport: chromium.defaultViewport,
+      headless: true,
     });
   } else {
     browser = await puppeteer.launch({
