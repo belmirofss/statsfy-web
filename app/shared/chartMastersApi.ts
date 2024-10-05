@@ -160,12 +160,12 @@ const getMostStreamedArtists = async (
 export const getChartMastersMostStreamed = async () => {
   let browser: any;
   if (process.env.NODE_ENV === "production") {
-    console.log('AAAAAAAAA')
-    const executablePath = await chromium.executablePath(chromiumPack);
     browser = await puppeteerCore.launch({
-      executablePath,
-      args: chromium.args,
-      headless: true,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(
+        `https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar`
+      ),
+      headless: chromium.headless,
     });
   } else {
     browser = await puppeteer.launch({
