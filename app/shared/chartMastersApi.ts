@@ -160,6 +160,7 @@ const getMostStreamedArtists = async (
 export const getChartMastersMostStreamed = async () => {
   let browser: any;
   if (process.env.NODE_ENV === "production") {
+    console.log('AAAAAAAAA')
     const executablePath = await chromium.executablePath(chromiumPack);
     browser = await puppeteerCore.launch({
       executablePath,
