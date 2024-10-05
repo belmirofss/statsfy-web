@@ -1,14 +1,11 @@
 import { Box, Tabs, Text } from "@radix-ui/themes";
-import {
-  getChartMastersMostStreamedArtists,
-  getChartMastersMostStreamedTracks,
-} from "../chartMastersApi";
+import { getChartMastersMostStreamed } from "../chartMastersApi";
 import { List } from "./List";
 import { ChartMastersArtist, ChartMastersTrack } from "../types";
 
 export const SpotifyGlobalRanking = async () => {
-  const mostStreamedTracks = await getChartMastersMostStreamedTracks(10);
-  const mostStreamedArtists = await getChartMastersMostStreamedArtists(10);
+  const { mostStreamedTracks, mostStreamedArtists } =
+    await getChartMastersMostStreamed();
 
   return (
     <Tabs.Root defaultValue="tracks">
