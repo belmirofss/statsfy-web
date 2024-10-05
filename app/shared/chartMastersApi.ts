@@ -1,10 +1,8 @@
-import chromium from "@sparticuz/chromium-min";
+import puppeteer from 'puppeteer'
+import puppeteerCore from 'puppeteer-core'
+import chromium from '@sparticuz/chromium'
 import { CHART_MASTERS_ENDPOINT } from "./constants";
 import { ChartMastersArtist, ChartMastersTrack } from "./types";
-
-
-chromium.setHeadlessMode = true;
-chromium.setGraphicsMode = false;
 
 const cache: Record<string, string> = {};
 
@@ -14,31 +12,34 @@ const getWdtNonce = async (url: string, invalidate: boolean = false) => {
   }
 
   let browser: any;
-  if (process.env.NODE_ENV === "production") {
-    const puppeteer = await import("puppeteer-core");
-    browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-    });
-  } else {
-    const puppeteer = await import("puppeteer");
-    browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-  }
-
-  const page = await browser.newPage();
-  await page.goto(url, { waitUntil: "networkidle2" });
-  const inputValue = await page.evaluate(() => {
-    const inputElement = document.querySelector('input[id^="wdtNonce"]');
-    if (inputElement && inputElement instanceof HTMLInputElement) {
-      return inputElement.value;
+  let inputValue;
+  try {
+    if (process.env.NODE_ENV === "production") {
+      const executablePath = await chromium.executablePath()
+      browser = await puppeteerCore.launch({
+        executablePath,
+        args: chromium.args,
+        headless: chromium.headless,
+        defaultViewport: chromium.defaultViewport
+      })
+    } else {
+      browser = await puppeteer.launch({
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      });
     }
-    return null;
-  });
-  await browser.close();
+
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: "networkidle2" });
+    inputValue = await page.evaluate(() => {
+      const inputElement = document.querySelector('input[id^="wdtNonce"]');
+      if (inputElement && inputElement instanceof HTMLInputElement) {
+        return inputElement.value;
+      }
+      return null;
+    });
+  } finally {
+    await browser.close();
+  }
   cache[url] = inputValue || "";
   return inputValue;
 };
@@ -60,7 +61,7 @@ export const getChartMastersMostStreamedTracks = async (
       },
       body: `draw=1&columns[0][data]=0&columns[0][name]=rank&columns[0][searchable]=false&columns[0][orderable]=true&columns[0][search][value]=&columns[0][search][regex]=false&columns[1][data]=1&columns[1][name]=g#&columns[1][searchable]=false&columns[1][orderable]=true&columns[1][search][value]=&columns[1][search][regex]=false&columns[2][data]=2&columns[2][name]=Title&columns[2][searchable]=true&columns[2][orderable]=true&columns[2][search][value]=&columns[2][search][regex]=false&columns[3][data]=3&columns[3][name]=Artist&columns[3][searchable]=true&columns[3][orderable]=true&columns[3][search][value]=&columns[3][search][regex]=false&columns[4][data]=4&columns[4][name]=image_url&columns[4][searchable]=false&columns[4][orderable]=true&columns[4][search][value]=&columns[4][search][regex]=false&columns[5][data]=5&columns[5][name]=Song&columns[5][searchable]=false&columns[5][orderable]=true&columns[5][search][value]=&columns[5][search][regex]=false&columns[6][data]=6&columns[6][name]=playcount&columns[6][searchable]=false&columns[6][orderable]=true&columns[6][search][value]=&columns[6][search][regex]=false&columns[7][data]=7&columns[7][name]=dailyStreams&columns[7][searchable]=false&columns[7][orderable]=true&columns[7][search][value]=&columns[7][search][regex]=false&columns[8][data]=8&columns[8][name]=year&columns[8][searchable]=true&columns[8][orderable]=true&columns[8][search][value]=&columns[8][search][regex]=false&columns[9][data]=9&columns[9][name]=genre&columns[9][searchable]=true&columns[9][orderable]=true&columns[9][search][value]=&columns[9][search][regex]=false&columns[10][data]=10&columns[10][name]=language&columns[10][searchable]=true&columns[10][orderable]=true&columns[10][search][value]=&columns[10][search][regex]=false&order[0][column]=6&order[0][dir]=desc&start=0&length=${limit}&search[value]=&search[regex]=false&wdtNonce=${wdtNonce}`,
       next: {
-        revalidate: 60 * 60 * 8, // 8 hours
+        revalidate: 60 * 60, // 1 hours
       },
     }
   );
