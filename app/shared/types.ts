@@ -86,7 +86,7 @@ export type MostStreamedTrack = {
 }
 
 export type MostStreamedArtist = {
-  artist: string;
+  name: string;
   image: string;
   streams: string;
 }
