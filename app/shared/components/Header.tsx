@@ -41,11 +41,11 @@ export const Header = () => {
   ];
 
   const moreButtons = [
-    {
-      label: "Spotify all time",
-      Icon: () => <FaRankingStar size={ICON_SIZE} />,
-      url: "/spotify-all-time",
-    },
+    // {
+    //   label: "Spotify all time",
+    //   Icon: () => <FaRankingStar size={ICON_SIZE} />,
+    //   url: "/spotify-all-time",
+    // },
     {
       label: "My account",
       Icon: () => <FaPerson size={ICON_SIZE} />,

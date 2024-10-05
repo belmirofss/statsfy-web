@@ -8,7 +8,7 @@ export default function SpotifyAllTime() {
         Most streamed on Spotify of all time
       </Text>
 
-      <SpotifyGlobalRanking />
+      {/* <SpotifyGlobalRanking /> */}
     </div>
   );
 }
