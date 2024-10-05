@@ -13,6 +13,7 @@ const getWdtNonce = async (url: string, invalidate: boolean = false) => {
   }
 
   let browser: any;
+  console.log('JAKLJDLKASJLKDJALKSDJ', process.env.NODE_ENV)
   if (process.env.NODE_ENV === "production") {
     const executablePath = await chromium.executablePath();
     browser = await puppeteerCore.launch({
