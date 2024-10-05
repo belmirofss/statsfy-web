@@ -1,10 +1,11 @@
-import puppeteer from 'puppeteer'
-import puppeteerCore from 'puppeteer-core'
-import chromium from '@sparticuz/chromium'
+import puppeteer from "puppeteer";
+import puppeteerCore from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 import { CHART_MASTERS_ENDPOINT } from "./constants";
 import { ChartMastersArtist, ChartMastersTrack } from "./types";
 
 const cache: Record<string, string> = {};
+
 
 const getWdtNonce = async (url: string, invalidate: boolean = false) => {
   if (!invalidate && cache[url]) {
@@ -12,34 +13,30 @@ const getWdtNonce = async (url: string, invalidate: boolean = false) => {
   }
 
   let browser: any;
-  let inputValue;
-  try {
-    if (process.env.NODE_ENV === "production") {
-      const executablePath = await chromium.executablePath()
-      browser = await puppeteerCore.launch({
-        executablePath,
-        args: chromium.args,
-        headless: chromium.headless,
-        defaultViewport: chromium.defaultViewport
-      })
-    } else {
-      browser = await puppeteer.launch({
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      });
-    }
-
-    const page = await browser.newPage();
-    await page.goto(url, { waitUntil: "networkidle2" });
-    inputValue = await page.evaluate(() => {
-      const inputElement = document.querySelector('input[id^="wdtNonce"]');
-      if (inputElement && inputElement instanceof HTMLInputElement) {
-        return inputElement.value;
-      }
-      return null;
+  if (process.env.NODE_ENV === "production") {
+    const executablePath = await chromium.executablePath();
+    browser = await puppeteerCore.launch({
+      executablePath,
+      args: chromium.args,
+      headless: chromium.headless,
+      defaultViewport: chromium.defaultViewport,
     });
-  } finally {
-    await browser.close();
+  } else {
+    browser = await puppeteer.launch({
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
   }
+
+  const page = await browser.newPage();
+  await page.goto(url, { waitUntil: "networkidle2" });
+  const inputValue = await page.evaluate(() => {
+    const inputElement = document.querySelector('input[id^="wdtNonce"]');
+    if (inputElement && inputElement instanceof HTMLInputElement) {
+      return inputElement.value;
+    }
+    return null;
+  });
+  await browser.close();
   cache[url] = inputValue || "";
   return inputValue;
 };
