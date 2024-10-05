@@ -10,6 +10,8 @@ export const SpotifyGlobalRanking = async () => {
   const mostStreamedTracks = await getMostStreamedTracks();
   const mostStreamedArtists = await getMostStreamedArtists();
 
+  console.log("AAAAAAA", mostStreamedArtists, mostStreamedTracks);
+
   return (
     <Tabs.Root defaultValue="tracks">
       <Tabs.List size="2" color="gray" highContrast className="justify-center">
