@@ -4,8 +4,16 @@ import Link from "next/link";
 import { Logo } from "@/app/shared/components/Logo";
 import { SpotifyLoginButton } from "./components/SpotifyLoginButton";
 import { SpotifyGlobalRanking } from "../shared/components/SpotifyGlobalRanking";
+import { redirect } from "next/navigation";
+import { getAuthSession } from "../shared/actions/auth";
 
-export default function Login() {
+export default async function Login() {
+  const session = await getAuthSession();
+
+  if (session) {
+    redirect("/resume");
+  }
+
   return (
     <div className="h-full">
       <div className="p-6 flex flex-col justify-center items-center gap-6 h-full w-full">
