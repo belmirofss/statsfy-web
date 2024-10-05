@@ -1,11 +1,14 @@
 import { Box, Tabs, Text } from "@radix-ui/themes";
-import { getChartMastersMostStreamed } from "../chartMastersApi";
+import {
+  getMostStreamedTracks,
+  getMostStreamedArtists,
+} from "../chartMastersApi";
 import { List } from "./List";
-import { ChartMastersArtist, ChartMastersTrack } from "../types";
+import { MostStreamedTrack, MostStreamedArtist } from "../types";
 
 export const SpotifyGlobalRanking = async () => {
-  const { mostStreamedTracks, mostStreamedArtists } =
-    await getChartMastersMostStreamed();
+  const mostStreamedTracks = await getMostStreamedTracks();
+  const mostStreamedArtists = await getMostStreamedArtists();
 
   return (
     <Tabs.Root defaultValue="tracks">
@@ -27,26 +30,17 @@ export const SpotifyGlobalRanking = async () => {
           <List
             startAt={1}
             data={mostStreamedTracks}
-            getTitle={(item) => (item as ChartMastersTrack).title}
-            getDescription={(item) => (item as ChartMastersTrack).artist}
-            getImage={(item) => (item as ChartMastersTrack).imageUrl}
+            getTitle={(item) => (item as MostStreamedTrack).title}
+            getDescription={(item) => (item as MostStreamedTrack).artist}
+            getImage={(item) => (item as MostStreamedTrack).image}
             right={(item) => {
-              const _item = item as ChartMastersTrack;
+              const _item = item as MostStreamedTrack;
               return (
-                <div className="flex flex-row gap-2">
-                  <div className="flex flex-col">
-                    <Text weight="bold" size="1">
-                      Streams
-                    </Text>
-                    <Text size="2">{_item.playcount}</Text>
-                  </div>
-
-                  <div className="flex flex-col">
-                    <Text weight="bold" size="1">
-                      Daily
-                    </Text>
-                    <Text size="2">{_item.dailyStreams}</Text>
-                  </div>
+                <div className="flex flex-col">
+                  <Text weight="bold" size="1">
+                    Streams
+                  </Text>
+                  <Text size="2">{_item.streams}</Text>
                 </div>
               );
             }}
@@ -56,16 +50,16 @@ export const SpotifyGlobalRanking = async () => {
           <List
             startAt={1}
             data={mostStreamedArtists}
-            getTitle={(item) => (item as ChartMastersArtist).artist}
-            getImage={(item) => (item as ChartMastersArtist).imageUrl}
+            getTitle={(item) => (item as MostStreamedArtist).artist}
+            getImage={(item) => (item as MostStreamedArtist).image}
             right={(item) => {
-              const _item = item as ChartMastersArtist;
+              const _item = item as MostStreamedArtist;
               return (
                 <div className="flex flex-col">
                   <Text weight="bold" size="1">
                     Streams
                   </Text>
-                  <Text size="2">{_item.leadSteams}</Text>
+                  <Text size="2">{_item.streams}</Text>
                 </div>
               );
             }}
