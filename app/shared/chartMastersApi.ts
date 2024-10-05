@@ -163,7 +163,7 @@ export const getChartMastersMostStreamed = async () => {
     browser = await puppeteerCore.launch({
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath(
-        `https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar`
+        `https://github.com/Sparticuz/chromium/releases/download/v127.0.0/chromium-v127.0.0-pack.tar`
       ),
       headless: chromium.headless,
     });
