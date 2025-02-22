@@ -1,6 +1,5 @@
 import { DefaultSession } from "next-auth";
 
-
 interface AuthUser {
   name: string;
   email: string;
@@ -77,16 +76,3 @@ export type SpotifyHistoryTrack = {
   track: SpotifyTrack;
   played_at: string;
 };
-
-export type MostStreamedTrack = {
-  title: string;
-  artist: string;
-  image: string | undefined;
-  streams: string;
-}
-
-export type MostStreamedArtist = {
-  name: string;
-  image: string;
-  streams: string;
-}

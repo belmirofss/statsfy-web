@@ -3,7 +3,6 @@ import { Heading, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import { Logo } from "@/app/shared/components/Logo";
 import { SpotifyLoginButton } from "./components/SpotifyLoginButton";
-import { SpotifyGlobalRanking } from "../shared/components/SpotifyGlobalRanking";
 import { redirect } from "next/navigation";
 import { getAuthSession } from "../shared/actions/auth";
 
@@ -36,15 +35,6 @@ export default async function Login() {
           </Link>
         </div>
       </div>
-
-      {/* <div className="flex flex-col items-center w-full p-6">
-        <div className="flex flex-col w-full md:max-w-lg gap-4">
-          <Text weight="bold" size="5" align="center">
-            Most streamed on Spotify of all time
-          </Text>
-          <SpotifyGlobalRanking />
-        </div>
-      </div> */}
 
       <div className="flex flex-col items-center w-full bg-main p-6">
         <div className="flex flex-col w-full md:max-w-lg gap-4">
