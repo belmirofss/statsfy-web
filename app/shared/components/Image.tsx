@@ -1,3 +1,4 @@
+import * as NextImage from "next/image";
 import notFoundImg from "../../../public/not_found.png";
 
 type Props = {
@@ -10,18 +11,20 @@ type Props = {
 export const Image = ({ url, size, alt, type }: Props) => {
   const extraClasses = {
     rounded: "rounded-full",
-    "semi-rounded": "rounded-md",
+    "semi-rounded": "rounded-lg",
   };
 
   return (
-    <img
-      src={url || notFoundImg.src}
+    <NextImage.default
       className={`border border-black ${extraClasses[type]}`}
+      src={url || notFoundImg.src}
+      alt={alt}
+      height={size}
+      width={size}
       style={{
         height: size,
         width: size,
       }}
-      alt={alt}
     />
   );
 };
