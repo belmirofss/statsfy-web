@@ -63,7 +63,7 @@ export const ShareContent = () => {
       quality: 1,
     }).then((dataUrl) => {
       const link = document.createElement("a");
-      link.download = "my-spotify-stats.png";
+      link.download = "my-spotify-stats";
       link.href = dataUrl;
       link.click();
     });
