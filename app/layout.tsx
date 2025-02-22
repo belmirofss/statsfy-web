@@ -26,7 +26,9 @@ export default function RootLayout({
       <body className={`${openSans.className} h-full`}>
         <Theme className="h-full">
           <ReactQueryProvider>
-            <NextAuthProvider>{children}</NextAuthProvider>
+            <NextAuthProvider>
+              <main className="h-full">{children}</main>
+            </NextAuthProvider>
           </ReactQueryProvider>
         </Theme>
       </body>

@@ -1,5 +1,4 @@
 import { Button as RadixButton } from "@radix-ui/themes";
-import { Responsive } from "@radix-ui/themes/props";
 import { ReactNode } from "react";
 
 type Props = {

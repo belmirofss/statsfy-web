@@ -3,10 +3,11 @@ import notFoundImg from "../../../public/not_found.png";
 type Props = {
   size: number;
   type: "rounded" | "semi-rounded";
+  alt: string;
   url?: string;
 };
 
-export const Image = ({ url, size, type }: Props) => {
+export const Image = ({ url, size, alt, type }: Props) => {
   const extraClasses = {
     rounded: "rounded-full",
     "semi-rounded": "rounded-md",
@@ -20,6 +21,7 @@ export const Image = ({ url, size, type }: Props) => {
         height: size,
         width: size,
       }}
+      alt={alt}
     />
   );
 };

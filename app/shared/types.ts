@@ -23,6 +23,8 @@ export interface AuthSession extends Omit<DefaultSession, "user"> {
   user: AuthUser;
 }
 
+export type StatsfyAuthSeesion = AuthSession | null;
+
 export enum SpotifyModes {
   TRACKS = "tracks",
   ARTISTS = "artists",

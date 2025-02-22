@@ -1,6 +1,6 @@
 import { Text } from "@radix-ui/themes";
-import { Logo } from "../shared/components/Logo";
 import { AboutButtons } from "./components/AboutButtons";
+import { Logo } from "@/app/shared/components/Logo";
 
 export default function About() {
   return (

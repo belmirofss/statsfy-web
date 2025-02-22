@@ -22,6 +22,7 @@ export const ResumeRecentlyPlayedItem = ({ historyTrack }: Props) => {
         size={divWidth}
         url={historyTrack.track.album.images[0].url}
         type="semi-rounded"
+        alt="Track cover"
       />
 
       <span className="flex flex-row items-center gap-1 rounded-full absolute top-2 left-2 py-1 px-2 bg-black/50 text-white text-[9px]">

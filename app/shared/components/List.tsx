@@ -9,6 +9,7 @@ type Props = {
   getTitle: (item: unknown) => string;
   getDescription?: (item: unknown) => string;
   getImage: (item: unknown) => string | undefined;
+  getAlt: (item: unknown) => string;
   right?: (item: unknown) => ReactNode;
 };
 
@@ -18,6 +19,7 @@ export const List = ({
   getTitle,
   getDescription,
   getImage,
+  getAlt,
   right,
 }: Props) => {
   return (
@@ -31,7 +33,12 @@ export const List = ({
             <Text weight="bold">
               {String(index + startAt).padStart(2, "0")}.
             </Text>
-            <Image url={getImage(item)} size={72} type="rounded" />
+            <Image
+              url={getImage(item)}
+              size={72}
+              type="rounded"
+              alt={getAlt(item)}
+            />
             <div className="flex flex-col">
               <Text weight="bold" style={{ ...generateTruncateWhenStyles(2) }}>
                 {getTitle(item)}

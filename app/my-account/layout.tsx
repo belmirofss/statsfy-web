@@ -1,8 +1,9 @@
 import { Metadata } from "next";
+import { Page } from "../shared/components/Page";
 
 export const metadata: Metadata = {
-  title: "Statsfy | Top tracks",
-  description: "Tracks that you most played on Spotify",
+  title: "Statsfy | My account",
+  description: "Your account on Spotify",
 };
 
 export default function RootLayout({
@@ -10,5 +11,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return <Page>{children}</Page>;
 }

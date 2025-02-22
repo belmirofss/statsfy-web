@@ -8,6 +8,7 @@ type PodiumPositionProps = {
   title: string;
   description?: string;
   imageUrl?: string;
+  alt: string;
 };
 
 type Props = {
@@ -51,6 +52,7 @@ const PodiumItem = ({
   title,
   description,
   imageUrl,
+  alt,
 }: PodiumPositionProps) => {
   const size =
     Math.min(window.innerWidth / 3 - 16, 164) * SIZE_MULTIPLIER[position];
@@ -66,7 +68,7 @@ const PodiumItem = ({
     >
       <FaCrown color={COLORS[position]} size={ICON_SIZES[position]} />
 
-      <Image url={imageUrl} size={size} type="rounded" />
+      <Image url={imageUrl} size={size} type="rounded" alt={alt} />
 
       <div className="flex flex-col">
         <Text
@@ -107,18 +109,21 @@ export const Podium = ({ first, second, third }: Props) => {
         title={second.title}
         description={second.description}
         imageUrl={second.imageUrl}
+        alt={second.alt}
       />
       <PodiumItem
         position="first"
         title={first.title}
         description={first.description}
         imageUrl={first.imageUrl}
+        alt={first.alt}
       />
       <PodiumItem
         position="third"
         title={third.title}
         description={third.description}
         imageUrl={third.imageUrl}
+        alt={third.alt}
       />
     </div>
   );

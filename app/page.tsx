@@ -1,10 +1,10 @@
-import { Button } from "../shared/components/Button";
+import { Button } from "./shared/components/Button";
 import { Heading, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import { Logo } from "@/app/shared/components/Logo";
-import { SpotifyLoginButton } from "./components/SpotifyLoginButton";
+import { SpotifyLoginButton } from "./shared/components/SpotifyLoginButton";
 import { redirect } from "next/navigation";
-import { getAuthSession } from "../shared/actions/auth";
+import { getAuthSession } from "./shared/actions/auth";
 
 export default async function Login() {
   const session = await getAuthSession();
@@ -23,13 +23,14 @@ export default async function Login() {
             Hello! Are you looking for your stats?
           </Heading>
 
-          <Heading as="h2" weight="regular" size="4" align="center">
+          <Heading as="h2" weight="regular" size="5" align="center">
             Log in with your Spotify account to see your stats
           </Heading>
         </div>
 
         <div className="flex flex-col items-center w-full gap-2">
           <SpotifyLoginButton />
+
           <Link href="/about" className="w-full md:max-w-sm">
             <Button type="secondary">About the website</Button>
           </Link>
@@ -55,19 +56,9 @@ export default async function Login() {
             </Text>
             <Text className="text-white" size="4">
               Share with your friends those interesting stats from your account
-              with your friends and ask them to also share their ones.
+              ask them to also share their ones.
             </Text>
           </div>
-
-          {/* <div className="flex flex-col">
-            <Text className="text-white" weight="bold" size="5">
-              Create playlists
-            </Text>
-            <Text className="text-white" size="4">
-              Create an amazing playlist from your personal stats and listen to
-              it in the Spotify app.
-            </Text>
-          </div> */}
 
           <div className="flex flex-col">
             <Text className="text-white" weight="bold" size="5">

@@ -16,7 +16,7 @@ export const Logo = ({ size = "regular", inverse }: Props) => {
   return (
     <Image
       src={inverse ? logoinverse : logo}
-      alt="Statsfy image"
+      alt="Statsfy logo"
       className={`w-auto ${customClassNames[size]}`}
     />
   );

@@ -5,16 +5,16 @@ import { useToken } from "./useToken";
 
 export const useSpotifyAccount = () => {
   const token = useToken();
-  
+
   return useQuery({
     queryKey: ["ACCOUNT"],
     queryFn: () =>
       API.get<SpotifyAccount>("v1/me", {
         headers: {
-          Authorization: `Bearer ${token}` 
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }),
     select: (response) => response.data,
-    enabled: !!token
+    enabled: !!token,
   });
 };
