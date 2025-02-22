@@ -57,16 +57,16 @@ export const ShareContent = () => {
       return;
     }
 
-    toJpeg(downloadRef.current, {
+    const dataUrl = await toJpeg(downloadRef.current, {
       cacheBust: false,
       backgroundColor: "white",
       quality: 1,
-    }).then((dataUrl) => {
-      const link = document.createElement("a");
-      link.download = "my-spotify-stats";
-      link.href = dataUrl;
-      link.click();
     });
+
+    const link = document.createElement("a");
+    link.download = "my-spotify-stats";
+    link.href = dataUrl;
+    link.click();
   };
 
   if (accountIsLoading || topArtistsIsLoading || topTracksIsLoading) {
