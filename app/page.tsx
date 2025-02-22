@@ -44,19 +44,18 @@ export default async function Login() {
               See your stats
             </Text>
             <Text className="text-white" size="4">
-              Discover what tracks you have been listening the most in the last
-              4 weeks. See what is the artists that you have listened the most
-              of all time. You will get surprised!
+              Discover what tracks and artists you have been listening the most
+              in the last 4 weeks, 6 months or all time. You will get surprised!
             </Text>
           </div>
 
           <div className="flex flex-col">
             <Text className="text-white" weight="bold" size="5">
-              Share now
+              Share
             </Text>
             <Text className="text-white" size="4">
-              Share with your friends those interesting stats from your account
-              ask them to also share their ones.
+              Share with your friends those interesting stats from your account.
+              Ask them to also share their ones with you!
             </Text>
           </div>
 
@@ -67,6 +66,15 @@ export default async function Login() {
             <Text className="text-white" size="4">
               All your data is saved exclusively on your device. Statsfy will
               never save or collect any information about you or your account.
+            </Text>
+          </div>
+
+          <div className="flex flex-col">
+            <Text className="text-white" weight="bold" size="5">
+              Ads, forgive me
+            </Text>
+            <Text className="text-white" size="4">
+              We use ads to keep the website online.
             </Text>
           </div>
         </div>
