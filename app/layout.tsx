@@ -11,6 +11,17 @@ const openSans = Open_Sans({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Statsfy",
   description: "Connect with your Spotify account and see your stats",
+  keywords: [
+    "Spotify",
+    "Statsfy",
+    "Stats",
+    "Statstics",
+    "Top",
+    "Top tracks",
+    "Top artists",
+    "Share",
+    "Download",
+  ],
 };
 
 export default function RootLayout({
