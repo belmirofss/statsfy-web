@@ -97,7 +97,7 @@ export const ShareContent = () => {
 
       <div className="flex flex-col gap-4 bg-white p-4" ref={downloadRef}>
         <div className="flex flex-col">
-          <Text size="6" weight="bold" className="text-main">
+          <Text size="6" weight="bold" className="text-main ">
             {accountData.display_name}
           </Text>
           <Text size="5">
