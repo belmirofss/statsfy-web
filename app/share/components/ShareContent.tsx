@@ -6,13 +6,13 @@ import { Loading } from "@/app/shared/components/Loading";
 import { Logo } from "@/app/shared/components/Logo";
 import { Podium } from "@/app/shared/components/Podium";
 import { Select } from "@/app/shared/components/Select";
+import { downloadHtmlAsImg } from "@/app/shared/helpers/downloadHtmlAsImg";
 import { formatArtistsToArtistNames } from "@/app/shared/helpers/formatArtistsToArtistNames";
 import { useSpotifyAccount } from "@/app/shared/hooks/useSpotifyAccount";
 import { useSpotifyTopArtists } from "@/app/shared/hooks/useSpotifyTopArtists";
 import { useSpotifyTopTracks } from "@/app/shared/hooks/useSpotifyTopTracks";
 import { SpotifyTimeRanges } from "@/app/shared/types";
 import { Text } from "@radix-ui/themes";
-import { toJpeg } from "html-to-image";
 import { useRef, useState } from "react";
 
 const SPOTIFY_TIME_RANGE_TO_TEXT: Record<SpotifyTimeRanges, string> = {
@@ -57,16 +57,7 @@ export const ShareContent = () => {
       return;
     }
 
-    const dataUrl = await toJpeg(downloadRef.current, {
-      cacheBust: false,
-      backgroundColor: "white",
-      quality: 1,
-    });
-
-    const link = document.createElement("a");
-    link.download = "my-spotify-stats";
-    link.href = dataUrl;
-    link.click();
+    await downloadHtmlAsImg(downloadRef.current, "my-spotify-stats");
   };
 
   if (accountIsLoading || topArtistsIsLoading || topTracksIsLoading) {
