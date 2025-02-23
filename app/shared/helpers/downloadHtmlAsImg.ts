@@ -6,6 +6,7 @@ export const downloadHtmlAsImg = async (
 ) => {
   const image = await domToPng(element, {
     backgroundColor: "white",
+    quality: 1,
   });
 
   const fakeLink = window.document.createElement("a");

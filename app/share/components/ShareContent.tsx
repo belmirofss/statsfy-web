@@ -157,9 +157,7 @@ export const ShareContent = () => {
 
         <div className="flex flex-row justify-between items-center">
           <Logo size="small" />
-          <Text>
-            Get yours at <b>statsfy.app</b>
-          </Text>
+          <Text weight="bold">statsfy.app</Text>
         </div>
       </div>
 
