@@ -9,9 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        main: "#1ED760"
-      }
-    }
+        main: "#1ED760",
+      },
+    },
   },
   plugins: [],
 };

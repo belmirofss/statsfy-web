@@ -1,16 +1,12 @@
-import html2canvas from "html2canvas";
+import { domToPng } from "modern-screenshot";
 
 export const downloadHtmlAsImg = async (
   element: HTMLElement,
   fileName: string
 ) => {
-  const canvas = await html2canvas(element, {
+  const image = await domToPng(element, {
     backgroundColor: "white",
-    scale: window.devicePixelRatio || 2,
-    width: element.scrollWidth,
-    height: element.scrollHeight,
   });
-  const image = canvas.toDataURL("image/jpeg", 1.0);
 
   const fakeLink = window.document.createElement("a");
   fakeLink.style.display = "none";

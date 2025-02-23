@@ -3,7 +3,6 @@
 @tailwind base;
 @layer base {
   img {
-    /* https://github.com/niklasvh/html2canvas/issues/2775#issuecomment-1204988157 */
     @apply inline-block;
   }
 }
