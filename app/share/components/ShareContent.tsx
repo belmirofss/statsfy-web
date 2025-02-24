@@ -155,14 +155,9 @@ export const ShareContent = () => {
           />
         </div>
 
-        <div className="flex flex-row justify-between items-center">
-          <div>
-            <Logo size="small" />
-          </div>
-
-          <Text>
-            Get yours at <b>statsfy.app</b>
-          </Text>
+        <div className="flex flex-row items-center justify-center gap-2">
+          <Text weight="medium">Get yours at</Text>
+          <Logo size="small" />
         </div>
       </div>
 
