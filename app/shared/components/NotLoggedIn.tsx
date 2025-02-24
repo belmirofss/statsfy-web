@@ -7,12 +7,11 @@ export const NotLoggedIn = () => {
       <div className="w-full flex flex-col items-center gap-6 p-6 ">
         <div>
           <Heading as="h1" weight="bold" size="6" align="center">
-            Hey, you have not connect with your Spotify account.
+            Hey, you have not connected with your Spotify account.
           </Heading>
 
           <Heading as="h2" weight="regular" size="5" align="center">
-            Do you want to see your status? Connect now and see your Spotify
-            stats!
+            Do you want to see your stats? Connect now!
           </Heading>
         </div>
 

@@ -14,7 +14,7 @@ export default async function Login() {
   }
 
   return (
-    <div className="h-full">
+    <div className="h-full w-full flex flex-col md:flex-row justify-between">
       <div className="p-6 flex flex-col justify-center items-center gap-6 h-full w-full">
         <Logo />
 
@@ -37,8 +37,8 @@ export default async function Login() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center w-full bg-main p-6">
-        <div className="flex flex-col w-full md:max-w-lg gap-4">
+      <div className="flex flex-col items-center justify-center bg-main p-6 h-full w-full">
+        <div className="flex flex-col w-full gap-4 max-w-lg">
           <div className="flex flex-col">
             <Text className="text-white" weight="bold" size="5">
               See your stats
