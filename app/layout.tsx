@@ -4,13 +4,15 @@ import { NextAuthProvider } from "./shared/providers/NextAuthProvider";
 import "./globals.css";
 import { Theme } from "@radix-ui/themes";
 import ReactQueryProvider from "./shared/providers/QueryClientProvider";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { AdSense } from "./shared/components/AdSense";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Statsfy",
-  description: "Connect with your Spotify account and see your stats",
+  title: "Statsfy - Connect with your Spotify account and see your stats",
+  description:
+    "Connect with your Spotify account to see your most listened tracks and artists, and much more stats. Download and share your Spotify insights easily with frinds",
   keywords: [
     "Spotify",
     "Statsfy",
@@ -22,6 +24,9 @@ export const metadata: Metadata = {
     "Share",
     "Download",
   ],
+  alternates: {
+    canonical: "./",
+  },
 };
 
 export default function RootLayout({
@@ -43,6 +48,7 @@ export default function RootLayout({
           </ReactQueryProvider>
         </Theme>
       </body>
+      <GoogleAnalytics gaId={process.env.G_ID || ""} />
     </html>
   );
 }

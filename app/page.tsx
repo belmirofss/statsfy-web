@@ -20,11 +20,12 @@ export default async function Login() {
 
         <div>
           <Heading as="h1" weight="bold" size="6" align="center">
-            Hello! Are you looking for your stats?
+            Hello! Are you looking for your Spotify stats?
           </Heading>
 
           <Heading as="h2" weight="regular" size="5" align="center">
-            Log in with your Spotify account to see your stats
+            Connect with your Spotify account and see now insights from your
+            Spotify account
           </Heading>
         </div>
 
@@ -40,9 +41,9 @@ export default async function Login() {
       <div className="flex flex-col items-center justify-center bg-main p-6 h-full w-full">
         <div className="flex flex-col w-full gap-4 max-w-lg">
           <div className="flex flex-col">
-            <Text className="text-white" weight="bold" size="5">
+            <Heading className="text-white" weight="bold" size="5">
               See your stats
-            </Text>
+            </Heading>
             <Text className="text-white" size="4">
               Discover what tracks and artists you have been listening the most
               in the last 4 weeks, 6 months or all time. You will get surprised!
@@ -50,9 +51,9 @@ export default async function Login() {
           </div>
 
           <div className="flex flex-col">
-            <Text className="text-white" weight="bold" size="5">
+            <Heading as="h1" className="text-white" weight="bold" size="5">
               Share
-            </Text>
+            </Heading>
             <Text className="text-white" size="4">
               Share with your friends those interesting stats from your account.
               Ask them to also share their ones with you!
@@ -60,9 +61,9 @@ export default async function Login() {
           </div>
 
           <div className="flex flex-col">
-            <Text className="text-white" weight="bold" size="5">
+            <Heading as="h1" className="text-white" weight="bold" size="5">
               Safe, no data will be collected
-            </Text>
+            </Heading>
             <Text className="text-white" size="4">
               All your data is saved exclusively on your device. Statsfy will
               never save or collect any information about you or your account.
@@ -70,9 +71,9 @@ export default async function Login() {
           </div>
 
           <div className="flex flex-col">
-            <Text className="text-white" weight="bold" size="5">
+            <Heading as="h1" className="text-white" weight="bold" size="5">
               Ads, forgive me
-            </Text>
+            </Heading>
             <Text className="text-white" size="4">
               We use ads to keep the website online.
             </Text>
