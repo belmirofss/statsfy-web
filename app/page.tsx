@@ -23,10 +23,10 @@ export default async function Login() {
             Hello! Are you looking for your Spotify stats?
           </Heading>
 
-          <Heading as="h2" weight="regular" size="5" align="center">
+          <Text weight="regular" size="5" align="center">
             Connect with your Spotify account and see now insights from your
             Spotify account
-          </Heading>
+          </Text>
         </div>
 
         <div className="flex flex-col items-center w-full gap-2">
@@ -41,7 +41,7 @@ export default async function Login() {
       <div className="flex flex-col items-center justify-center bg-main p-6 h-full w-full">
         <div className="flex flex-col w-full gap-4 max-w-lg">
           <div className="flex flex-col">
-            <Heading className="text-white" weight="bold" size="5">
+            <Heading as="h2" className="text-white" weight="bold" size="5">
               See your stats
             </Heading>
             <Text className="text-white" size="4">
@@ -51,7 +51,7 @@ export default async function Login() {
           </div>
 
           <div className="flex flex-col">
-            <Heading as="h1" className="text-white" weight="bold" size="5">
+            <Heading as="h2" className="text-white" weight="bold" size="5">
               Share
             </Heading>
             <Text className="text-white" size="4">
@@ -61,7 +61,7 @@ export default async function Login() {
           </div>
 
           <div className="flex flex-col">
-            <Heading as="h1" className="text-white" weight="bold" size="5">
+            <Heading as="h2" className="text-white" weight="bold" size="5">
               Safe, no data will be collected
             </Heading>
             <Text className="text-white" size="4">
@@ -71,8 +71,8 @@ export default async function Login() {
           </div>
 
           <div className="flex flex-col">
-            <Heading as="h1" className="text-white" weight="bold" size="5">
-              Ads, forgive me
+            <Heading as="h2" className="text-white" weight="bold" size="5">
+              Ads, forgive us
             </Heading>
             <Text className="text-white" size="4">
               We use ads to keep the website online.
