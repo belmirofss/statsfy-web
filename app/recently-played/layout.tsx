@@ -2,9 +2,8 @@ import { Metadata } from "next";
 import { Page } from "../shared/components/Page";
 
 export const metadata: Metadata = {
-  title: "Statsfy | Recently played",
-  description: "Tracks you played recently on Spotify",
-  keywords: ["Spotify", "Statsfy", "Stats", "Statstics", "Recently played"],
+  title: "Your recently played Spotify songs",
+  description: "See the last 50 songs you played on Spotify and exactly when you played each one.",
 };
 
 export default function RootLayout({

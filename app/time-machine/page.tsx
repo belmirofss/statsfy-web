@@ -5,5 +5,5 @@ import { TimeMachineContent } from "./components/TimeMachineContent";
 export default async function TimeMachine() {
   const session = await getAuthSession();
 
-  return session ? <TimeMachineContent /> : <NotLoggedIn />;
+  return session ? <TimeMachineContent /> : <NotLoggedIn feature="timeMachine" />;
 }

@@ -5,5 +5,5 @@ import { WorldMapContent } from "./components/WorldMapContent";
 export default async function WorldMap() {
   const session = await getAuthSession();
 
-  return session ? <WorldMapContent /> : <NotLoggedIn />;
+  return session ? <WorldMapContent /> : <NotLoggedIn feature="worldMap" />;
 }

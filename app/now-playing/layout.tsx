@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import { Page } from "../shared/components/Page";
 
 export const metadata: Metadata = {
-  title: "Statsfy | Now playing",
-  description: "What you're playing on Spotify right now, with synced lyrics",
-  keywords: ["Spotify", "Statsfy", "Now playing", "Lyrics", "Synced lyrics"],
+  title: "Spotify now playing with synced lyrics",
+  description:
+    "Follow along with synced lyrics for the song you're playing on Spotify, and see your history with it.",
 };
 
 export default function RootLayout({

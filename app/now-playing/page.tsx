@@ -5,5 +5,5 @@ import { NowPlayingContent } from "./components/NowPlayingContent";
 export default async function NowPlaying() {
   const session = await getAuthSession();
 
-  return session ? <NowPlayingContent /> : <NotLoggedIn />;
+  return session ? <NowPlayingContent /> : <NotLoggedIn feature="nowPlaying" />;
 }

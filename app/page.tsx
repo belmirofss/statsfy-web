@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { IconType } from "react-icons";
 import { LuBarChart3, LuMusic, LuShare, LuShieldCheck } from "react-icons/lu";
 import { Logo } from "@/app/shared/components/Logo";
 import { LandingFeatures, LandingShareBand } from "./components/LandingFeatures";
 import { SpotifyLoginButton } from "./shared/components/SpotifyLoginButton";
-import { getAuthSession } from "./shared/actions/auth";
+import { SITE_URL } from "./shared/constants";
 
 // Illustrative preview only, real data appears after logging in
 const PREVIEW_TRACKS = [
@@ -87,15 +86,31 @@ const ProductPreview = () => (
   </div>
 );
 
-export default async function Landing() {
-  const session = await getAuthSession();
+const STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "WebSite", name: "Statsfy", url: SITE_URL },
+    {
+      "@type": "WebApplication",
+      name: "Statsfy",
+      url: SITE_URL,
+      description:
+        "See your top Spotify tracks and artists, find your music year and how mainstream your taste is, and share it with friends.",
+      applicationCategory: "MultimediaApplication",
+      operatingSystem: "Web",
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    },
+  ],
+};
 
-  if (session) {
-    redirect("/resume");
-  }
-
+// Logged in visitors are sent to /resume by the middleware
+export default function Landing() {
   return (
     <div className="flex min-h-screen flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
+      />
       <header className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-5 py-5 lg:px-8 lg:py-6">
         <Logo />
         <nav aria-label="Main" className="flex items-center gap-2 text-[15px] font-semibold lg:gap-8">

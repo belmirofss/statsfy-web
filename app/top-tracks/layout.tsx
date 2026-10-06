@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import { Page } from "../shared/components/Page";
 
 export const metadata: Metadata = {
-  title: "Statsfy | Top tracks",
-  description: "Tracks that you most played on Spotify",
-  keywords: ["Spotify", "Statsfy", "Stats", "Statstics", "Top tracks"],
+  title: "Your top Spotify tracks",
+  description:
+    "See the 50 songs you've played most on Spotify in the last 4 weeks, 6 months or of all time.",
 };
 
 export default function RootLayout({

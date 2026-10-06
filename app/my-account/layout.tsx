@@ -2,8 +2,9 @@ import { Metadata } from "next";
 import { Page } from "../shared/components/Page";
 
 export const metadata: Metadata = {
-  title: "Statsfy | My account",
-  description: "Your account on Spotify",
+  title: "My account",
+  description: "Your Spotify account on Statsfy.",
+  robots: { index: false, follow: true },
 };
 
 export default function RootLayout({

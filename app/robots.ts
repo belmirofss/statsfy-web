@@ -1,21 +1,13 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "./shared/constants";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: [
-        "/",
-        "/resume",
-        "/top-tracks",
-        "/top-artists",
-        "/recently-played",
-        "/share",
-        "/my-account",
-        "/about",
-      ],
-      disallow: [],
+      allow: "/",
+      disallow: "/api/",
     },
-    sitemap: "https://statsfy.app/sitemap.xml",
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

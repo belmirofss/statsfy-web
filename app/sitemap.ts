@@ -1,84 +1,11 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "./shared/constants";
+import { FEATURE_LIST } from "./shared/features";
 
+// Only pages with content for logged out visitors; the overview, share and
+// account pages are noindex
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: "https://statsfy.app",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    {
-      url: "https://statsfy.app/resume",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: "https://statsfy.app/top-tracks",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: "https://statsfy.app/top-artists",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: "https://statsfy.app/recently-played",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: "https://statsfy.app/time-machine",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: "https://statsfy.app/mainstream",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: "https://statsfy.app/world-map",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: "https://statsfy.app/new-releases",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: "https://statsfy.app/now-playing",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: "https://statsfy.app/share",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: "https://statsfy.app/my-account",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: "https://statsfy.app/about",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-  ];
+  return ["", ...FEATURE_LIST.map((feature) => feature.href), "/about"].map((path) => ({
+    url: `${SITE_URL}${path}`,
+  }));
 }

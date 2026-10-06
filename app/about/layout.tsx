@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import { Page } from "../shared/components/Page";
 
 export const metadata: Metadata = {
-  title: "Statsfy | About",
-  description: "About the Statsfy website",
-  keywords: ["Spotify", "Statsfy", "Stats", "Statstics", "About"],
+  title: "About",
+  description:
+    "How Statsfy works, what it does with your Spotify data, and answers to common questions.",
 };
 
 export default function RootLayout({

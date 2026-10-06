@@ -4,7 +4,7 @@
 
 Curious to know which artist has listened to the most? Statsfy is an website to discover not only that, but also the tracks you have been listening to the most and share it with your friends!
 
-[Access it now](https://www.statsfy.app)
+[Access it now](https://statsfy.vercel.app)
 
 ## Project
 

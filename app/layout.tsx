@@ -7,6 +7,7 @@ import { PreferencesProvider } from "./shared/providers/PreferencesProvider";
 import { AppDataPrefetcher } from "./shared/providers/AppDataPrefetcher";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { AdSense } from "./shared/components/AdSense";
+import { SITE_URL } from "./shared/constants";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -21,22 +22,25 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Statsfy - Connect with your Spotify account and see your stats",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Statsfy - See your Spotify stats, top tracks and top artists",
+    template: "%s | Statsfy",
+  },
   description:
-    "Connect with your Spotify account to see your most listened tracks and artists, and much more stats. Download and share your Spotify insights easily with frinds",
-  keywords: [
-    "Spotify",
-    "Statsfy",
-    "Stats",
-    "Statstics",
-    "Top",
-    "Top tracks",
-    "Top artists",
-    "Share",
-    "Download",
-  ],
+    "See your top Spotify tracks and artists from the last 4 weeks, 6 months or all time, find your music year and how mainstream your taste is, and share it with friends.",
   alternates: {
     canonical: "./",
+  },
+  // Title and description are filled in from each page's own
+  openGraph: {
+    type: "website",
+    siteName: "Statsfy",
+    url: "./",
+    locale: "en_US",
+  },
+  verification: {
+    google: "foN4mwW-WqNyO7KYHx3nqmP8AZ_6Q2S3j-l-FH3xIb4",
   },
   appleWebApp: {
     capable: true,

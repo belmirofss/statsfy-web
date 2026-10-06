@@ -162,7 +162,7 @@ const SidebarLink = ({ item, small }: { item: NavItem; small?: boolean }) => {
 export const Sidebar = () => {
   return (
     <aside className="no-scrollbar sticky top-0 hidden h-screen w-[232px] shrink-0 flex-col gap-1 overflow-y-auto border-r border-line bg-rail px-4 py-6 lg:flex">
-      <Link href="/resume" className="mb-5 px-2.5" aria-label="Statsfy home">
+      <Link href="/" className="mb-5 px-2.5" aria-label="Statsfy home">
         <Logo />
       </Link>
       <nav aria-label="Main" className="flex flex-col gap-0.5">
@@ -185,7 +185,7 @@ export const MobileTopBar = () => {
 
   return (
     <header className="flex items-center justify-between px-5 pb-2 pt-5 lg:hidden">
-      <Link href="/resume" aria-label="Statsfy home">
+      <Link href="/" aria-label="Statsfy home">
         <Logo size="small" />
       </Link>
       {status === "unauthenticated" ? (

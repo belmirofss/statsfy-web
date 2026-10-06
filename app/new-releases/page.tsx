@@ -5,5 +5,5 @@ import { NewReleasesContent } from "./components/NewReleasesContent";
 export default async function NewReleases() {
   const session = await getAuthSession();
 
-  return session ? <NewReleasesContent /> : <NotLoggedIn />;
+  return session ? <NewReleasesContent /> : <NotLoggedIn feature="newReleases" />;
 }

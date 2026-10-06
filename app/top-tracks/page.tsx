@@ -5,5 +5,5 @@ import { NotLoggedIn } from "../shared/components/NotLoggedIn";
 export default async function TopTracks() {
   const session = await getAuthSession();
 
-  return session ? <TopTracksRanking /> : <NotLoggedIn />;
+  return session ? <TopTracksRanking /> : <NotLoggedIn feature="topTracks" />;
 }

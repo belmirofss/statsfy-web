@@ -5,5 +5,5 @@ import { MainstreamContent } from "./components/MainstreamContent";
 export default async function Mainstream() {
   const session = await getAuthSession();
 
-  return session ? <MainstreamContent /> : <NotLoggedIn />;
+  return session ? <MainstreamContent /> : <NotLoggedIn feature="mainstream" />;
 }

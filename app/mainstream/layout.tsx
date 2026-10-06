@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import { Page } from "../shared/components/Page";
 
 export const metadata: Metadata = {
-  title: "Statsfy | Mainstream meter",
-  description: "How mainstream or underground is your Spotify taste?",
-  keywords: ["Spotify", "Statsfy", "Stats", "Mainstream", "Underground", "Popularity"],
+  title: "How mainstream is your Spotify taste?",
+  description:
+    "Measure how mainstream or underground your Spotify taste is, and see your most underground favourites.",
 };
 
 export default function RootLayout({
