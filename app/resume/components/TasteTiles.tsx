@@ -121,7 +121,7 @@ export const TasteTiles = ({ tracks, artists }: Props) => {
         <Tile
           href="/world-map"
           label="World map"
-          value={countries?.countries.length ?? "–"}
+          value={origins.done ? (countries?.countries.length ?? "–") : "–"}
           accent="countries"
           caption={
             origins.done ? (
@@ -133,7 +133,7 @@ export const TasteTiles = ({ tracks, artists }: Props) => {
                 </span>
               </>
             ) : (
-              `Checking ${origins.checked}/${origins.total}…`
+              "Finding origins…"
             )
           }
         />

@@ -1,12 +1,10 @@
 import { SpotifyAccount } from "../types";
 import API from "../api";
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 import { useToken } from "./useToken";
 
-export const useSpotifyAccount = () => {
-  const token = useToken();
-
-  return useQuery({
+export const accountQuery = (token: string | undefined) =>
+  queryOptions({
     queryKey: ["ACCOUNT"],
     queryFn: () =>
       API.get<SpotifyAccount>("v1/me", {
@@ -14,6 +12,13 @@ export const useSpotifyAccount = () => {
           Authorization: `Bearer ${token}`,
         },
       }),
+  });
+
+export const useSpotifyAccount = () => {
+  const token = useToken();
+
+  return useQuery({
+    ...accountQuery(token),
     select: (response) => response.data,
     enabled: !!token,
   });

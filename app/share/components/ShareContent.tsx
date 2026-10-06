@@ -406,10 +406,9 @@ export const ShareContent = () => {
                 Story pack slides are 9:16 images, made for Instagram and
                 WhatsApp stories. Tick the ones you want under each slide.
               </p>
-              {!origins.done && origins.total > 0 && (
+              {!origins.done && (
                 <p>
-                  The World map slide appears once your artists&apos; countries are found
-                  ({origins.checked} of {origins.total}).
+                  The World map slide appears once your artists&apos; countries are found.
                 </p>
               )}
               {!latestMatch && (

@@ -4,6 +4,7 @@ import { NextAuthProvider } from "./shared/providers/NextAuthProvider";
 import "./globals.css";
 import ReactQueryProvider from "./shared/providers/QueryClientProvider";
 import { PreferencesProvider } from "./shared/providers/PreferencesProvider";
+import { AppDataPrefetcher } from "./shared/providers/AppDataPrefetcher";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { AdSense } from "./shared/components/AdSense";
 
@@ -52,7 +53,10 @@ export default function RootLayout({
       <body>
         <ReactQueryProvider>
           <NextAuthProvider>
-            <PreferencesProvider>{children}</PreferencesProvider>
+            <PreferencesProvider>
+              <AppDataPrefetcher />
+              {children}
+            </PreferencesProvider>
           </NextAuthProvider>
         </ReactQueryProvider>
       </body>

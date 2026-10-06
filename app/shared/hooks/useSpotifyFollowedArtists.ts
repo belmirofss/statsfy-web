@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 import API from "../api";
 import { SpotifyArtist, SpotifyFollowedArtistsResponse } from "../types";
 import { useToken } from "./useToken";
@@ -6,10 +6,8 @@ import { useToken } from "./useToken";
 // 50 is the page size limit; 4 pages is plenty for a release radar
 const MAX_PAGES = 4;
 
-export const useSpotifyFollowedArtists = ({ enabled = true }: { enabled?: boolean } = {}) => {
-  const token = useToken();
-
-  return useQuery({
+export const followedArtistsQuery = (token: string | undefined, background = false) =>
+  queryOptions({
     queryKey: ["FOLLOWED_ARTISTS"],
     queryFn: async () => {
       const artists: SpotifyArtist[] = [];
@@ -21,6 +19,7 @@ export const useSpotifyFollowedArtists = ({ enabled = true }: { enabled?: boolea
           {
             params: { type: "artist", limit: 50, ...(after ? { after } : {}) },
             headers: { Authorization: `Bearer ${token}` },
+            background,
           }
         );
         artists.push(...response.data.artists.items);
@@ -30,6 +29,13 @@ export const useSpotifyFollowedArtists = ({ enabled = true }: { enabled?: boolea
 
       return artists;
     },
+  });
+
+export const useSpotifyFollowedArtists = ({ enabled = true }: { enabled?: boolean } = {}) => {
+  const token = useToken();
+
+  return useQuery({
+    ...followedArtistsQuery(token),
     enabled: !!token && enabled,
   });
 };

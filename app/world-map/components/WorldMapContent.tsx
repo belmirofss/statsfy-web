@@ -60,11 +60,15 @@ export const WorldMapContent = () => {
     />
   );
 
-  if (isLoading || isError || !data) {
+  if (isLoading || isError || !data || !origins.done) {
     return (
       <div>
         {header}
-        {isError ? <Error /> : <Loading />}
+        {isError ? (
+          <Error />
+        ) : (
+          <Loading label={data ? "Looking up where your artists are from" : "Loading"} />
+        )}
       </div>
     );
   }
@@ -82,24 +86,6 @@ export const WorldMapContent = () => {
   return (
     <div className="flex flex-col gap-4">
       {header}
-
-      {!origins.done && (
-        <section className="card flex flex-col gap-2.5 p-4" role="status" aria-live="polite">
-          <p className="text-sm font-semibold text-subtle">
-            Looking up where your artists are from… {origins.checked} of {origins.total}
-          </p>
-          <span className="h-1.5 rounded bg-line">
-            <span
-              className="block h-1.5 rounded bg-main transition-all"
-              style={{ width: `${(origins.checked / Math.max(origins.total, 1)) * 100}%` }}
-            />
-          </span>
-          <p className="text-xs text-muted">
-            Origins come from MusicBrainz, one artist per second. They&apos;re saved on this
-            device, so next time is instant.
-          </p>
-        </section>
-      )}
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
         <Stat label="Countries" value={stats.countries.length} highlight />
@@ -191,9 +177,7 @@ export const WorldMapContent = () => {
             </>
           ) : (
             <p className="text-sm text-muted">
-              {origins.done
-                ? "MusicBrainz couldn't place any of your top artists."
-                : "Countries appear here as they're found."}
+              MusicBrainz couldn&apos;t place any of your top artists.
             </p>
           )}
         </section>
