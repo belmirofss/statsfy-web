@@ -26,9 +26,6 @@ import { useSpotifyTopTracks } from "@/app/shared/hooks/useSpotifyTopTracks";
 import { usePreferences } from "@/app/shared/providers/PreferencesProvider";
 import { TasteTiles } from "./TasteTiles";
 
-// Releases this recent get a "New release" badge in the top artists panel
-const FRESH_RELEASE_DAYS = 30;
-
 const useGreeting = () => {
   const [greeting, setGreeting] = useState("Hello");
 
@@ -82,12 +79,6 @@ export const Overview = () => {
   const topTrack = tracks.data?.[0];
   const topArtist = artists.data?.[0];
   const genres = getTopGenres(artists.data ?? [], 3);
-  const freshCutoff = Date.now() - FRESH_RELEASE_DAYS * 24 * 60 * 60 * 1000;
-  const freshArtistIds = new Set(
-    releases.data
-      ?.filter((release) => release.date.getTime() >= freshCutoff)
-      .map((release) => release.artist.id)
-  );
   const playingTrack = nowPlaying.data?.item;
 
   const renderState = (query: { isLoading: boolean; isError: boolean }) => {
@@ -216,21 +207,7 @@ export const Overview = () => {
           {renderState(artists) ?? (
             <ol>
               {artists.data?.slice(0, 5).map((artist, index) => (
-                <ArtistRow
-                  key={artist.id}
-                  artist={artist}
-                  rank={index + 1}
-                  right={
-                    freshArtistIds.has(artist.id) && (
-                      <Link
-                        href="/new-releases"
-                        className="whitespace-nowrap rounded-full border border-main px-2.5 py-1 text-[11px] font-extrabold text-main"
-                      >
-                        New release
-                      </Link>
-                    )
-                  }
-                />
+                <ArtistRow key={artist.id} artist={artist} rank={index + 1} />
               ))}
             </ol>
           )}
