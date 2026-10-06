@@ -31,7 +31,7 @@ export const STORY_SLIDES: { id: StorySlideId; label: string }[] = [
 export const STORY_SIZE = { width: 360, height: 640 };
 
 const VIOLET = "#5B3DF5";
-const LIME = "#C6F432";
+export const LIME = "#C6F432";
 const CORAL = "#FF6B4A";
 const PINK = "#FFB3D9";
 const INK = "#111111";
@@ -39,8 +39,8 @@ const SUN = "#FFD23F";
 const SKY = "#4CC9F0";
 // One step per mainstream tier, from underground to top 40
 const SKY_RAMP = [SKY, "#7AD8F4", "#A9E6F8", "#D4F3FB", "#FFFFFF"];
-const FOREST = "#0E3B2E";
-const MOSS = "#2C5A4A";
+export const FOREST = "#0E3B2E";
+export const MOSS = "#2C5A4A";
 const ROSE = "#FF8FAB";
 
 const PERIOD_PHRASES: Record<SpotifyTimeRanges, string> = {

@@ -42,7 +42,7 @@ export const MAINSTREAM_TIERS: MainstreamTier[] = [
 // Darkest to brightest green, one per tier
 export const MAINSTREAM_TIER_COLORS = ["#173D24", "#1F5A33", "#1A9A4B", "#1ED760", "#A6F3C2"];
 
-export const GEM_THRESHOLD = 35;
+export const GEM_COUNT = 5;
 
 type Rated<T> = { item: T; popularity: number; rank: number };
 
@@ -90,7 +90,8 @@ export const getMainstreamStats = <T extends { popularity?: number }>(
     tier: getMainstreamTier(score),
     lowest: byPopularity[0],
     highest: byPopularity[byPopularity.length - 1],
-    gems: byPopularity.filter((entry) => entry.popularity < GEM_THRESHOLD).slice(0, 5),
+    // Relative to the ranking, so there are always some to show
+    gems: byPopularity.slice(0, GEM_COUNT),
     buckets,
     rated: rated.length,
   };

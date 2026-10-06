@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { LuShare } from "react-icons/lu";
 import { Button } from "@/app/shared/components/Button";
+import { FOREST, LIME, MOSS } from "@/app/share/templates/StoryPack";
 import { DotMap } from "@/app/shared/components/DotMap";
 import { Error } from "@/app/shared/components/Error";
 import { Loading } from "@/app/shared/components/Loading";
@@ -244,7 +245,7 @@ export const WorldMapContent = () => {
           })}
         </section>
 
-        <section className="flex flex-col justify-between gap-3.5 rounded-[20px] border border-line bg-raised p-5">
+        <section className="flex flex-col justify-between gap-5 rounded-[20px] border border-line bg-raised p-5">
           <div>
             <h2 className="font-display text-lg font-bold">Share your map</h2>
             <p className="mt-1.5 text-sm leading-relaxed text-soft">
@@ -252,6 +253,50 @@ export const WorldMapContent = () => {
               slide.
             </p>
           </div>
+          {stats.countries.length > 0 && (
+            <div className="flex flex-1 items-center justify-center">
+              {/* Mini version of the Story pack World slide */}
+              <div
+                aria-hidden
+                className="flex aspect-[9/16] w-full max-w-[220px] flex-col rounded-2xl p-4 text-white shadow-[0_12px_40px_rgba(0,0,0,0.45)]"
+                style={{ background: FOREST }}
+              >
+                <p className="text-[10px] font-bold">My music comes from</p>
+                <p
+                  className="mt-1 text-[56px] font-extrabold leading-[0.85] tracking-[-0.05em]"
+                  style={{ color: LIME }}
+                >
+                  {stats.countries.length}
+                </p>
+                <p className="text-lg font-extrabold leading-tight">
+                  {stats.countries.length === 1 ? "country" : "countries"}
+                </p>
+                <div className="flex flex-1 items-center">
+                  <DotMap dotColor={MOSS} dotSize={0.6}>
+                    {stats.countries.map(({ code }) => {
+                      const point = getMapPoint(code);
+                      return (
+                        point && (
+                          <span
+                            key={code}
+                            className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                            style={{ left: `${point.x * 100}%`, top: `${point.y * 100}%`, background: LIME }}
+                          />
+                        )
+                      );
+                    })}
+                  </DotMap>
+                </div>
+                <p className="line-clamp-2 text-[10px] font-semibold">
+                  {stats.continents} {stats.continents === 1 ? "continent" : "continents"} · most from{" "}
+                  {stats.countries
+                    .slice(0, 3)
+                    .map(({ name }) => name)
+                    .join(", ")}
+                </p>
+              </div>
+            </div>
+          )}
           <Button href="/share?template=story" size="small" className="self-start">
             <LuShare aria-hidden size={16} />
             Open in Share

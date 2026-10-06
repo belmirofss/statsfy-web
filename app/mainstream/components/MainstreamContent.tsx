@@ -12,7 +12,6 @@ import { TimeRangeControl } from "@/app/shared/components/TimeRangeControl";
 import { formatArtistsToArtistNames } from "@/app/shared/helpers/formatArtistsToArtistNames";
 import { getInitials } from "@/app/shared/helpers/getInitials";
 import {
-  GEM_THRESHOLD,
   getMainstreamStats,
   MAINSTREAM_TIER_COLORS,
   MAINSTREAM_TIERS,
@@ -221,39 +220,33 @@ export const MainstreamContent = () => {
           <div>
             <h2 className="font-display text-lg font-bold">Hidden gems</h2>
             <p className="text-[13px] text-muted">
-              Your favourites with a popularity under {GEM_THRESHOLD}
+              The {stats.gems.length} least popular of your top {noun}
             </p>
           </div>
-          {stats.gems.length === 0 ? (
-            <p className="text-sm text-muted">
-              Everything in your top {noun} is fairly well known.
-            </p>
-          ) : (
-            <ol className="flex flex-col gap-3">
-              {stats.gems.map(({ item, popularity, rank }) => {
-                const { name, sub } = describe(item);
-                return (
-                  <li key={item.id} className="flex flex-col gap-1.5">
-                    <span className="flex justify-between gap-2">
-                      <span className="min-w-0">
-                        <span className="block truncate text-sm font-bold">{name}</span>
-                        <span className="block truncate text-xs capitalize text-muted">
-                          #{rank} · {sub}
-                        </span>
+          <ol className="flex flex-col gap-3">
+            {stats.gems.map(({ item, popularity, rank }) => {
+              const { name, sub } = describe(item);
+              return (
+                <li key={item.id} className="flex flex-col gap-1.5">
+                  <span className="flex justify-between gap-2">
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-bold">{name}</span>
+                      <span className="block truncate text-xs capitalize text-muted">
+                        #{rank} · {sub}
                       </span>
-                      <span className="font-display text-base font-bold text-subtle">{popularity}</span>
                     </span>
-                    <span className="h-1.5 rounded bg-line">
-                      <span
-                        className="block h-1.5 rounded bg-[#1A9A4B]"
-                        style={{ width: `${popularity}%` }}
-                      />
-                    </span>
-                  </li>
-                );
-              })}
-            </ol>
-          )}
+                    <span className="font-display text-base font-bold text-subtle">{popularity}</span>
+                  </span>
+                  <span className="h-1.5 rounded bg-line">
+                    <span
+                      className="block h-1.5 rounded bg-[#1A9A4B]"
+                      style={{ width: `${popularity}%` }}
+                    />
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
         </section>
       </div>
 
