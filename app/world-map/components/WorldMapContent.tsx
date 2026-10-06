@@ -3,36 +3,24 @@
 import { useState } from "react";
 import { LuShare } from "react-icons/lu";
 import { Button } from "@/app/shared/components/Button";
+import { DotMap } from "@/app/shared/components/DotMap";
 import { Error } from "@/app/shared/components/Error";
 import { Loading } from "@/app/shared/components/Loading";
 import { PageHeader } from "@/app/shared/components/PageHeader";
 import { ArtistRow } from "@/app/shared/components/Rows";
 import { TimeRangeControl } from "@/app/shared/components/TimeRangeControl";
-import { getContinent, MAP_COLUMNS, MAP_ROWS, MAP_TILES } from "@/app/shared/helpers/countries";
+import { Continent, getContinent, getMapPoint } from "@/app/shared/helpers/countries";
 import { getCountryStats } from "@/app/shared/helpers/getCountryStats";
 import { useArtistOrigins } from "@/app/shared/hooks/useArtistOrigins";
 import { useSpotifyAccount } from "@/app/shared/hooks/useSpotifyAccount";
 import { useSpotifyTopArtists } from "@/app/shared/hooks/useSpotifyTopArtists";
 import { usePreferences } from "@/app/shared/providers/PreferencesProvider";
 
-// Fill and text color for a tile with this many artists, darkest to brightest
-const tileColors = (count: number) =>
-  count >= 10
-    ? { bg: "#A6F3C2", fg: "#06210F" }
-    : count >= 4
-      ? { bg: "#1ED760", fg: "#06210F" }
-      : count >= 2
-        ? { bg: "#1A9A4B", fg: "#06210F" }
-        : count === 1
-          ? { bg: "#1F5A33", fg: "#F2F4EF" }
-          : { bg: "#1E211D", fg: "#5E6659" };
+// Continent colors, given out from the continent with the most artists down
+const CONTINENT_COLORS = ["#1ED760", "#A6F3C2", "#1A9A4B", "#3F7A52", "#6B8F76", "#2F4A38"];
 
-const LEGEND = [
-  { label: "1", count: 1 },
-  { label: "2–3", count: 2 },
-  { label: "4–9", count: 4 },
-  { label: "10+", count: 10 },
-];
+// Bubble diameter in px for a country with this many artists
+const bubbleSize = (count: number) => Math.round(6 + Math.sqrt(count) * 7);
 
 const Stat = ({ label, value, highlight }: { label: string; value: string | number; highlight?: boolean }) => (
   <section className="card flex flex-col gap-1 p-4 lg:p-5">
@@ -83,6 +71,24 @@ export const WorldMapContent = () => {
     : null;
   const topCount = stats.countries[0]?.artists.length ?? 1;
 
+  // Biggest first, so smaller bubbles sit on top and stay clickable
+  const bubbles = stats.countries
+    .flatMap((country) => {
+      const point = getMapPoint(country.code);
+      return point ? [{ country, point, size: bubbleSize(country.artists.length) }] : [];
+    })
+    .sort((a, b) => b.size - a.size);
+  const selectedPoint = selected ? getMapPoint(selected.code) : null;
+
+  const continentCounts = new Map<Continent, number>();
+  stats.countries.forEach(({ code, artists }) => {
+    const continent = getContinent(code);
+    if (continent) continentCounts.set(continent, (continentCounts.get(continent) ?? 0) + artists.length);
+  });
+  const continents = Array.from(continentCounts, ([continent, count]) => ({ continent, count })).sort(
+    (a, b) => b.count - a.count
+  );
+
   return (
     <div className="flex flex-col gap-4">
       {header}
@@ -99,56 +105,81 @@ export const WorldMapContent = () => {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <section className="card flex flex-col gap-4 p-4 lg:p-5">
-          <div className="relative" style={{ aspectRatio: `${MAP_COLUMNS} / ${MAP_ROWS}` }}>
-            {MAP_TILES.map((tile) => {
-              const count = counts.get(tile.code) ?? 0;
-              const { bg, fg } = tileColors(count);
-              const style = {
-                left: `${(tile.column / MAP_COLUMNS) * 100}%`,
-                top: `${(tile.row / MAP_ROWS) * 100}%`,
-                width: `${(0.94 / MAP_COLUMNS) * 100}%`,
-                height: `${(0.94 / MAP_ROWS) * 100}%`,
-                background: bg,
-                color: fg,
-              };
-              const isSelected = selected?.code === tile.code;
-
-              return count > 0 ? (
-                <button
-                  key={tile.code}
-                  type="button"
-                  aria-label={`${tile.code}, ${count} ${count === 1 ? "artist" : "artists"}`}
-                  aria-pressed={isSelected}
-                  onClick={() => setSelectedCode(tile.code)}
-                  className={`absolute flex items-center justify-center overflow-hidden rounded-[4px] font-display text-[clamp(6px,0.85vw,11px)] font-bold sm:rounded-md ${
-                    isSelected ? "ring-2 ring-fg" : ""
-                  }`}
-                  style={style}
-                >
-                  <span className="hidden sm:inline">{tile.code}</span>
-                </button>
-              ) : (
+        <section className="card flex flex-col justify-center gap-6 p-4 lg:p-5">
+          <DotMap dotColor="#323730" dotSize={0.6}>
+            <div className="absolute inset-0 [--bubble-scale:0.7] sm:[--bubble-scale:1]">
+              {bubbles.map(({ country, point, size }) => {
+                const count = country.artists.length;
+                const isSelected = selected?.code === country.code;
+                return (
+                  <button
+                    key={country.code}
+                    type="button"
+                    title={country.name}
+                    aria-label={`${country.name}, ${count} ${count === 1 ? "artist" : "artists"}`}
+                    aria-pressed={isSelected}
+                    onClick={() => setSelectedCode(country.code)}
+                    className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors ${
+                      isSelected
+                        ? "border-2 border-fg bg-main shadow-[0_0_0_3px_#151714,0_0_28px_rgba(30,215,96,0.55)]"
+                        : "border-[1.5px] border-main bg-main/30 shadow-[0_0_16px_rgba(30,215,96,0.35)] hover:bg-main/60"
+                    }`}
+                    style={{
+                      left: `${point.x * 100}%`,
+                      top: `${point.y * 100}%`,
+                      width: `calc(var(--bubble-scale) * ${size}px)`,
+                      height: `calc(var(--bubble-scale) * ${size}px)`,
+                    }}
+                  />
+                );
+              })}
+              {selected && selectedPoint && (
                 <span
-                  key={tile.code}
                   aria-hidden
-                  className="absolute flex items-center justify-center overflow-hidden rounded-[4px] font-display text-[clamp(6px,0.8vw,10px)] font-bold sm:rounded-md"
-                  style={style}
+                  className="pointer-events-none absolute whitespace-nowrap rounded-full bg-fg px-2.5 py-1 font-display text-xs font-bold text-on-main"
+                  style={{
+                    left: `${selectedPoint.x * 100}%`,
+                    top: `${selectedPoint.y * 100}%`,
+                    transform:
+                      selectedPoint.x > 0.7
+                        ? `translate(calc(-100% - var(--bubble-scale) * ${bubbleSize(selected.artists.length) / 2}px - 8px), -50%)`
+                        : `translate(calc(var(--bubble-scale) * ${bubbleSize(selected.artists.length) / 2}px + 8px), -50%)`,
+                  }}
                 >
-                  <span className="hidden sm:inline">{tile.code}</span>
+                  {selected.name} · {selected.artists.length}
                 </span>
-              );
-            })}
-          </div>
-          <div className="flex flex-wrap items-center gap-3.5 text-xs font-bold text-soft">
-            <span>Artists</span>
-            {LEGEND.map(({ label, count }) => (
-              <span key={label} className="flex items-center gap-1.5">
-                <span className="h-3.5 w-3.5 rounded" style={{ background: tileColors(count).bg }} />
-                {label}
-              </span>
-            ))}
-          </div>
+              )}
+            </div>
+          </DotMap>
+
+          {continents.length > 0 && (
+            <div className="flex flex-col gap-3">
+              <div className="flex h-2 gap-[3px]">
+                {continents.map(({ continent, count }, index) => (
+                  <span
+                    key={continent}
+                    className="rounded"
+                    style={{ flex: count, background: CONTINENT_COLORS[index] }}
+                  />
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-x-5 gap-y-2 text-[13px]">
+                {continents.map(({ continent, count }, index) => (
+                  <span key={continent} className="flex items-center gap-2">
+                    <span
+                      className="h-2.5 w-2.5 rounded-[3px]"
+                      style={{ background: CONTINENT_COLORS[index] }}
+                    />
+                    <span className="font-semibold text-subtle">{continent}</span>
+                    <span className="font-display font-bold">{count}</span>
+                  </span>
+                ))}
+              </div>
+              <p className="text-xs text-muted">
+                Bubble size is the number of artists. Tap a bubble to see them.
+              </p>
+            </div>
+          )}
         </section>
 
         <section className="card flex flex-col gap-3 p-5">

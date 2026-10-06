@@ -1,5 +1,6 @@
 import { forwardRef, ReactNode } from "react";
-import { MAP_COLUMNS, MAP_ROWS, MAP_TILES } from "@/app/shared/helpers/countries";
+import { DotMap } from "@/app/shared/components/DotMap";
+import { getMapPoint } from "@/app/shared/helpers/countries";
 import { formatArtistsToArtistNames } from "@/app/shared/helpers/formatArtistsToArtistNames";import { SpotifyTimeRanges } from "@/app/shared/types";
 import { ArtistArt, TrackArt } from "./ShareImage";
 import { FONT, ShareData } from "./types";
@@ -247,8 +248,6 @@ export const StorySlide = forwardRef<
 
   if (id === "world" && data.insights.world) {
     const { countries, continents, topNames } = data.insights.world;
-    const lit = new Set(countries);
-    const tile = 312 / MAP_COLUMNS;
     return (
       <Slide ref={ref} background={FOREST} color="#FFFFFF">
         <p className="text-[15px] font-bold">My music comes from</p>
@@ -262,20 +261,21 @@ export const StorySlide = forwardRef<
           {countries.length === 1 ? "country" : "countries"}
         </p>
         <div className="flex flex-1 items-center">
-          <div className="relative" style={{ width: 312, height: tile * MAP_ROWS }}>
-            {MAP_TILES.map(({ code, column, row }) => (
-              <span
-                key={code}
-                className="absolute rounded-[2px]"
-                style={{
-                  left: column * tile,
-                  top: row * tile,
-                  width: tile - 2,
-                  height: tile - 2,
-                  background: lit.has(code) ? LIME : MOSS,
-                }}
-              />
-            ))}
+          <div style={{ width: 312 }}>
+            <DotMap dotColor={MOSS} dotSize={0.6}>
+              {countries.map((code) => {
+                const point = getMapPoint(code);
+                return (
+                  point && (
+                    <span
+                      key={code}
+                      className="absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                      style={{ left: `${point.x * 100}%`, top: `${point.y * 100}%`, background: LIME }}
+                    />
+                  )
+                );
+              })}
+            </DotMap>
           </div>
         </div>
         <p className="text-[14px] font-semibold">
