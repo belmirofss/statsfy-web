@@ -32,7 +32,7 @@ const isAlbum = (release: Release) => release.album.album_type !== "single";
 
 export const NewReleasesContent = () => {
   const [filter, setFilter] = useState<Filter>("all");
-  const { data, isLoading, isError, checkedArtists, followedCount } = useNewReleases();
+  const { data, isLoading, isError } = useNewReleases();
 
   const header = (
     <PageHeader
@@ -143,11 +143,6 @@ export const NewReleasesContent = () => {
           </ul>
         </section>
       ))}
-
-      <p className="text-[13px] text-muted">
-        Checked {checkedArtists} artists: your most played plus{" "}
-        {followedCount > 0 ? "ones you follow" : "none followed yet"}.
-      </p>
     </div>
   );
 };
