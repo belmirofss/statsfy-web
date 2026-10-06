@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 import { NextAuthProvider } from "./shared/providers/NextAuthProvider";
 import "./globals.css";
@@ -38,6 +38,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "./",
   },
+  appleWebApp: {
+    capable: true,
+    title: "Statsfy",
+    statusBarStyle: "black",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0B0C0A",
 };
 
 export default function RootLayout({

@@ -21,6 +21,7 @@ import {
 } from "react-icons/lu";
 import { useSpotifyAccount } from "../hooks/useSpotifyAccount";
 import { getInitials } from "../helpers/getInitials";
+import { InstallBanner, InstallMenuItem, IosInstallSheet } from "./InstallPrompt";
 import { Logo } from "./Logo";
 import { MobileMiniPlayer, SidebarMiniPlayer } from "./MiniPlayer";
 import { SpotifyLoginButton } from "./SpotifyLoginButton";
@@ -227,6 +228,7 @@ const MoreSheet = ({ onClose }: { onClose: () => void }) => {
         className="flex flex-col gap-1 rounded-t-3xl border-t border-edge bg-surface px-4 pb-[calc(env(safe-area-inset-bottom)+24px)] pt-2.5"
       >
         <span aria-hidden className="mx-auto mb-2.5 h-1 w-10 rounded-sm bg-edge" />
+        <InstallMenuItem onClose={onClose} />
         {MORE_ITEMS.map((item, index) => {
           const active = isActive(pathname, item.href);
           return (
@@ -264,6 +266,7 @@ export const MobileTabBar = () => {
   return (
     <>
       <div className="fixed inset-x-0 bottom-0 z-40 flex flex-col gap-2 lg:hidden">
+        <InstallBanner />
         <MobileMiniPlayer />
         <nav
           aria-label="Main"
@@ -300,6 +303,7 @@ export const MobileTabBar = () => {
         </nav>
       </div>
       {moreOpen && <MoreSheet onClose={() => setMoreOpen(false)} />}
+      <IosInstallSheet />
     </>
   );
 };
