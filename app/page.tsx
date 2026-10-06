@@ -167,7 +167,7 @@ export default function Landing() {
       <LandingShareBand />
 
       <footer className="border-t border-edge">
-        <div className="mx-auto grid w-full max-w-[1600px] gap-6 px-5 py-7 sm:grid-cols-2 lg:grid-cols-4 lg:px-8 lg:py-8">
+        <div className="mx-auto grid w-full max-w-[1280px] gap-6 px-5 py-7 sm:grid-cols-2 lg:flex lg:justify-between lg:px-8 lg:py-8">
           {FEATURES.map(({ title, Icon }) => (
             <div key={title} className="flex items-center gap-3.5">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-raised text-main">
@@ -177,7 +177,7 @@ export default function Landing() {
             </div>
           ))}
         </div>
-        <p className="mx-auto w-full max-w-[1600px] px-5 pb-7 text-[13px] leading-relaxed text-muted lg:px-8">
+        <p className="mx-auto w-full max-w-[1280px] px-5 pb-7 text-[13px] leading-relaxed text-muted lg:px-8">
           Statsfy is an independent app and is not affiliated with, endorsed or sponsored by
           Spotify. Spotify is a trademark of Spotify AB.
         </p>
