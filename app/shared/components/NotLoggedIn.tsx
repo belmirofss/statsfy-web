@@ -9,8 +9,8 @@ export const NotLoggedIn = () => {
           Hey, you have not connected with your Spotify account.
         </h1>
         <p className="text-[16px] leading-relaxed text-soft">
-          Log in with Spotify to see your most listened tracks and artists
-          across time ranges, and share them with your friends.
+          Connect your account to see your listening stats and share them with
+          friends.
         </p>
       </div>
 
