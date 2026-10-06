@@ -24,6 +24,25 @@ export type ShareInclude = {
   genres: boolean;
 };
 
+// Extra stats for the Story pack; each one is missing when there's no data
+export type ShareInsights = {
+  musicYear?: {
+    year: number;
+    nostalgiaPercent: number;
+    decades: { label: string; count: number }[];
+    topDecade: string;
+  };
+  mainstream?: { score: number; tier: string; lowest: string };
+  world?: { countries: string[]; continents: number; topNames: string[] };
+  match?: {
+    friendName: string;
+    score: number;
+    tier: string;
+    sharedArtists: number;
+    topSharedArtist: string | null;
+  };
+};
+
 export type ShareData = {
   name: string;
   firstName: string;
@@ -32,6 +51,7 @@ export type ShareData = {
   tracks: SpotifyTrack[];
   artists: SpotifyArtist[];
   genres: GenreShare[];
+  insights: ShareInsights;
 };
 
 export type ShareTheme = {

@@ -11,7 +11,7 @@ export const Page = ({ children }: Props) => {
       <Sidebar />
       <div className="flex min-w-0 flex-1 flex-col">
         <MobileTopBar />
-        <main className="mx-auto w-full max-w-[1240px] flex-1 px-5 pb-32 pt-3 lg:px-10 lg:pb-12 lg:pt-8">
+        <main className="mx-auto w-full max-w-[1240px] flex-1 px-5 pb-48 pt-3 lg:px-10 lg:pb-12 lg:pt-8">
           {children}
         </main>
       </div>

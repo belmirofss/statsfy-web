@@ -7,7 +7,12 @@ import { Error } from "@/app/shared/components/Error";
 import { Loading } from "@/app/shared/components/Loading";
 import { PageHeader } from "@/app/shared/components/PageHeader";
 import { SegmentedControl } from "@/app/shared/components/SegmentedControl";
+import { getCountryStats } from "@/app/shared/helpers/getCountryStats";
+import { getMainstreamStats } from "@/app/shared/helpers/getMainstreamStats";
+import { getTimeMachineStats } from "@/app/shared/helpers/getTimeMachineStats";
 import { getTopGenres } from "@/app/shared/helpers/getTopGenres";
+import { readSavedMatches, SavedMatch } from "@/app/shared/helpers/tasteMatch";
+import { useArtistOrigins } from "@/app/shared/hooks/useArtistOrigins";
 import { useSpotifyAccount } from "@/app/shared/hooks/useSpotifyAccount";
 import { useSpotifyTopArtists } from "@/app/shared/hooks/useSpotifyTopArtists";
 import { useSpotifyTopTracks } from "@/app/shared/hooks/useSpotifyTopTracks";
@@ -45,6 +50,7 @@ import {
   TemplateProps,
 } from "../templates/types";
 import { FitPreview, ScaledBox } from "./ScaledPreview";
+import { ShareTabs } from "./ShareTabs";
 import { TemplateId, TemplatePicker } from "./TemplatePicker";
 
 const TEMPLATES: {
@@ -108,6 +114,8 @@ export const ShareContent = () => {
   const account = useSpotifyAccount();
   const tracks = useSpotifyTopTracks({ timeRange });
   const artists = useSpotifyTopArtists({ timeRange });
+  const origins = useArtistOrigins(artists.data);
+  const [latestMatch, setLatestMatch] = useState<SavedMatch | null>(null);
 
   const [templateId, setTemplateId] = useState<TemplateId>("pulse");
   const [format, setFormat] = useState<ShareFormat>("story");
@@ -129,7 +137,17 @@ export const ShareContent = () => {
   useEffect(() => {
     setSupportsShare(canShareFiles());
     setSupportsCopy(canCopyImages());
+
+    // Other pages link here with ?template=story to open a specific template
+    const requested = new URLSearchParams(window.location.search).get("template");
+    if (requested && TEMPLATES.some(({ id }) => id === requested)) {
+      setTemplateId(requested as TemplateId);
+    }
   }, []);
+
+  useEffect(() => {
+    if (account.data) setLatestMatch(readSavedMatches(account.data.id)[0] ?? null);
+  }, [account.data]);
 
   useEffect(() => {
     if (!message) return;
@@ -150,6 +168,9 @@ export const ShareContent = () => {
   }
 
   const name = account.data.display_name || "My";
+  const timeMachine = getTimeMachineStats(tracks.data);
+  const mainstream = getMainstreamStats(tracks.data);
+  const countryStats = origins.done ? getCountryStats(artists.data, origins.countries) : null;
   const data: ShareData = {
     name,
     firstName: name.split(" ")[0],
@@ -158,6 +179,36 @@ export const ShareContent = () => {
     tracks: tracks.data.slice(0, 10),
     artists: artists.data.slice(0, 16),
     genres: getTopGenres(artists.data),
+    insights: {
+      musicYear: timeMachine
+        ? {
+            year: timeMachine.averageYear,
+            nostalgiaPercent: timeMachine.nostalgiaPercent,
+            decades: timeMachine.decades.map(({ label, count }) => ({ label, count })),
+            topDecade: timeMachine.topDecade.label,
+          }
+        : undefined,
+      mainstream: mainstream
+        ? { score: mainstream.score, tier: mainstream.tier.name, lowest: mainstream.lowest.item.name }
+        : undefined,
+      world:
+        countryStats && countryStats.countries.length > 0
+          ? {
+              countries: countryStats.countries.map(({ code }) => code),
+              continents: countryStats.continents,
+              topNames: countryStats.countries.slice(0, 3).map(({ name: country }) => country),
+            }
+          : undefined,
+      match: latestMatch
+        ? {
+            friendName: latestMatch.friendName,
+            score: latestMatch.score,
+            tier: latestMatch.tier,
+            sharedArtists: latestMatch.sharedArtists,
+            topSharedArtist: latestMatch.topSharedArtist,
+          }
+        : undefined,
+    },
   };
 
   const template = TEMPLATES.find(({ id }) => id === templateId) ?? TEMPLATES[0];
@@ -323,6 +374,7 @@ export const ShareContent = () => {
   return (
     <div className={SHARE_FONT_VARIABLES}>
       <PageHeader title="Share" subtitle="Design your image, then download or share it." />
+      <ShareTabs />
 
       <div className="grid items-start gap-6 lg:grid-cols-[340px_minmax(0,1fr)]">
         <section className="flex min-w-0 flex-col gap-6 lg:order-2">
@@ -349,10 +401,23 @@ export const ShareContent = () => {
           </ControlGroup>
 
           {isStory ? (
-            <p className="text-sm leading-relaxed text-muted">
-              Story pack slides are 9:16 images, made for Instagram and
-              WhatsApp stories. Tick the ones you want under each slide.
-            </p>
+            <div className="flex flex-col gap-2 text-sm leading-relaxed text-muted">
+              <p>
+                Story pack slides are 9:16 images, made for Instagram and
+                WhatsApp stories. Tick the ones you want under each slide.
+              </p>
+              {!origins.done && origins.total > 0 && (
+                <p>
+                  The World map slide appears once your artists&apos; countries are found
+                  ({origins.checked} of {origins.total}).
+                </p>
+              )}
+              {!latestMatch && (
+                <p>
+                  Compare with a friend to unlock the Taste match slide.
+                </p>
+              )}
+            </div>
           ) : (
             <>
               <ControlGroup label="Format">

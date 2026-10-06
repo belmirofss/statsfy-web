@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { IconType } from "react-icons";
-import { LuMusic, LuShare, LuShieldCheck } from "react-icons/lu";
+import { LuBarChart3, LuMusic, LuShare, LuShieldCheck } from "react-icons/lu";
 import { Logo } from "@/app/shared/components/Logo";
+import { LandingFeatures, LandingShareBand } from "./components/LandingFeatures";
 import { SpotifyLoginButton } from "./shared/components/SpotifyLoginButton";
 import { getAuthSession } from "./shared/actions/auth";
 
@@ -15,11 +16,9 @@ const PREVIEW_TRACKS = [
 ];
 
 const FEATURES: { title: string; Icon: IconType }[] = [
-  {
-    title: "Discover what tracks and artists you have been listening the most",
-    Icon: LuMusic,
-  },
-  { title: "Share with your friends", Icon: LuShare },
+  { title: "Your top tracks and artists", Icon: LuMusic },
+  { title: "Insights into your taste", Icon: LuBarChart3 },
+  { title: "Share and compare with friends", Icon: LuShare },
   { title: "Private by design", Icon: LuShieldCheck },
 ];
 
@@ -70,6 +69,10 @@ const ProductPreview = () => (
         ))}
       </ul>
     </div>
+    <div className="absolute -top-5 right-0 hidden flex-col rounded-2xl bg-[#FFD23F] px-[18px] py-3 text-[#111111] shadow-2xl sm:flex">
+      <span className="text-[11px] font-extrabold tracking-[0.06em]">MY MUSIC YEAR</span>
+      <span className="font-display text-[30px] font-bold leading-none">2021</span>
+    </div>
     <div className="absolute -bottom-5 left-0 hidden items-center gap-3 rounded-2xl bg-fg py-3.5 pl-3.5 pr-5 text-canvas shadow-2xl sm:flex lg:-left-2">
       <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#E9475E] font-extrabold text-[#FFE3E7]">
         CR
@@ -96,6 +99,9 @@ export default async function Landing() {
       <header className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-5 py-5 lg:px-8 lg:py-6">
         <Logo />
         <nav aria-label="Main" className="flex items-center gap-2 text-[15px] font-semibold lg:gap-8">
+          <Link href="#features" className="px-2 py-3 text-subtle hover:text-white">
+            Features
+          </Link>
           <Link href="/about" className="hidden px-2 py-3 text-subtle hover:text-white sm:inline">
             How it works
           </Link>
@@ -122,17 +128,10 @@ export default async function Landing() {
             <span className="text-main">Spotify stats?</span>
           </h1>
           <p className="max-w-[480px] text-[17px] leading-relaxed text-soft lg:text-[19px]">
-            Connect with your Spotify account and see now insights from your
-            Spotify account.
+            See what you really listen to, and what it says about you.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <SpotifyLoginButton className="w-full sm:w-auto" />
-            <Link
-              href="/about"
-              className="whitespace-nowrap px-5 py-4 text-center text-base font-bold text-fg hover:text-main"
-            >
-              See how it works →
-            </Link>
           </div>
           <p className="flex items-center gap-2.5 text-sm text-muted">
             <LuShieldCheck aria-hidden size={18} className="shrink-0" />
@@ -143,8 +142,11 @@ export default async function Landing() {
         <ProductPreview />
       </main>
 
+      <LandingFeatures />
+      <LandingShareBand />
+
       <footer className="border-t border-edge">
-        <div className="mx-auto grid w-full max-w-[1600px] gap-6 px-5 py-7 sm:grid-cols-3 lg:px-8 lg:py-8">
+        <div className="mx-auto grid w-full max-w-[1600px] gap-6 px-5 py-7 sm:grid-cols-2 lg:grid-cols-4 lg:px-8 lg:py-8">
           {FEATURES.map(({ title, Icon }) => (
             <div key={title} className="flex items-center gap-3.5">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-raised text-main">

@@ -1,10 +1,19 @@
 import { forwardRef, ReactNode } from "react";
-import { formatArtistsToArtistNames } from "@/app/shared/helpers/formatArtistsToArtistNames";
-import { SpotifyTimeRanges } from "@/app/shared/types";
+import { MAP_COLUMNS, MAP_ROWS, MAP_TILES } from "@/app/shared/helpers/countries";
+import { formatArtistsToArtistNames } from "@/app/shared/helpers/formatArtistsToArtistNames";import { SpotifyTimeRanges } from "@/app/shared/types";
 import { ArtistArt, TrackArt } from "./ShareImage";
 import { FONT, ShareData } from "./types";
 
-export type StorySlideId = "song" | "artist" | "tracks" | "lineup" | "vibe";
+export type StorySlideId =
+  | "song"
+  | "artist"
+  | "tracks"
+  | "lineup"
+  | "vibe"
+  | "year"
+  | "mainstream"
+  | "world"
+  | "match";
 
 export const STORY_SLIDES: { id: StorySlideId; label: string }[] = [
   { id: "song", label: "#1 song" },
@@ -12,6 +21,10 @@ export const STORY_SLIDES: { id: StorySlideId; label: string }[] = [
   { id: "tracks", label: "Top 5 tracks" },
   { id: "lineup", label: "Lineup" },
   { id: "vibe", label: "My vibe" },
+  { id: "year", label: "Music year" },
+  { id: "mainstream", label: "Mainstream" },
+  { id: "world", label: "World map" },
+  { id: "match", label: "Taste match" },
 ];
 
 export const STORY_SIZE = { width: 360, height: 640 };
@@ -21,6 +34,13 @@ const LIME = "#C6F432";
 const CORAL = "#FF6B4A";
 const PINK = "#FFB3D9";
 const INK = "#111111";
+const SUN = "#FFD23F";
+const SKY = "#4CC9F0";
+// One step per mainstream tier, from underground to top 40
+const SKY_RAMP = [SKY, "#7AD8F4", "#A9E6F8", "#D4F3FB", "#FFFFFF"];
+const FOREST = "#0E3B2E";
+const MOSS = "#2C5A4A";
+const ROSE = "#FF8FAB";
 
 const PERIOD_PHRASES: Record<SpotifyTimeRanges, string> = {
   [SpotifyTimeRanges.SHORT]: "of the month",
@@ -59,6 +79,10 @@ export const getAvailableSlides = (data: ShareData) =>
   STORY_SLIDES.filter(({ id }) => {
     if (id === "song" || id === "tracks") return data.tracks.length > 0;
     if (id === "artist" || id === "lineup") return data.artists.length > 0;
+    if (id === "year") return !!data.insights.musicYear;
+    if (id === "mainstream") return !!data.insights.mainstream;
+    if (id === "world") return !!data.insights.world;
+    if (id === "match") return !!data.insights.match;
     return data.genres.length > 0;
   });
 
@@ -158,6 +182,141 @@ export const StorySlide = forwardRef<
           )}
         </div>
         <Footer />
+      </Slide>
+    );
+  }
+
+  if (id === "year" && data.insights.musicYear) {
+    const { year, nostalgiaPercent, decades, topDecade } = data.insights.musicYear;
+    const shown = decades.slice(-6);
+    const max = Math.max(1, ...shown.map(({ count }) => count));
+    return (
+      <Slide ref={ref} background={SUN} color={INK}>
+        <p className="text-[15px] font-bold">My music year</p>
+        <p className="mt-2 text-[110px] font-extrabold leading-[0.9] tracking-[-0.05em]">{year}</p>
+        <p className="mt-3 text-[16px] font-semibold">
+          The average release year of my top tracks {period}
+        </p>
+        <div className="mt-6 flex flex-1 items-end gap-2.5">
+          {shown.map((decade) => (
+            <div key={decade.label} className="flex h-full flex-1 flex-col items-center justify-end gap-2">
+              <span
+                className="block w-full rounded-md"
+                style={{
+                  height: `${Math.max(4, (decade.count / max) * 100)}%`,
+                  background: INK,
+                  opacity: decade.label === topDecade ? 1 : 0.35,
+                }}
+              />
+              <span className="text-[13px] font-bold">{decade.label}</span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-[14px] font-bold">{nostalgiaPercent}% older than 10 years</p>
+        <div className="mt-3"><Footer /></div>
+      </Slide>
+    );
+  }
+
+  if (id === "mainstream" && data.insights.mainstream) {
+    const { score, tier, lowest } = data.insights.mainstream;
+    return (
+      <Slide ref={ref} background={SKY} color={INK}>
+        <p className="text-[15px] font-bold">My taste is</p>
+        <p className="mt-2 text-[60px] font-extrabold leading-[0.9] tracking-[-0.04em]">{tier}</p>
+        <p className="mt-3 text-[18px] font-semibold">{score} / 100 on the mainstream meter</p>
+        <div className="flex-1" />
+        <div
+          className="relative flex h-6 overflow-hidden rounded-full border-[3px]"
+          style={{ borderColor: INK }}
+        >
+          {SKY_RAMP.map((color) => (
+            <span key={color} className="flex-1" style={{ background: color }} />
+          ))}
+          <span className="absolute inset-y-0 w-1.5" style={{ left: `${score}%`, background: INK }} />
+        </div>
+        <div className="mt-2 flex justify-between text-[12px] font-extrabold uppercase">
+          <span>Underground</span>
+          <span>Top 40</span>
+        </div>
+        <p className={`mt-5 text-[15px] font-semibold ${truncate}`}>Deepest cut: {lowest}</p>
+        <div className="mt-3"><Footer /></div>
+      </Slide>
+    );
+  }
+
+  if (id === "world" && data.insights.world) {
+    const { countries, continents, topNames } = data.insights.world;
+    const lit = new Set(countries);
+    const tile = 312 / MAP_COLUMNS;
+    return (
+      <Slide ref={ref} background={FOREST} color="#FFFFFF">
+        <p className="text-[15px] font-bold">My music comes from</p>
+        <p
+          className="mt-2 text-[100px] font-extrabold leading-[0.85] tracking-[-0.05em]"
+          style={{ color: LIME }}
+        >
+          {countries.length}
+        </p>
+        <p className="text-[34px] font-extrabold leading-tight">
+          {countries.length === 1 ? "country" : "countries"}
+        </p>
+        <div className="flex flex-1 items-center">
+          <div className="relative" style={{ width: 312, height: tile * MAP_ROWS }}>
+            {MAP_TILES.map(({ code, column, row }) => (
+              <span
+                key={code}
+                className="absolute rounded-[2px]"
+                style={{
+                  left: column * tile,
+                  top: row * tile,
+                  width: tile - 2,
+                  height: tile - 2,
+                  background: lit.has(code) ? LIME : MOSS,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+        <p className="text-[14px] font-semibold">
+          {continents} {continents === 1 ? "continent" : "continents"}
+          {topNames.length > 0 && ` · most from ${topNames.join(", ")}`}
+        </p>
+        <div className="mt-3"><Footer /></div>
+      </Slide>
+    );
+  }
+
+  if (id === "match" && data.insights.match) {
+    const { friendName, score, tier, sharedArtists, topSharedArtist } = data.insights.match;
+    return (
+      <Slide ref={ref} background={ROSE} color={INK} center>
+        <p className="text-[15px] font-bold">
+          {data.firstName} × {friendName}
+        </p>
+        <div className="mt-8 flex">
+          {[data.firstName, friendName].map((person, index) => (
+            <span
+              key={`${person}-${index}`}
+              className="flex h-[96px] w-[96px] items-center justify-center rounded-full border-[5px] text-[34px] font-extrabold"
+              style={{
+                borderColor: INK,
+                background: index === 0 ? "#F4A259" : "#8E7DFF",
+                marginLeft: index === 0 ? 0 : -22,
+              }}
+            >
+              {person.slice(0, 1).toUpperCase()}
+            </span>
+          ))}
+        </div>
+        <p className="mt-6 text-[110px] font-extrabold leading-[0.9] tracking-[-0.05em]">{score}%</p>
+        <p className="mt-2 text-[26px] font-extrabold">{tier}</p>
+        <div className="flex-1" />
+        <p className="text-[15px] font-semibold">
+          {sharedArtists} {sharedArtists === 1 ? "artist" : "artists"} in common
+          {topSharedArtist && `, led by ${topSharedArtist}`}
+        </p>
+        <div className="mt-3"><Footer /></div>
       </Slide>
     );
   }

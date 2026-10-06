@@ -24,6 +24,8 @@ const DATA_WE_READ = [
   "Profile name, email & country",
   "Top tracks and artists",
   "Recently played",
+  "Artists you follow, for new releases",
+  "What's playing now, and play/pause controls",
 ];
 
 export const MyAccountContent = () => {

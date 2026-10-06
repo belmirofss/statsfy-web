@@ -10,6 +10,8 @@ type Props = Pick<
 > & {
   label?: string;
   withIcon?: boolean;
+  // Path to land on after logging in
+  callbackPath?: string;
 };
 
 const SoundIcon = () => (
@@ -32,10 +34,11 @@ export const SpotifyLoginButton = ({
   withIcon = true,
   variant = "primary",
   size = "large",
+  callbackPath = "/resume",
   ...rest
 }: Props) => {
   const handleLogin = () => {
-    signIn("spotify", { callbackUrl: `${process.env.NEXT_PUBLIC_URL}/resume` });
+    signIn("spotify", { callbackUrl: `${process.env.NEXT_PUBLIC_URL}${callbackPath}` });
   };
 
   return (
