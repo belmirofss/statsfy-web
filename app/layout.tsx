@@ -1,13 +1,23 @@
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+import { Manrope, Space_Grotesk } from "next/font/google";
 import { NextAuthProvider } from "./shared/providers/NextAuthProvider";
 import "./globals.css";
-import { Theme } from "@radix-ui/themes";
 import ReactQueryProvider from "./shared/providers/QueryClientProvider";
+import { PreferencesProvider } from "./shared/providers/PreferencesProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { AdSense } from "./shared/components/AdSense";
 
-const openSans = Open_Sans({ subsets: ["latin"] });
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Statsfy - Connect with your Spotify account and see your stats",
@@ -35,18 +45,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${manrope.variable} ${spaceGrotesk.variable}`}>
       <head>
         <AdSense />
       </head>
-      <body className={`${openSans.className} h-full`}>
-        <Theme className="h-full">
-          <ReactQueryProvider>
-            <NextAuthProvider>
-              <main className="h-full">{children}</main>
-            </NextAuthProvider>
-          </ReactQueryProvider>
-        </Theme>
+      <body>
+        <ReactQueryProvider>
+          <NextAuthProvider>
+            <PreferencesProvider>{children}</PreferencesProvider>
+          </NextAuthProvider>
+        </ReactQueryProvider>
       </body>
       <GoogleAnalytics gaId={process.env.G_ID || ""} />
     </html>

@@ -42,13 +42,18 @@ export type SpotifyImage = {
   url: string;
 };
 
+export type SpotifyExternalUrls = {
+  spotify?: string;
+};
+
 export type SpotifyAccount = {
   id: string;
   country: string;
   display_name: string;
   images: SpotifyImage[];
-  product: "free" | "premium";
+  product: "free" | "premium" | "open";
   email: string;
+  external_urls?: SpotifyExternalUrls;
 };
 
 export type SpotifyAlbum = {
@@ -64,7 +69,9 @@ export type SpotifyItemsResponse<T> = {
 export type SpotifyArtist = {
   id: string;
   name: string;
-  images: SpotifyImage[];
+  images?: SpotifyImage[];
+  genres?: string[];
+  external_urls?: SpotifyExternalUrls;
 };
 
 export type SpotifyTrack = {
@@ -72,6 +79,8 @@ export type SpotifyTrack = {
   name: string;
   artists: SpotifyArtist[];
   album: SpotifyAlbum;
+  duration_ms?: number;
+  external_urls?: SpotifyExternalUrls;
 };
 
 export type SpotifyHistoryTrack = {

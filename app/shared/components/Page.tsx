@@ -1,17 +1,21 @@
 import { ReactNode } from "react";
-import { Header } from "./Header";
+import { MobileTabBar, MobileTopBar, Sidebar } from "./Navigation";
 
 type Props = {
   children: ReactNode;
 };
 
-export const Page = async ({ children }: Props) => {
+export const Page = ({ children }: Props) => {
   return (
-    <div className="h-full w-full">
-      <Header />
-      <div className="p-8 pt-24 w-full h-full flex flex-col items-center overscroll-y-auto gap-4">
-        <main className="w-full md:max-w-lg flex-1 pb-8">{children}</main>
+    <div className="min-h-screen lg:flex">
+      <Sidebar />
+      <div className="flex min-w-0 flex-1 flex-col">
+        <MobileTopBar />
+        <main className="mx-auto w-full max-w-[1240px] flex-1 px-5 pb-32 pt-3 lg:px-10 lg:pb-12 lg:pt-8">
+          {children}
+        </main>
       </div>
+      <MobileTabBar />
     </div>
   );
 };

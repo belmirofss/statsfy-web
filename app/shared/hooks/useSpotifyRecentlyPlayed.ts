@@ -3,23 +3,25 @@ import API from "../api";
 import { useQuery } from "@tanstack/react-query";
 import { useToken } from "./useToken";
 
-
-export const useSpotifyRecentlyPlayed = () => {
+// 50 is the maximum the Spotify API returns for recently played
+export const useSpotifyRecentlyPlayed = ({ limit = 50 }: { limit?: number } = {}) => {
   const token = useToken();
 
   return useQuery({
-    queryKey: ["RECENTLY_PLAYED"],
+    queryKey: ["RECENTLY_PLAYED", limit],
     queryFn: () =>
-      API.get<SpotifyItemsResponse<SpotifyHistoryTrack>>("v1/me/player/recently-played", {
-        params: {
-          limit: 15,
-          offset: 0,
-        },
-        headers: {
-          Authorization: `Bearer ${token}` 
+      API.get<SpotifyItemsResponse<SpotifyHistoryTrack>>(
+        "v1/me/player/recently-played",
+        {
+          params: {
+            limit,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      }),
+      ),
     select: (response) => response.data.items,
-    enabled: !!token
-  })
+    enabled: !!token,
+  });
 };

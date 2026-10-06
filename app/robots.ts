@@ -9,6 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         "/resume",
         "/top-tracks",
         "/top-artists",
+        "/recently-played",
         "/share",
         "/my-account",
         "/about",

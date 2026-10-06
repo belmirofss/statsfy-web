@@ -1,25 +1,25 @@
-import { Card, Heading } from "@radix-ui/themes";
+import { LuShieldCheck } from "react-icons/lu";
 import { SpotifyLoginButton } from "./SpotifyLoginButton";
 
 export const NotLoggedIn = () => {
   return (
-    <Card variant="surface">
-      <div className="w-full flex flex-col items-center gap-8 p-6 ">
-        <div className="flex flex-col gap-4">
-          <Heading as="h1" weight="bold" size="6" align="center">
-            Hey, you have not connected with your Spotify account.
-          </Heading>
-
-          <Heading as="h2" weight="regular" size="5" align="center">
-            By logging in with your Spotify account, you will beautifully
-            discover stats from your account. You can view your most listened
-            tracks and artists across time ranges, easily share them with your
-            friends and much more!
-          </Heading>
-        </div>
-
-        <SpotifyLoginButton />
+    <div className="card mx-auto flex max-w-xl flex-col items-center gap-6 px-6 py-10 text-center">
+      <div className="flex flex-col gap-3">
+        <h1 className="font-display text-[28px] font-bold leading-tight tracking-[-0.02em]">
+          Hey, you have not connected with your Spotify account.
+        </h1>
+        <p className="text-[16px] leading-relaxed text-soft">
+          Log in with Spotify to see your most listened tracks and artists
+          across time ranges, and share them with your friends.
+        </p>
       </div>
-    </Card>
+
+      <SpotifyLoginButton />
+
+      <p className="flex items-center gap-2 text-sm text-muted">
+        <LuShieldCheck aria-hidden size={16} />
+        Nothing is stored on our servers.
+      </p>
+    </div>
   );
 };

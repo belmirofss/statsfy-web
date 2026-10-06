@@ -6,9 +6,14 @@ import { useToken } from "./useToken";
 type Props = {
   timeRange: SpotifyTimeRanges;
   limit?: number;
+  enabled?: boolean;
 };
 
-export const useSpotifyTopArtists = ({ timeRange, limit = 50 }: Props) => {
+export const useSpotifyTopArtists = ({
+  timeRange,
+  limit = 50,
+  enabled = true,
+}: Props) => {
   const token = useToken();
 
   return useQuery({
@@ -21,10 +26,10 @@ export const useSpotifyTopArtists = ({ timeRange, limit = 50 }: Props) => {
           time_range: timeRange,
         },
         headers: {
-          Authorization: `Bearer ${token}` 
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }),
-      select: (response) => response.data.items,
-      enabled: !!token
-  })
+    select: (response) => response.data.items,
+    enabled: !!token && enabled,
+  });
 };

@@ -1,9 +1,8 @@
-import { Spinner } from "@radix-ui/themes";
-
-export const Loading = () => {
+export const Loading = ({ label = "Loading" }: { label?: string }) => {
   return (
-    <div className="h-full flex flex-row justify-center items-center">
-      <Spinner size="3" />;
+    <div role="status" className="flex items-center justify-center py-12">
+      <span className="h-8 w-8 animate-spin rounded-full border-2 border-edge border-t-main" />
+      <span className="sr-only">{label}</span>
     </div>
   );
 };

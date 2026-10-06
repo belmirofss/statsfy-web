@@ -1,12 +1,8 @@
-import { Text } from "@radix-ui/themes";
-
 export const Error = () => {
   return (
-    <div className="h-full flex flex-col items-center justify-center">
-      <Text size="3" weight="bold">
-        Something went wrong
-      </Text>
-      <Text size="3">Try again later</Text>
+    <div className="flex flex-col items-center justify-center gap-1 py-12 text-center">
+      <p className="font-display text-lg font-bold">Something went wrong</p>
+      <p className="text-sm text-muted">Try again later</p>
     </div>
   );
 };
