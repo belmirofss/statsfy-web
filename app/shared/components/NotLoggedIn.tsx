@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LuShieldCheck } from "react-icons/lu";
+import { LuLock, LuShieldCheck } from "react-icons/lu";
 import { FEATURES, FEATURE_LIST, FeatureKey } from "../features";
 import { SpotifyLoginButton } from "./SpotifyLoginButton";
 
@@ -31,10 +31,16 @@ export const NotLoggedIn = ({ feature }: Props) => {
 
         <SpotifyLoginButton callbackPath={current?.href} />
 
-        <p className="flex items-center gap-2 text-sm text-muted">
-          <LuShieldCheck aria-hidden size={16} />
-          Nothing is stored on our servers.
-        </p>
+        <div className="flex flex-col items-center gap-1.5 text-sm text-muted">
+          <p className="flex items-center gap-2">
+            <LuLock aria-hidden size={16} className="shrink-0" />
+            You log in on Spotify&apos;s own site. Statsfy never sees your password.
+          </p>
+          <p className="flex items-center gap-2">
+            <LuShieldCheck aria-hidden size={16} className="shrink-0" />
+            Nothing is stored on our servers.
+          </p>
+        </div>
       </section>
 
       <nav aria-labelledby="more-stats" className="flex flex-col gap-4">
@@ -55,6 +61,10 @@ export const NotLoggedIn = ({ feature }: Props) => {
           ))}
         </ul>
       </nav>
+
+      <p className="text-[13px] leading-relaxed text-muted">
+        Statsfy is an independent app and is not affiliated with, endorsed or sponsored by Spotify.
+      </p>
     </div>
   );
 };

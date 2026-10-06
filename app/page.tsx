@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { IconType } from "react-icons";
-import { LuBarChart3, LuMusic, LuShare, LuShieldCheck } from "react-icons/lu";
+import { LuBarChart3, LuLock, LuMusic, LuShare, LuShieldCheck } from "react-icons/lu";
 import { Logo } from "@/app/shared/components/Logo";
 import { LandingFeatures, LandingShareBand } from "./components/LandingFeatures";
 import { SpotifyLoginButton } from "./shared/components/SpotifyLoginButton";
@@ -148,10 +148,16 @@ export default function Landing() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <SpotifyLoginButton className="w-full sm:w-auto" />
           </div>
-          <p className="flex items-center gap-2.5 text-sm text-muted">
-            <LuShieldCheck aria-hidden size={18} className="shrink-0" />
-            Nothing is stored on our servers. Your stats stay on your device.
-          </p>
+          <div className="flex flex-col gap-2 text-sm text-muted">
+            <p className="flex items-center gap-2.5">
+              <LuLock aria-hidden size={18} className="shrink-0" />
+              You log in on Spotify&apos;s own site. Statsfy never sees your password.
+            </p>
+            <p className="flex items-center gap-2.5">
+              <LuShieldCheck aria-hidden size={18} className="shrink-0" />
+              Nothing is stored on our servers. Your stats stay on your device.
+            </p>
+          </div>
         </div>
 
         <ProductPreview />
@@ -171,6 +177,10 @@ export default function Landing() {
             </div>
           ))}
         </div>
+        <p className="mx-auto w-full max-w-[1600px] px-5 pb-7 text-[13px] leading-relaxed text-muted lg:px-8">
+          Statsfy is an independent app and is not affiliated with, endorsed or sponsored by
+          Spotify. Spotify is a trademark of Spotify AB.
+        </p>
       </footer>
     </div>
   );
