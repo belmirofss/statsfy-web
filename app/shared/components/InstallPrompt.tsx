@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import { LuChevronRight, LuDownload, LuPlusSquare, LuShare, LuX } from "react-icons/lu";
 import { useInstallPrompt } from "../hooks/useInstallPrompt";
 import { Button } from "./Button";
@@ -17,26 +17,7 @@ const AppIcon = () => (
 );
 
 export const InstallBanner = () => {
-  const { method, showBanner, showSnoozeNotice, install, snooze, openSteps, hideSnoozeNotice } =
-    useInstallPrompt();
-
-  useEffect(() => {
-    if (!showSnoozeNotice) return;
-    const timeout = window.setTimeout(hideSnoozeNotice, 5000);
-    return () => window.clearTimeout(timeout);
-  }, [showSnoozeNotice, hideSnoozeNotice]);
-
-  if (showSnoozeNotice) {
-    return (
-      <div
-        role="status"
-        className="mx-2 rounded-2xl border border-edge bg-raised px-4 py-3.5 text-sm leading-snug text-subtle shadow-[0_18px_40px_rgba(0,0,0,0.55)]"
-      >
-        {method === "ios" ? "You can find these steps anytime in " : "Got it. You can install anytime from "}
-        <strong className="text-fg">More</strong>.
-      </div>
-    );
-  }
+  const { method, showBanner, install, snooze, openSteps } = useInstallPrompt();
 
   if (!showBanner) return null;
 

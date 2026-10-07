@@ -15,7 +15,6 @@ type InstallState = {
   installed: boolean;
   dismissedAt: number | null;
   stepsOpenedFrom: "banner" | "menu" | null;
-  showSnoozeNotice: boolean;
 };
 
 const DISMISSED_KEY = "statsfy:install-dismissed-at";
@@ -28,7 +27,6 @@ const INITIAL_STATE: InstallState = {
   installed: false,
   dismissedAt: null,
   stepsOpenedFrom: null,
-  showSnoozeNotice: false,
 };
 
 // Shared across components (banner, More menu, iOS sheet) and page navigations
@@ -80,14 +78,14 @@ if (typeof window !== "undefined") {
   });
 }
 
-const snooze = (withNotice = true) => {
+const snooze = () => {
   const now = Date.now();
   try {
     window.localStorage.setItem(DISMISSED_KEY, String(now));
   } catch {
     // Storage can be unavailable (private mode); snooze for this session only
   }
-  update({ dismissedAt: now, showSnoozeNotice: withNotice });
+  update({ dismissedAt: now });
 };
 
 const install = async () => {
@@ -102,7 +100,7 @@ const install = async () => {
   if (outcome === "accepted") {
     update({ installed: true });
   } else {
-    snooze(false);
+    snooze();
   }
 };
 
@@ -113,8 +111,6 @@ const closeSteps = () => {
   update({ stepsOpenedFrom: null });
   if (from === "banner") snooze();
 };
-
-const hideSnoozeNotice = () => update({ showSnoozeNotice: false });
 
 export const useInstallPrompt = () => {
   const current = useSyncExternalStore(subscribe, () => state, () => INITIAL_STATE);
@@ -142,12 +138,10 @@ export const useInstallPrompt = () => {
   return {
     method,
     showBanner: method !== null && device?.touch === true && !snoozed,
-    showSnoozeNotice: current.showSnoozeNotice,
     stepsOpen: current.stepsOpenedFrom !== null,
     install,
     snooze,
     openSteps,
     closeSteps,
-    hideSnoozeNotice,
   };
 };
