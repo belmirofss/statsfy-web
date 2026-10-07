@@ -4,8 +4,10 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { getCountryStats } from "@/app/shared/helpers/getCountryStats";
 import { getMainstreamStats, MAINSTREAM_TIER_COLORS } from "@/app/shared/helpers/getMainstreamStats";
+import { getMoodStats, mapPosition, MOODS } from "@/app/shared/helpers/getMoodStats";
 import { getTimeMachineStats } from "@/app/shared/helpers/getTimeMachineStats";
 import { useArtistOrigins } from "@/app/shared/hooks/useArtistOrigins";
+import { useAudioFeatures } from "@/app/shared/hooks/useAudioFeatures";
 import { SpotifyArtist, SpotifyTrack } from "@/app/shared/types";
 
 const Tile = ({
@@ -50,12 +52,14 @@ type Props = {
   artists: SpotifyArtist[] | undefined;
 };
 
-/** Teasers for Time machine, Mainstream and World map on the overview. */
+/** Teasers for Time machine, Mainstream, Mood map and World map on the overview. */
 export const TasteTiles = ({ tracks, artists }: Props) => {
   const timeMachine = tracks ? getTimeMachineStats(tracks) : null;
   const mainstream = tracks ? getMainstreamStats(tracks) : null;
   const origins = useArtistOrigins(artists);
   const countries = artists ? getCountryStats(artists, origins.countries) : null;
+  const audio = useAudioFeatures(tracks);
+  const mood = tracks && audio.done ? getMoodStats(tracks, audio.features) : null;
   const maxDecade = Math.max(1, ...(timeMachine?.decades.map(({ count }) => count) ?? [1]));
 
   return (
@@ -63,7 +67,7 @@ export const TasteTiles = ({ tracks, artists }: Props) => {
       <h2 id="taste-title" className="font-display text-lg font-bold">
         Your taste
       </h2>
-      <div className="grid grid-cols-3 gap-2 sm:gap-4">
+      <div className="grid grid-cols-2 gap-2 sm:gap-4">
         <Tile
           href="/time-machine"
           label="Music year"
@@ -116,6 +120,37 @@ export const TasteTiles = ({ tracks, artists }: Props) => {
             ) : (
               "Not available"
             )
+          }
+        />
+        <Tile
+          href="/mood-map"
+          label="Mood"
+          value={
+            <span className="block text-[20px] leading-[1.05] tracking-[-0.02em] sm:text-[28px]">
+              {mood?.vibe ?? "–"}
+            </span>
+          }
+          visual={
+            mood && (
+              <span className="relative block h-[52px] w-[52px] overflow-hidden rounded-[10px] border border-line bg-[#10120F]">
+                <span className="absolute inset-y-0 left-1/2 w-px bg-edge" />
+                <span className="absolute inset-x-0 top-1/2 h-px bg-edge" />
+                {mood.items.slice(0, 12).map(({ track, features, mood: key }) => (
+                  <span
+                    key={track.id}
+                    className="absolute h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-sm"
+                    style={{ ...mapPosition(features), background: MOODS[key].color }}
+                  />
+                ))}
+              </span>
+            )
+          }
+          caption={
+            mood
+              ? `${mood.topMood.percent}% ${mood.topMood.name.toLowerCase()} · ${mood.tempo} BPM avg`
+              : audio.done || audio.isError
+                ? "Not available"
+                : "Measuring moods…"
           }
         />
         <Tile

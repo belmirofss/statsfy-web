@@ -9,10 +9,12 @@ import { PageHeader } from "@/app/shared/components/PageHeader";
 import { SegmentedControl } from "@/app/shared/components/SegmentedControl";
 import { getCountryStats } from "@/app/shared/helpers/getCountryStats";
 import { getMainstreamStats } from "@/app/shared/helpers/getMainstreamStats";
+import { getMoodStats, mapPosition } from "@/app/shared/helpers/getMoodStats";
 import { getTimeMachineStats } from "@/app/shared/helpers/getTimeMachineStats";
 import { getTopGenres } from "@/app/shared/helpers/getTopGenres";
 import { readSavedMatches, SavedMatch } from "@/app/shared/helpers/tasteMatch";
 import { useArtistOrigins } from "@/app/shared/hooks/useArtistOrigins";
+import { useAudioFeatures } from "@/app/shared/hooks/useAudioFeatures";
 import { useSpotifyAccount } from "@/app/shared/hooks/useSpotifyAccount";
 import { useSpotifyTopArtists } from "@/app/shared/hooks/useSpotifyTopArtists";
 import { useSpotifyTopTracks } from "@/app/shared/hooks/useSpotifyTopTracks";
@@ -115,6 +117,7 @@ export const ShareContent = () => {
   const tracks = useSpotifyTopTracks({ timeRange });
   const artists = useSpotifyTopArtists({ timeRange });
   const origins = useArtistOrigins(artists.data);
+  const audio = useAudioFeatures(tracks.data);
   const [latestMatch, setLatestMatch] = useState<SavedMatch | null>(null);
 
   const [templateId, setTemplateId] = useState<TemplateId>("pulse");
@@ -171,6 +174,7 @@ export const ShareContent = () => {
   const timeMachine = getTimeMachineStats(tracks.data);
   const mainstream = getMainstreamStats(tracks.data);
   const countryStats = origins.done ? getCountryStats(artists.data, origins.countries) : null;
+  const mood = audio.done ? getMoodStats(tracks.data, audio.features) : null;
   const data: ShareData = {
     name,
     firstName: name.split(" ")[0],
@@ -199,6 +203,17 @@ export const ShareContent = () => {
               topNames: countryStats.countries.slice(0, 3).map(({ name: country }) => country),
             }
           : undefined,
+      mood: mood
+        ? {
+            vibe: mood.vibe,
+            dots: mood.items.map(({ features, mood: key }) => ({
+              ...mapPosition(features),
+              color: mood.mix.find((item) => item.key === key)?.color ?? "#FFFFFF",
+            })),
+            mix: mood.mix.map(({ name, color, percent }) => ({ name, color, percent })),
+            tempo: mood.tempo,
+          }
+        : undefined,
       match: latestMatch
         ? {
             friendName: latestMatch.friendName,
@@ -409,6 +424,11 @@ export const ShareContent = () => {
               {!origins.done && (
                 <p>
                   The World map slide appears once your artists&apos; countries are found.
+                </p>
+              )}
+              {!audio.done && !audio.isError && (
+                <p>
+                  The Mood map slide appears once your songs&apos; moods are measured.
                 </p>
               )}
               {!latestMatch && (

@@ -14,10 +14,20 @@ const PREVIEW_TRACKS = [
   { rank: 5, name: "APT.", artist: "ROSÉ, Bruno Mars", colors: ["#FF7FB0", "#FFF0F6"] },
 ];
 
+// [left, top, color] of the songs on the small mood map
+const VIBE_DOTS: [number, number, string][] = [
+  [8, 9, "#FF9F6B"],
+  [16, 15, "#E9475E"],
+  [10, 19, "#FF9F6B"],
+  [33, 11, "#1ED760"],
+  [11, 35, "#7EA6F7"],
+  [36, 34, "#B9AEFF"],
+];
+
 const FEATURES: { title: string; Icon: IconType }[] = [
   { title: "Your top tracks and artists", Icon: LuMusic },
   { title: "Insights into your taste", Icon: LuBarChart3 },
-  { title: "Share and compare with friends", Icon: LuShare },
+  { title: "Share, compare and challenge friends", Icon: LuShare },
   { title: "Private by design", Icon: LuShieldCheck },
 ];
 
@@ -72,15 +82,21 @@ const ProductPreview = () => (
       <span className="text-[11px] font-extrabold tracking-[0.06em]">MY MUSIC YEAR</span>
       <span className="font-display text-[30px] font-bold leading-none">2021</span>
     </div>
-    <div className="absolute -bottom-5 left-0 hidden items-center gap-3 rounded-2xl bg-fg py-3.5 pl-3.5 pr-5 text-canvas shadow-2xl sm:flex lg:-left-2">
-      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#E9475E] font-extrabold text-[#FFE3E7]">
-        CR
+    <div className="absolute -bottom-5 left-0 hidden items-center gap-3 rounded-2xl bg-fg py-3 pl-3 pr-5 text-canvas shadow-2xl sm:flex lg:-left-2">
+      <span aria-hidden className="relative h-[52px] w-[52px] overflow-hidden rounded-xl bg-canvas">
+        <span className="absolute inset-y-0 left-1/2 w-px bg-edge" />
+        <span className="absolute inset-x-0 top-1/2 h-px bg-edge" />
+        {VIBE_DOTS.map(([left, top, color]) => (
+          <span
+            key={`${left}-${top}`}
+            className="absolute h-2 w-2 rounded-sm"
+            style={{ left, top, background: color }}
+          />
+        ))}
       </span>
       <span>
-        <span className="block text-xs font-bold tracking-[0.06em] text-[#4F564B]">
-          TOP ARTIST
-        </span>
-        <span className="block font-display text-lg font-bold">Chappell Roan</span>
+        <span className="block text-xs font-bold tracking-[0.06em] text-[#4F564B]">MY VIBE</span>
+        <span className="block font-display text-lg font-bold">Late-night drive</span>
       </span>
     </div>
   </div>
@@ -143,7 +159,8 @@ export default function Landing() {
             <span className="text-main">Spotify stats?</span>
           </h1>
           <p className="max-w-[480px] text-[17px] leading-relaxed text-soft lg:text-[19px]">
-            See what you really listen to, and what it says about you.
+            See what you really listen to, what it says about you, and how well you actually
+            know it.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <SpotifyLoginButton className="w-full sm:w-auto" />

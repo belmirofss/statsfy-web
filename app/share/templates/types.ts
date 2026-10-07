@@ -34,6 +34,13 @@ export type ShareInsights = {
   };
   mainstream?: { score: number; tier: string; lowest: string };
   world?: { countries: string[]; continents: number; topNames: string[] };
+  mood?: {
+    vibe: string;
+    // Each song on the map, positions in percent
+    dots: { left: string; top: string; color: string }[];
+    mix: { name: string; color: string; percent: number }[];
+    tempo: number;
+  };
   match?: {
     friendName: string;
     score: number;

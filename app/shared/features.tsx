@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { MAINSTREAM_TIER_COLORS } from "./helpers/getMainstreamStats";
+import { MOODS } from "./helpers/getMoodStats";
 
 // Small abstract drawings of each feature; real data appears after logging in
 const Preview = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
@@ -23,6 +24,19 @@ const Row = ({ color, rank, width }: { color: string; rank?: number; width: stri
 const MAP_PATTERN = [0, 1, 0, 0, 3, 2, 0, 0, 2, 0, 4, 0, 0, 2, 0, 1, 0, 1, 0, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1];
 const MAP_COLORS = ["#2A2E28", "#1F5A33", "#1A9A4B", "#1ED760", "#A6F3C2"];
 
+// [left %, top %, color] of the songs on the mood map drawing
+const MOOD_DOTS: [number, number, string][] = [
+  [14, 18, MOODS.angsty.color],
+  [30, 30, MOODS.angsty.color],
+  [22, 40, MOODS.angsty.color],
+  [38, 14, MOODS.angsty.color],
+  [70, 22, MOODS.euphoric.color],
+  [84, 36, MOODS.euphoric.color],
+  [20, 74, MOODS.melancholic.color],
+  [36, 84, MOODS.melancholic.color],
+  [74, 70, MOODS.peaceful.color],
+];
+
 export type Feature = {
   href: string;
   title: string;
@@ -40,10 +54,12 @@ export type FeatureKey =
   | "recentlyPlayed"
   | "timeMachine"
   | "mainstream"
+  | "moodMap"
   | "worldMap"
   | "newReleases"
   | "nowPlaying"
-  | "tasteMatch";
+  | "tasteMatch"
+  | "knowYourself";
 
 export const FEATURES: Record<FeatureKey, Feature> = {
   topTracks: {
@@ -137,6 +153,28 @@ export const FEATURES: Record<FeatureKey, Feature> = {
       </Preview>
     ),
   },
+  moodMap: {
+    href: "/mood-map",
+    title: "Mood map",
+    text: "Where your songs sit between happy and sad, calm and intense, and your vibe in two words.",
+    heading: "Is your Spotify music happy or sad?",
+    intro:
+      "Statsfy maps your top Spotify songs between happy and sad, calm and intense, sums up your vibe and shows the tempo you listen to most.",
+    preview: (
+      <Preview className="relative overflow-hidden p-0">
+        <span className="absolute inset-y-0 left-1/2 w-px bg-edge" />
+        <span className="absolute inset-x-0 top-1/2 h-px bg-edge" />
+        {MOOD_DOTS.map(([left, top, color]) => (
+          <span
+            key={`${left}-${top}`}
+            className="absolute h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-[4px]"
+            style={{ left: `${left}%`, top: `${top}%`, background: color }}
+          />
+        ))}
+        <span className="absolute left-[27%] top-[30%] h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-dashed border-main" />
+      </Preview>
+    ),
+  },
   worldMap: {
     href: "/world-map",
     title: "World map",
@@ -197,6 +235,29 @@ export const FEATURES: Record<FeatureKey, Feature> = {
           <span className="-ml-3.5 h-[52px] w-[52px] rounded-full border-[3px] border-raised bg-[#8E7DFF]" />
         </span>
         <span className="font-display text-[32px] font-bold text-main">71%</span>
+      </Preview>
+    ),
+  },
+  knowYourself: {
+    href: "/know-yourself",
+    title: "Know yourself",
+    text: "Guess which of your songs you play more, or name one from its intro. Then challenge a friend.",
+    heading: "How well do you know your Spotify taste?",
+    intro:
+      "Play higher or lower with your own top Spotify songs, or name them from their first second. Then send a friend a challenge and see who knows your taste better.",
+    preview: (
+      <Preview className="items-center justify-center gap-3">
+        <span className="flex h-full w-16 flex-col justify-end gap-1.5 rounded-[10px] border-2 border-main bg-[#14241A] p-1.5">
+          <span className="flex-1 rounded-md bg-[#2B44E8]" />
+          <span className="text-right font-display text-xs font-bold text-main">#1</span>
+        </span>
+        <span className="flex h-7 w-7 items-center justify-center rounded-full border border-edge bg-canvas font-display text-[11px] font-bold text-muted">
+          or
+        </span>
+        <span className="flex h-full w-16 flex-col justify-end gap-1.5 rounded-[10px] border-2 border-edge p-1.5">
+          <span className="flex-1 rounded-md bg-[#7A4A2C]" />
+          <span className="text-right font-display text-xs font-bold text-muted">#?</span>
+        </span>
       </Preview>
     ),
   },

@@ -24,6 +24,7 @@ import { useSpotifyRecentlyPlayed } from "@/app/shared/hooks/useSpotifyRecentlyP
 import { useSpotifyTopArtists } from "@/app/shared/hooks/useSpotifyTopArtists";
 import { useSpotifyTopTracks } from "@/app/shared/hooks/useSpotifyTopTracks";
 import { usePreferences } from "@/app/shared/providers/PreferencesProvider";
+import { DailyRound } from "./DailyRound";
 import { TasteTiles } from "./TasteTiles";
 
 const useGreeting = () => {
@@ -188,10 +189,6 @@ export const Overview = () => {
         </section>
       </div>
 
-      <div className="mt-6">
-        <TasteTiles tracks={tracks.data} artists={artists.data} />
-      </div>
-
       <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Panel title="Top tracks" action={<SeeAll href="/top-tracks" label="See all 50" />}>
           {renderState(tracks) ?? (
@@ -254,30 +251,15 @@ export const Overview = () => {
         </Panel>
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-        <Panel
-          title="New from your artists"
-          action={<SeeAll href="/new-releases" label={releases.data?.length ? `See all ${releases.data.length}` : "See all"} />}
-        >
-          {releases.isLoading ? (
-            <Loading label="Checking your artists for new releases" />
-          ) : releases.data && releases.data.length > 0 ? (
-            <ul className="grid grid-cols-2 gap-x-3 gap-y-4 sm:grid-cols-4">
-              {releases.data.slice(0, 4).map((release) => (
-                <li key={release.album.id} className="min-w-0">
-                  <ReleaseCard release={release} showReason={false} />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="py-6 text-sm text-muted">
-              Nothing new from your artists in the last few months.
-            </p>
-          )}
-        </Panel>
+      <div className="mt-6">
+        <TasteTiles tracks={tracks.data} artists={artists.data} />
+      </div>
+
+      <div className="mt-4 grid items-start gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <DailyRound />
 
         <section className="flex flex-col gap-3.5 rounded-[20px] border border-line bg-raised p-5">
-          <h2 className="font-display text-lg font-bold">Compare with a friend</h2>
+          <h2 className="font-display text-lg font-bold">Play with a friend</h2>
           <div className="flex items-center gap-4">
             <span className="flex">
               <InitialsAvatar
@@ -291,13 +273,41 @@ export const Overview = () => {
             <span className="font-display text-[30px] font-bold text-muted">??%</span>
           </div>
           <p className="text-sm leading-relaxed text-soft">
-            Send a link. When your friend logs in, they see how much your taste overlaps and what
-            to play next.
+            See how much your taste overlaps, or dare a friend to guess which of your songs you play
+            more.
           </p>
-          <Button href="/share/compare" variant="light" size="small" className="self-start">
-            Get my match link
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button href="/share/compare" variant="light" size="small">
+              Get my match link
+            </Button>
+            <Button href="/know-yourself#challenge" variant="secondary" size="small">
+              Send a challenge
+            </Button>
+          </div>
         </section>
+      </div>
+
+      <div className="mt-4">
+        <Panel
+          title="New from your artists"
+          action={<SeeAll href="/new-releases" label={releases.data?.length ? `See all ${releases.data.length}` : "See all"} />}
+        >
+          {releases.isLoading ? (
+            <Loading label="Checking your artists for new releases" />
+          ) : releases.data && releases.data.length > 0 ? (
+            <ul className="grid grid-cols-2 gap-x-3 gap-y-4 sm:grid-cols-4 lg:grid-cols-6">
+              {releases.data.slice(0, 6).map((release, index) => (
+                <li key={release.album.id} className={`min-w-0 ${index >= 4 ? "hidden lg:block" : ""}`}>
+                  <ReleaseCard release={release} showReason={false} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="py-6 text-sm text-muted">
+              Nothing new from your artists in the last few months.
+            </p>
+          )}
+        </Panel>
       </div>
     </div>
   );

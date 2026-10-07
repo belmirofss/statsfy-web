@@ -11,6 +11,7 @@ export type StorySlideId =
   | "tracks"
   | "lineup"
   | "vibe"
+  | "mood"
   | "year"
   | "mainstream"
   | "world"
@@ -22,6 +23,7 @@ export const STORY_SLIDES: { id: StorySlideId; label: string }[] = [
   { id: "tracks", label: "Top 5 tracks" },
   { id: "lineup", label: "Lineup" },
   { id: "vibe", label: "My vibe" },
+  { id: "mood", label: "Mood map" },
   { id: "year", label: "Music year" },
   { id: "mainstream", label: "Mainstream" },
   { id: "world", label: "World map" },
@@ -84,6 +86,7 @@ export const getAvailableSlides = (data: ShareData) =>
     if (id === "mainstream") return !!data.insights.mainstream;
     if (id === "world") return !!data.insights.world;
     if (id === "match") return !!data.insights.match;
+    if (id === "mood") return !!data.insights.mood;
     return data.genres.length > 0;
   });
 
@@ -183,6 +186,48 @@ export const StorySlide = forwardRef<
           )}
         </div>
         <Footer />
+      </Slide>
+    );
+  }
+
+  if (id === "mood" && data.insights.mood) {
+    const { vibe, dots, mix, tempo } = data.insights.mood;
+    const top = [...mix].sort((a, b) => b.percent - a.percent)[0];
+    return (
+      <Slide ref={ref} background={INK} color="#FFFFFF">
+        <p className="text-[15px] font-bold">My mood map {period}</p>
+        <p
+          className="mt-2 text-[52px] font-extrabold leading-[0.9] tracking-[-0.04em]"
+          style={{ color: top.color }}
+        >
+          {vibe}
+        </p>
+        <div className="relative mt-6 h-[250px] overflow-hidden rounded-[18px] bg-[#1C1C1C]">
+          <span className="absolute inset-y-0 left-1/2 w-px bg-[#333333]" />
+          <span className="absolute inset-x-0 top-1/2 h-px bg-[#333333]" />
+          {dots.map((dot, index) => (
+            <span
+              key={index}
+              className="absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-[4px] border-2 border-[#1C1C1C]"
+              style={{ left: dot.left, top: dot.top, background: dot.color }}
+            />
+          ))}
+        </div>
+        <div className="mt-2 flex justify-between text-[11px] font-extrabold uppercase text-[#9A9A9A]">
+          <span>Sad</span>
+          <span>Happy</span>
+        </div>
+        <div className="mt-4 grid grid-cols-2 gap-x-5 gap-y-2">
+          {mix.map((mood) => (
+            <span key={mood.name} className="flex items-center gap-2 text-[14px] font-bold">
+              <span className="h-2.5 w-2.5 rounded-[3px]" style={{ background: mood.color }} />
+              <span className="flex-1">{mood.name}</span>
+              {mood.percent}%
+            </span>
+          ))}
+        </div>
+        <p className="mt-4 text-[14px] font-semibold">{tempo} BPM on average</p>
+        <div className="mt-3"><Footer /></div>
       </Slide>
     );
   }

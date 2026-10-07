@@ -9,6 +9,7 @@ import {
   LuChevronRight,
   LuClock,
   LuDisc3,
+  LuGamepad2,
   LuGauge,
   LuGlobe,
   LuHistory,
@@ -17,6 +18,7 @@ import {
   LuMenu,
   LuMic,
   LuMusic,
+  LuScatterChart,
   LuShare,
 } from "react-icons/lu";
 import { useSpotifyAccount } from "../hooks/useSpotifyAccount";
@@ -38,9 +40,11 @@ const TOP_TRACKS: NavItem = { label: "Top tracks", shortLabel: "Tracks", href: "
 const TOP_ARTISTS: NavItem = { label: "Top artists", shortLabel: "Artists", href: "/top-artists", Icon: LuMic };
 const TIME_MACHINE: NavItem = { label: "Time machine", shortLabel: "Time machine", href: "/time-machine", Icon: LuHistory };
 const MAINSTREAM: NavItem = { label: "Mainstream", shortLabel: "Mainstream", href: "/mainstream", Icon: LuGauge };
+const MOOD_MAP: NavItem = { label: "Mood map", shortLabel: "Mood map", href: "/mood-map", Icon: LuScatterChart };
 const WORLD_MAP: NavItem = { label: "World map", shortLabel: "World map", href: "/world-map", Icon: LuGlobe };
 const RECENTLY_PLAYED: NavItem = { label: "Recently played", shortLabel: "Recent", href: "/recently-played", Icon: LuClock };
 const NEW_RELEASES: NavItem = { label: "New releases", shortLabel: "Releases", href: "/new-releases", Icon: LuDisc3 };
+const KNOW_YOURSELF: NavItem = { label: "Know yourself", shortLabel: "Game", href: "/know-yourself", Icon: LuGamepad2 };
 const SHARE: NavItem = { label: "Share", shortLabel: "Share", href: "/share", Icon: LuShare };
 
 const MAIN_ITEMS: NavItem[] = [
@@ -49,9 +53,11 @@ const MAIN_ITEMS: NavItem[] = [
   TOP_ARTISTS,
   TIME_MACHINE,
   MAINSTREAM,
+  MOOD_MAP,
   WORLD_MAP,
   RECENTLY_PLAYED,
   NEW_RELEASES,
+  KNOW_YOURSELF,
   SHARE,
 ];
 
@@ -64,7 +70,16 @@ const ABOUT_ITEM: NavItem = {
 
 // The phone tab bar has room for five; everything else lives under "More"
 const MOBILE_TABS = [OVERVIEW, TOP_TRACKS, TOP_ARTISTS, SHARE];
-const MORE_ITEMS = [TIME_MACHINE, MAINSTREAM, WORLD_MAP, RECENTLY_PLAYED, NEW_RELEASES, ABOUT_ITEM];
+const MORE_ITEMS = [
+  TIME_MACHINE,
+  MAINSTREAM,
+  MOOD_MAP,
+  WORLD_MAP,
+  RECENTLY_PLAYED,
+  NEW_RELEASES,
+  KNOW_YOURSELF,
+  ABOUT_ITEM,
+];
 
 const isActive = (pathname: string, href: string) =>
   pathname === href || pathname.startsWith(`${href}/`);
