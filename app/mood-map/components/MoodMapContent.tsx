@@ -287,7 +287,7 @@ export const MoodMapContent = () => {
         </section>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
         <section className="card flex flex-col gap-4 rounded-3xl p-5 lg:p-6">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
